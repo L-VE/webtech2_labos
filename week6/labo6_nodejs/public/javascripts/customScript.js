@@ -50,9 +50,9 @@ $(document).ready(function(){
         messagesIds.push("message"+messageId);
         messageId++;
         previousChatTime = currentDateTime;
-        console.log(messagesIds);
+        //console.log(messagesIds);
         
-       console.log(currentDateTime);
+        //console.log(currentDateTime);
         $("#leftSide").append(appendToLeftSide);
 	
     }); // END VAN SUBSCRIBE ASK
@@ -95,27 +95,50 @@ $(document).ready(function(){
     });
 
     var subscriptionAllquestion = client.subscribe('/allquestions', function(message) {
-        var currentElement = $("#" + message.chosenQuestion);
-        currentElement.animate({height: currentElement.height() * 1.2}, 1000 );
-        var fontSize = currentElement.find(".chatMessage").css('fontSize');    
-        if(fontSize != undefined)
-        {
-            //alert(fontSize);
-            var numberFontSize = fontSize.substr(0,fontSize.length - 2);
-           // alert(numberFontSize);
-           currentElement.find(".chatMessage").css('fontSize', (numberFontSize * 1.2) + "px");
-        }
+
+        var currentElementId = ""; 
+        $.each($(".chatTime"), function(key, value) {
+           // $('div.chatTime:contains(' + key + ')').html(value);
+           var currentChatTime = $(this)[0].innerText;
+           //console.log(currentChatTime);
+           //console.log(message.messageTimeStamp);
+           if(currentChatTime == message.messageTimeStamp)
+           {
+                currentElementId = $(this).parent()[0].id;
+                //console.log(currentElementId);
+          
+
+              //  $(".chatTime:contains('" + message.messageTimeStamp + "')" ).css( "text-decoration", "underline" );
+                //var currentElement = $("#" + message.chosenQuestion);
+                var currentElement = $("#" + currentElementId);
+                currentElement.animate({height: currentElement.height() * 1.2}, 1000 );
+                var fontSize = currentElement.find(".chatMessage").css('fontSize');    
+                if(fontSize != undefined)
+                {
+                    //alert(fontSize);
+                    var numberFontSize = fontSize.substr(0,fontSize.length - 2);
+                   // alert(numberFontSize);
+                   currentElement.find(".chatMessage").css('fontSize', (numberFontSize * 1.2) + "px");
+                }
+         }
+        
+        });
     });
 
-    $( "#leftSide" ).on( "click", "div", function( event ) {
+    $( "#leftSide" ).on( "click", "div.questionStyle.animateQuestion", function( event ) {
       var chosenQuestion = $(this)[0].id;
+      
+      //console.log($(this));
+      var messageTimeStamp = $("#"+chosenQuestion).find('.chatTime')[0].innerText;
+      
+      //console.log(messageTimeStamp);
        event.preventDefault();
-    var publicationAllQuestions = client.publish('/allquestions', {chosenQuestion : chosenQuestion});
+    var publicationAllQuestions = client.publish('/allquestions', {chosenQuestion : chosenQuestion, messageTimeStamp : messageTimeStamp});
     
     });
 
 
-      
+      // KLIK WORDT NU OOK GEDAAN VOOR ELK ELEMENT IN DE DIV, MAG ALLEEN VOOR DE OUTERDIV
 
 
 });// END VAN DOCUMENT READY
