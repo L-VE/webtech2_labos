@@ -1,0 +1,126 @@
+body
+{
+    background-image: url("../images/woodpattern.jpg");
+}
+
+h1
+{
+    font-weight: 100;
+    font-size: 40px;
+    display:block;
+    color:#ee090c;
+    background: white;
+}
+
+h3
+{
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: black;
+    font-size: 130%;   
+    font-weight: 100;
+}
+
+header
+{
+    height:500px;
+    position: relative;
+}
+
+/*Navigation*/
+
+nav
+{
+	background-color: #ded3b3;
+	width:100%;
+	height:150px; 
+	position: absolute;
+}
+
+nav ul
+{
+    list-style: none;
+}
+
+nav a:link,
+nav a:visited,
+nav a:hover,
+nav a:active
+{
+    display: block;
+    text-decoration: none;
+    text-transform:uppercase;
+    text-align: center;
+    color: #ee090c;  
+    width:90%;  
+    height:50px; 
+}
+
+nav a:hover
+{
+	color:#b31113; 
+}
+
+/*Banner*/
+#banner
+{
+	background-image: url("../images/bannerlab1.jpg");
+	height: 500px;
+	width: 100%;
+
+	/*css3*/
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-position: center center;
+}
+
+#banner h1
+{
+	position: absolute;
+	padding:  4px 10px;
+	margin-left: 30px;
+	margin-top: 200px;
+}
+
+/*Recipe Section*/
+
+#recipe
+{
+	width: 90%;
+	margin: 0 auto;
+	padding: 30px 4%;
+	background-color: white;
+	color:#292929;
+
+	/*css3*/
+	-moz-box-shadow:5px 5px 5px rgba(0,0,0,0.3);
+	-webkit-box-shadow:5px 5px 5px rgba(0,0,0,0.3);
+	box-shadow:5px 5px 5px rgba(0,0,0,0.3);
+}
+
+@media only screen and (min-width: 480px)
+{ 
+	nav
+	{
+		height: 50px;
+	}
+
+	nav a:link,
+	nav a:visited,
+	nav a:hover,
+	nav a:active
+	{
+	  	float: left;
+	    text-align: left;
+	    color: #ee090c;  
+	    width:120px;  
+	    height:50px; 
+	}
+
+	nav a:hover
+	{
+		color:#b31113; 
+	}
+}
