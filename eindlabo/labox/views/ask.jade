@@ -1,0 +1,57 @@
+extends layout
+
+block content
+    #wholeContainer.ordinaryUser
+        #baseContent
+          #header
+            #goBack
+                img(id="goBackArrow", src="../images/arrow_goBack_white.png")
+            h1 IMD WALL
+            #account
+                img(id="accountPic", src="../images/user_white.png")
+          //#login
+          //  h2 Login here
+          //  ul
+          //      li: img(id="facebook", src="../images/facebook_white.png")
+          //      li: img(id="twitter", src="../images/twitter_white.png")
+          #content
+            #leftSide
+                p.category 
+                    span Current topics
+                #topicList
+                    p.topics 
+                        span Eerste Topic
+                            img(class="arrow", src="../images/arrow_black.png")
+                    p.topics 
+                        span Tweede Topic
+                            img(class="arrow", src="../images/arrow_black.png")
+                    p.topics 
+                        span Derde Topic
+                            img(class="arrow", src="../images/arrow_black.png")
+                    p.topics 
+                        span Vierde Topic
+                            img(class="arrow", src="../images/arrow_black.png")
+                #topicDetails
+                    p
+                        | Dit zijn allemaal details
+                        | van het huidige topic
+                        | qvybuhijhgytfrdtfhuijgutyhujgytfygftyhuygutgu
+            #rightSide
+                p.questionHeader
+                    span Ask a question
+                </br>
+                ul#form
+                    li: textarea(name='questionField', id='questionField', placeholder="your message", maxlength="500", rows="3" )
+                    li: p.errorMessage 
+                    li: p.charactersLeft
+                    li: #sendTypes
+                            input(type='radio', name='questionType', id='questionType', value='question') 
+                            label(for='questionType', class='sendType') Question
+                            input(type='radio',name='questionType', id='answerType', value='answer') 
+                            label(for='answerType', class='sendType') Answer
+                    li: input#submitQuestion(type="submit", value="Send")
+        #accountOptions
+            #options 
+                h2 My account
+                </br>
+                p.logout Logout

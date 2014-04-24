@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    #login
+        h2 Login here
+        ul
+            li: a(class='facebookLogin', href="/auth/facebook")
+                    img(id="facebook", src="../images/facebook_white.png")
+            li: img(id="admin", src="../images/gears.png")

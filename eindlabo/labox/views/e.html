@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		body
+		{
+			margin: 10px;
+		}
+
+		.message
+		{
+			width: 80%;
+			margin: 0 10%;
+			background-color: red;
+		}
+
+		.innerMessage
+		{
+			background-color: green;
+			width: 90%;
+			margin: 0 5%;
+			padding: 2% 0;
+			overflow: hidden;
+		}
+
+		.left{background-color: yellow; width: 30%; float: left;}
+		.right{background-color: orange; width: 70%; float: right;}
+
+		.innerLeft{float: left; background-color: blue;margin: 10px; width: 90%;}
+
+		.innerRight{background-color: pink; margin: 10px; width: 90;}
+
+		.voter, .userPic{width: 51%; float: left; margin: 0 32%;}
+
+		img{width: 55px;}
+		li img{width: 20px; }
+		/*li:first-child{float: left;}*/
+		/*li:last-child{float: right;}*/
+		li{list-style-type: none;}
+
+		.timeStamp{float: right;margin: 0 10px 5px 0;}
+
+		.voteButton{padding: 0;}
+		
+
+		.messageCon
+		{
+			width: 100%;
+			height: 200px;
+			/*background-color: red;*/
+		}
+
+		.messageCon.even
+		{
+			background-color: white;
+		}
+
+		.messageCon.uneven
+		{
+			background-color: lightgrey;
+		}
+
+		.messageConSec
+		{
+			width: 90%;
+			height: 200px;
+			margin: 0 auto;
+			/*background-color: blue;*/
+		}
+
+		.messageDetails, .messageContent
+		{float: left; margin-top: 10px; margin-bottom: 10px;}
+
+		.messageDetails
+		{
+			/*background-color: yellow;*/
+			width: 10%;
+			margin-right: 2.5%;
+			height: 100px;
+		}
+
+		.messageDetails img
+		{
+			margin: 0 12.5%;
+			width: 75%;
+		}
+
+		.messageDetails .votes h1
+		{
+			font-size: 16px;
+			font-weight: normal;
+			text-align: center;
+			margin:0;
+		}
+
+		.messageDetails .votes h1 span
+		{
+			font-weight: bold;
+		}
+
+		.messageDetails .votes .voteAction ul, .messageDetails .votes .voteAction ul li
+		{
+			margin:0;padding:0;
+		}
+
+		.messageDetails .votes .voteAction ul li
+		{
+			width: 50%;
+			float: left;
+		}
+
+		.messageDetails .votes .voteAction ul li a
+		{
+			display: block;
+			text-indent: -9999px;
+			width: 25px;
+			height: 25px;
+		}
+
+		.messageDetails .votes .voteAction ul li a.up
+		{
+			background-image: url('../public/images/plus_sign.png');
+			background-repeat: no-repeat;
+			margin: 0 auto;
+		}
+
+		.messageDetails .votes .voteAction ul li a.down
+		{
+			background-image: url('../public/images/minus_sign.png');
+			background-repeat: no-repeat;
+			margin: 0 auto;
+		}
+
+		.messageContent
+		{
+			/*background-color: purple;*/
+			width:87.5%;
+		}
+
+		.messageContent h1, .messageContent h2, .messageContent h3
+		{font-size: 16px;font-weight: normal;margin: 0;padding: 0;}
+
+		.messageContent .name
+		{
+			margin-bottom: 5px;
+			font-size: 18px;
+			font-weight: bold;
+		}
+
+		.messageContent .name h1
+		{
+			font-size: 18px;
+			font-weight: bold;
+		}
+
+		.messageContent .time
+		{
+			margin-top: 10px;
+		}
+
+		.messageContent .time h3
+		{
+			text-align: right;
+		}
+
+	</style>
+</head>
+<body>
+		<div class='messageCon even'>
+			<div class='messageConSec'>
+				<div class='messageDetails'>
+					<div class="profile">
+						<img src="../public/images/profilePic.png" alt="">
+					</div>
+
+					<div class='votes'>
+						<div class='voteInfo'>
+							<h1 class="votes"><span class='voteCounter'>0</span> votes</h1>
+						</div>
+
+						<div class='voteAction'>
+							<ul>
+								<li><a class='up' href="">vote up</a></li>
+								<li><a class='down' href="">vote down</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class='messageContent'>
+					
+					<div class="name">
+						<h1>Your Name Here</h1>
+					</div>
+
+					<div class="text">
+						<h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vehicula velit quis est ullamcorper, eu fringilla risus hendrerit. Aliquam eget placerat nisl, non semper nulla. Sed mollis arcu sed dui semper pulvinar. Praesent nec dolor odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque venenatis posuere ligula, non feugiat nisl varius a. Fusce purus neque, ultricies non adipiscing a,</h2>
+					</div>
+
+					<div class="time">
+						<h3>10:25:46</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class='messageCon uneven'>
+			<div class='messageConSec'>
+				<div class='messageDetails'>
+					<div class="profile">
+						<img src="../public/images/profilePic.png" alt="">
+					</div>
+
+					<div class='votes'>
+						<div class='voteInfo'>
+							<h1 class="votes"><span class='voteCounter'>0</span> votes</h1>
+						</div>
+
+						<div class='voteAction'>
+							<ul>
+								<li><a class='up' href="">vote up</a></li>
+								<li><a class='down' href="">vote down</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class='messageContent'>
+					
+					<div class="name">
+						<h1>Your Name Here</h1>
+					</div>
+
+					<div class="text">
+						<h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vehicula velit quis est ullamcorper, eu fringilla risus hendrerit. Aliquam eget placerat nisl, non semper nulla. Sed mollis arcu sed dui semper pulvinar. Praesent nec dolor odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque venenatis posuere ligula, non feugiat nisl varius a. Fusce purus neque, ultricies non adipiscing a,</h2>
+					</div>
+
+					<div class="time">
+						<h3>10:25:46</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class='messageCon even'>
+			<div class='messageConSec'>
+				<div class='messageDetails'>
+					<div class="profile">
+						<img src="../public/images/profilePic.png" alt="">
+					</div>
+
+					<div class='votes'>
+						<div class='voteInfo'>
+							<h1 class="votes"><span class='voteCounter'>0</span> votes</h1>
+						</div>
+
+						<div class='voteAction'>
+							<ul>
+								<li><a class='up' href="">vote up</a></li>
+								<li><a class='down' href="">vote down</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class='messageContent'>
+					
+					<div class="name">
+						<h1>Your Name Here</h1>
+					</div>
+
+					<div class="text">
+						<h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vehicula velit quis est ullamcorper, eu fringilla risus hendrerit. Aliquam eget placerat nisl, non semper nulla. Sed mollis arcu sed dui semper pulvinar. Praesent nec dolor odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque venenatis posuere ligula, non feugiat nisl varius a. Fusce purus neque, ultricies non adipiscing a,</h2>
+					</div>
+
+					<div class="time">
+						<h3>10:25:46</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class='messageCon uneven'>
+			<div class='messageConSec'>
+				<div class='messageDetails'>
+					<div class="profile">
+						<img src="../public/images/profilePic.png" alt="">
+					</div>
+
+					<div class='votes'>
+						<div class='voteInfo'>
+							<h1 class="votes"><span class='voteCounter'>0</span> votes</h1>
+						</div>
+
+						<div class='voteAction'>
+							<ul>
+								<li><a class='up' href="">vote up</a></li>
+								<li><a class='down' href="">vote down</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class='messageContent'>
+					
+					<div class="name">
+						<h1>Your Name Here</h1>
+					</div>
+
+					<div class="text">
+						<h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vehicula velit quis est ullamcorper, eu fringilla risus hendrerit. Aliquam eget placerat nisl, non semper nulla. Sed mollis arcu sed dui semper pulvinar. Praesent nec dolor odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque venenatis posuere ligula, non feugiat nisl varius a. Fusce purus neque, ultricies non adipiscing a,</h2>
+					</div>
+
+					<div class="time">
+						<h3>10:25:46</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+</body>
+</html>

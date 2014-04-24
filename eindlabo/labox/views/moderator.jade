@@ -1,0 +1,44 @@
+extends layout
+
+block content
+    #wholeContainer.moderatorAccount
+        #baseContent
+          #header
+            #goBack
+                img(id="goBackArrow", src="../images/arrow_goBack_white.png")
+            h1 IMD WALL
+            #account
+                img(id="accountPic", src="../images/user_white.png")
+          //#login
+          //  h2 Login here
+          //  ul
+          //      li: img(id="facebook", src="../images/facebook_white.png")
+          //      li: img(id="twitter", src="../images/twitter_white.png")
+          #content(class="posts")
+            ul#questionList(class='moderator')
+            //    li(class="questionItem"): .question
+            //        span.typeColor
+            //        span 
+            //            img(src="../images/profilePic.png", class="profilePic")
+            //        .delete 
+            //            img(class="deleteMessage", src="../images/x_sign_dark.png")
+            //        span.user User1
+            //        span.typeTextMod Vraag1
+                    
+            //    li(class="questionItem"): .answer
+            //        span.typeColor
+            //        span 
+            //            img(src="../images/profilePic.png", class="profilePic")
+            //        .delete 
+            //            img(class="deleteMessage", src="../images/x_sign_dark.png")
+            //        span.user User3
+            //        span.typeTextMod Antwoord1
+
+
+
+
+        #accountOptions
+            #options 
+                h2 My account
+                </br>
+                p.logout Logout
