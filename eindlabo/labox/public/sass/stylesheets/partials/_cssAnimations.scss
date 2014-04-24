@@ -1,0 +1,48 @@
+.moveRight
+{	
+	@include add-translateX(-150px);
+}
+
+.animateQuestion
+{
+	@include add-transform-origin(left, bottom);
+
+	/*-webkit-transform-origin: left bottom;
+ 	transform-origin: left bottom;
+ 	ms-transform-origin: left bottom;*/
+	
+	@include add-animation(1s);
+	/*-webkit-animation: animateQuestion 1s;
+	animation: animateQuestion 1s;
+	ms-animation: animateQuestion 1s;*/
+	
+	@include add-fill-mode(forwards);
+	/*
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	ms-animation-fill-mode: forwards;*/
+
+
+	@include question-transition(1s);
+	/*-webkit-transition: -webkit-transform 1s ease-in;
+	-moz-transition: -moz-transform 1s ease-in;
+	-ms-transition: -ms-transform 1s ease-in;
+	transition: transform 1s ease-in;*/
+}
+
+@include question-translation(-20px, 1px, 0, 1);
+
+/*
+@-webkit-keyframes animateQuestion
+{
+	 0% { -webkit-transform: translateY(0px); opacity: 0; }
+	100% { -webkit-transform: translateY(15px); opacity: 1; }
+}
+
+@keyframes animateQuestion
+{
+	 0% { transform: translateY(0px); opacity: 0; }
+	100% { transform: translateY(15px); opacity: 1; }
+}
+
+*/

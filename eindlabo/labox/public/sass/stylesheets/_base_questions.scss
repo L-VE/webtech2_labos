@@ -1,0 +1,381 @@
+$headerColor : #01a1af;
+$backgroundColor: #feffff;
+/*#33b6c0*/
+$font-roboto: 'roboto-regular', sans-serif;
+$font-oxygen: 'oxygen-regular', sans-serif;
+
+body
+{
+	
+	#wholeContainer
+	{
+		#header
+			{	
+				h1
+				{
+					text-align: center;
+					background-color: darken($headerColor, 10%);
+					padding: 20px 0;
+					font-family:  $font-oxygen;
+					@include font-size(1.6) ;
+					color: white;
+				}
+				
+			}
+
+
+		#content
+		{
+			margin: 20px 5%;
+
+			#noMessages
+			{
+				text-align: center;
+				margin-top: 100px;
+			}
+
+			#questionList
+			{
+				li.questionItem
+				{
+					margin: 10px 0;
+					padding: 10px 0;
+					border-top: 1px solid $headerColor;
+					border-right: 1px solid $headerColor;
+					border-bottom: 1px solid $headerColor;
+					@include border-radius(10px); 
+					overflow: hidden;
+
+					.types
+					{
+						padding: 0 10px;
+						@include font-size(1.1);
+					}
+
+					.extraTypeColor
+					{
+						padding: 0 3px;
+						margin-left: -0.5px;
+						@include border-radius-topBottom(10px)  
+					}
+
+					.profilePicExtra
+					{
+						width: 50px;
+					}
+
+					.userExtra
+					{
+						padding-left: 10px;
+						position: absolute;
+						@include font-size(1);
+					}
+
+					.arrowVoterExtra
+					{
+						width: 16px;
+						cursor: pointer;
+					}
+					
+					.voterExtra
+					{
+						float: right;
+					}
+
+					.voteBoxExtra
+					{
+						margin-right: 5px;
+						border: 1px solid #01727c;
+						width: 55px;
+						height: 50px;
+					}
+
+					#questionMod
+					{
+						margin-bottom: 35px;
+						/*@extend .question;*/
+					}
+
+					#answerMod
+					{
+						margin-bottom: 35px;
+						/*@extend .answer;*/
+					}
+
+					
+					.messageCon
+					{
+						width: 100%;
+						margin-top: -20px;
+						/*height: 200px;*/
+
+						.typeColorquestion
+						{
+							@extend .extraTypeColor;
+							background-color: #950d01;
+						}
+
+						.typeColoranswer
+						{
+							@extend .extraTypeColor;
+							background-color: #01950d;
+						}
+
+						.messageConSec
+						{
+							width: 90%;
+							/*height: 200px;*/
+							margin: 0 auto;
+
+							.extraForDetailsContent
+							{
+								float: left; 
+								/*margin-top: 10px; 
+								margin-bottom: 10px;*/
+							}
+
+							.messageDetails
+							{
+								@extend .extraForDetailsContent;
+								width: 10%;
+								margin-right: 2.5%;
+								/*height: 100px;*/
+
+								img
+								{
+									margin: 0 12.5%;
+									width: 75%;
+								}
+
+								.profile
+								{
+									img
+									{
+
+									}
+								}
+
+								.votes
+								{
+									margin-top: 10px;
+
+									.voteInfo
+									{
+										margin-bottom: 10px;
+
+										h1.votesNr
+										{
+											font-size: 16px;
+											font-weight: normal;
+											text-align: center;
+											margin:0;
+
+											span.voteCounter
+											{
+												font-weight: bold;
+											}
+										}
+									}
+
+									.extraAImage
+										{
+											display: block;
+											text-indent: -9999px;
+											width: 25px;
+											height: 25px;
+										}
+
+									.deleteAction
+									{
+										position: absolute;
+										top: 5%;
+										right: 1%;
+
+										span.delete
+										{
+											@extend .extraAImage;
+											background-image: url('../../images/x_sign_dark.png');
+											background-repeat: no-repeat;
+											margin: 0 auto;
+										}
+
+										span.delete:hover
+										{
+											background-image: url('../../images/x_sign_light.png');
+											cursor: pointer;
+										}
+									}
+
+									.voteAction
+									{
+
+										ul
+										{
+											margin:0;
+											padding:0;
+
+											li
+											{
+
+												/*margin:0;*/
+												margin: 0 0 0 3.5px;
+												padding:0;
+												/*width: 50%;*/
+												width: 45%;
+												float: left;
+												
+												
+
+												span.up
+												{
+													@extend .extraAImage;
+													background-image: url('../../images/vote_up_unvoted.png');
+													background-repeat: no-repeat;
+													margin: 0 auto;
+												}
+
+												span.down
+												{
+													@extend .extraAImage;
+													background-image: url('../../images/vote_down_unvoted.png');
+													background-repeat: no-repeat;
+													margin: 0 auto;
+												}
+
+												span.up:hover
+												{
+													background-image: url('../../images/vote_up_light.png');
+													cursor: pointer;
+												}
+
+												span.down:hover
+												{
+													background-image: url('../../images/vote_down_light.png');
+												
+													cursor: pointer;
+												}
+
+												span.inactiveUp
+												{
+													@extend .extraAImage;
+													background-image: url('../../images/vote_up_inactive.png');
+													background-repeat: no-repeat;
+													margin: 0 auto;
+													cursor: default;
+												}
+
+												span.inactiveUp:hover
+												{
+													background-image: url('../../images/vote_up_inactive.png');
+													
+												}
+
+												span.chosenUp
+												{
+													@extend .extraAImage;
+													background-image: url('../../images/vote_up_dark.png');
+													background-repeat: no-repeat;
+													margin: 0 auto;
+												}
+
+												span.chosenUp:hover
+												{
+													background-image: url('../../images/vote_up_light.png');
+												}
+
+												span.inactiveDown
+												{
+													@extend .extraAImage;
+													background-image: url('../../images/vote_down_inactive.png');
+													background-repeat: no-repeat;
+													margin: 0 auto;
+													cursor: default;
+												}
+
+												span.inactiveDown:hover
+												{
+													background-image: url('../../images/vote_down_inactive.png');
+												}
+
+												span.chosenDown
+												{
+													@extend .extraAImage;
+													background-image: url('../../images/vote_down_dark.png');
+													background-repeat: no-repeat;
+													margin: 0 auto;
+												}
+
+												span.chosenDown:hover
+												{
+													background-image: url('../../images/vote_down_light.png');
+												}
+											}
+										}
+									}
+								}
+							}
+							
+							.messageContent
+							{
+								@extend .extraForDetailsContent;
+								width:87.5%;
+
+								.extraForh1h2h3
+								{
+									font-size: 16px;
+									font-weight: normal;
+									margin: 0;
+									padding: 0;
+								}
+
+								.name
+								{
+									margin-bottom: 5px;
+									font-size: 18px;
+									font-weight: bold;
+									h1
+									{
+										@extend .extraForh1h2h3;
+										font-size: 18px;
+										font-weight: bold;
+									}
+								}
+
+								.text
+								{
+									margin-bottom: 25px;
+
+									h2
+									{
+										@extend .extraForh1h2h3;
+										word-wrap: break-word;
+									}
+								}
+
+								.time
+								{
+									/*margin-top: 10px;*/
+									/*margin-right: -4%;
+									margin-top: 4%;*/
+									bottom: 4%;
+									right: 2%;
+									position: absolute;
+
+									h3
+									{
+										@extend .extraForh1h2h3;
+										text-align: right;
+									}
+								}
+							}
+
+						}
+
+					}
+
+				}	
+			}
+
+		}
+	}
+}

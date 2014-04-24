@@ -1,0 +1,101 @@
+
+@mixin font-size($sizeValue: 1.6) 
+{
+  font-size: ($sizeValue * 10) + px;
+  font-size: $sizeValue + rem;
+}
+
+@mixin line-height($sizeValue: 1.6) 
+{
+  line-height: ($sizeValue * 10) + px;
+  line-height: $sizeValue + rem;
+}
+
+@mixin add-translateX($distance)
+{
+   -webkit-transform: translateX($distance);
+   transform: translateX($distance);
+   ms-transform: translateX($distance);
+}
+
+@mixin add-transition($time)
+{
+	transition: -webkit-transform $time;
+	transition: transform $time;
+}
+
+@mixin border-radius($radius) 
+{
+	-webkit-border-radius: $radius;
+	-moz-border-radius: $radius;
+	-ms-border-radius: $radius;
+	border-radius: $radius;
+}
+
+@mixin border-radius-topBottom($radius) 
+{
+	-webkit-border-top-left-radius:$radius;
+	/*-webkit-border-top-right-radius:$radius;
+	-webkit-border-bottom-right-radius:$radius;*/
+	-webkit-border-bottom-left-radius:$radius;
+
+	-moz--border-top-left-radius:$radius;
+	/*-moz--border-top-right-radius:$radius;
+	-moz--border-bottom-right-radius:$radius;*/
+	-moz--border-bottom-left-radius:$radius;
+
+	-ms-border-top-left-radius:$radius;
+	/*-ms-border-top-right-radius:$radius;
+	-ms-border-bottom-right-radius:$radius;*/
+	-ms-border-bottom-left-radius:$radius;
+
+	border-top-left-radius:$radius;
+	/*border-top-right-radius:$radius;
+	border-bottom-right-radius:$radius;*/
+	border-bottom-left-radius:$radius;
+}
+
+@mixin add-transform-origin($value1, $value2)
+{
+	-webkit-transform-origin: $value1 $value2;
+ 	transform-origin: $value1 $value2;
+ 	ms-transform-origin: $value1 $value2;
+}
+
+@mixin add-animation($time)
+{
+	-webkit-animation: animateQuestion $time;
+	animation: animateQuestion $time;
+	ms-animation: animateQuestion $time;
+}
+
+@mixin add-fill-mode($fillmode)
+{
+	-webkit-animation-fill-mode: $fillmode;
+	animation-fill-mode: $fillmode;
+	ms-animation-fill-mode: $fillmode;
+}
+
+@mixin question-transition($time)
+{
+	-webkit-transition: -webkit-transform $time ease-in;
+	-moz-transition: -moz-transform $time ease-in;
+	-ms-transition: -ms-transform $time ease-in;
+	transition: transform $time ease-in;
+}
+
+@mixin question-translation($begin, $end, $beginOpacity, $endOpacity)
+{
+	@-webkit-keyframes animateQuestion
+	{
+		 0% { -webkit-transform: translateY($begin); opacity: $beginOpacity; }
+		100% { -webkit-transform: translateY($end); opacity: $endOpacity; }
+	}
+
+	@keyframes animateQuestion
+	{
+		 0% { transform: translateY($begin); opacity: $beginOpacity; }
+		100% { transform: translateY($end); opacity: $endOpacity; }
+	}
+}
+

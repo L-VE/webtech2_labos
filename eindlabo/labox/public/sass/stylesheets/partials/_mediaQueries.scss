@@ -1,0 +1,163 @@
+@media only screen and (max-width : 710px) {
+  body
+  {
+		#wholeContainer
+		{
+			
+			#baseContent
+			{
+				
+				#login
+				{
+					
+
+					ul
+					{
+						margin: 30px 8%;
+						width: 86%;	
+					}
+				}
+			}
+		}
+		
+  }
+}
+
+
+
+
+@media only screen and (max-width : 682px) {
+  body
+  {
+
+
+  	#wholeContainer
+	{
+		
+		#baseContent
+		{
+		
+			#content
+			{
+			
+				.noFloatSides
+		  		{
+		  			float: none;
+		  			width: 95%;
+		  		}
+
+				#leftSide
+				{
+					@extend .noFloatSides;
+
+					.category
+					{
+						text-align: center;
+					}
+
+				}
+
+
+				#rightSide
+				{
+					@extend .noFloatSides;
+
+					.questionHeader
+					{
+						margin: 0;
+						width: auto;
+					}
+
+					#form
+					{
+						margin: 0;
+						width: 97%;
+					}
+
+				}
+			}
+		}
+	}
+		
+  }
+}
+
+
+
+@media only screen and (max-width : 420px) {
+  body
+  {
+		#wholeContainer
+		{
+			#baseContent
+			{
+
+				#login
+				{
+					h2
+					{
+						@include font-size(1.2) ;
+					}
+				}
+
+				#content
+				{
+					 #rightSide
+					 {
+					 	#form
+					 	{
+							textarea
+							{
+								height: 100px;
+							}
+					 	}
+					 }
+				}
+			}
+		}
+		
+  }
+}
+
+@media only screen and (max-width : 377px) {
+  body
+  {
+		#wholeContainer
+		{
+			
+			#baseContent
+			{
+				
+				#login
+				{
+					
+					height: 100%;
+					ul
+					{
+						margin: 30px 29%;
+						width: 42%;
+						li
+						{
+							margin: 30px 0;
+							width: 100%;	
+
+							#twitter
+							{
+								float: none;
+							}
+
+							#facebook
+							{
+								float: none;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+  }
+}
+
+
+

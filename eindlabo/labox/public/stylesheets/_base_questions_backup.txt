@@ -1,0 +1,352 @@
+$headerColor : #01a1af;
+$backgroundColor: #feffff;
+/*#33b6c0*/
+$font-roboto: 'roboto-regular', sans-serif;
+$font-oxygen: 'oxygen-regular', sans-serif;
+
+body
+{
+	#wholeContainer
+	{
+		#header
+			{	
+				h1
+				{
+					text-align: center;
+					background-color: darken($headerColor, 10%);
+					padding: 20px 0;
+					font-family:  $font-oxygen;
+					@include font-size(1.6) ;
+					color: white;
+				}
+				
+			}
+
+
+		#content
+		{
+			margin: 20px 5%;
+
+			#noMessages
+			{
+				text-align: center;
+				margin-top: 100px;
+			}
+
+			#questionList
+			{
+				li.questionItem
+				{
+					margin: 10px 0;
+					padding: 10px 0;
+					border-top: 1px solid $headerColor;
+					border-right: 1px solid $headerColor;
+					border-bottom: 1px solid $headerColor;
+					@include border-radius(10px); 
+					overflow: hidden;
+
+					.types
+					{
+						padding: 0 10px;
+						@include font-size(1.1);
+					}
+
+					.extraTypeColor
+					{
+						padding: 0 3px;
+						margin-left: -10.5px;
+						@include border-radius-topBottom(10px)  
+					}
+
+					.profilePicExtra
+					{
+						width: 50px;
+					}
+
+					.userExtra
+					{
+						padding-left: 10px;
+						position: absolute;
+						@include font-size(1);
+					}
+
+					.arrowVoterExtra
+					{
+						width: 16px;
+						cursor: pointer;
+					}
+					
+					.voterExtra
+					{
+						float: right;
+					}
+
+					.voteBoxExtra
+					{
+						margin-right: 5px;
+						border: 1px solid #01727c;
+						width: 55px;
+						height: 50px;
+					}
+
+					#questionMod
+					{
+						margin-bottom: 35px;
+						@extend .question;
+					}
+
+					#answerMod
+					{
+						margin-bottom: 35px;
+						@extend .answer;
+					}
+
+					.question
+					{
+						@extend .types;
+
+						.typeColor
+						{
+							@extend .extraTypeColor;
+							background-color: #950d01;
+						}
+
+						.user
+						{
+							@extend .userExtra;
+						}
+
+						.typeTextMod
+						{
+							margin-left: 60px;
+							padding-right: 22px;
+							word-wrap: break-word;
+							@include font-size(0.9);
+						}
+						
+						.typeText
+						{
+							margin-left: 63px;
+							padding-right: 70px;
+							word-wrap: break-word;
+							@include font-size(0.9);
+						}
+
+
+						.profilePic
+						{
+							@extend .profilePicExtra;
+							margin-left: 5px;
+						}
+
+						.chatTime
+						{
+							@include font-size(0.8);
+							position: absolute;
+							right: 19px;
+							bottom: 4px;
+							/*left: 11px;*/
+						}
+
+
+						.delete
+						{
+							float: right;
+							.deleteMessage
+							{
+								padding: 5px;
+								@extend .arrowVoterExtra; 
+							}
+						}
+
+						.voter
+						{
+							margin-bottom: 20px;
+
+							.voteButton
+							{
+								
+								width: 93%;
+								
+								.voteUp
+								{
+									@extend .arrowVoterExtra;
+									float: left;
+									padding: 7px 5px;
+								}
+
+								.voteDown
+								{
+									@extend .arrowVoterExtra;
+									float: right;
+									margin-top: 7px;
+									padding: 7px 5px;
+								}
+
+							}
+							
+							@extend .voterExtra;
+
+							#voteBoxMod
+							{
+								border:none;
+								position: absolute;
+								bottom: 15px;
+								left:15px;
+							}
+
+							.voteBox
+							{
+								
+								@extend .voteBoxExtra;
+
+								.voteText
+								{
+									/*top: 30%;
+									left: 35%;
+									position: relative;*/
+									text-align: center;
+
+									.votes
+									{
+										margin-top: 10px;
+										@include font-size(0.9);
+									}
+
+									.staticText
+									{
+										margin-top: -7px;
+										@include font-size(0.65);
+									}
+								}
+							}
+						}
+					}
+
+					.answer
+					{
+						@extend .types;
+
+						.typeColor
+						{
+							@extend .extraTypeColor;
+							background-color: #01950d;
+						}
+
+						.user
+						{
+							@extend .userExtra;
+						}
+
+						.typeTextMod
+						{
+							margin-left: 60px;
+							padding-right: 22px;
+							word-wrap: break-word;
+							@include font-size(0.9);
+						}
+
+						.typeText
+						{
+							margin-left: 63px;
+							padding-right: 70px;
+							word-wrap: break-word;
+							@include font-size(0.9);
+						}
+
+						.profilePic
+						{
+							@extend .profilePicExtra;
+							margin-left: 5px;
+						}
+
+						.chatTime
+						{
+							@include font-size(0.8);
+							position: absolute;
+							right: 19px;
+							bottom: 4px;
+							/*left: 11px;*/
+						}
+
+						.delete
+						{
+							float: right;
+							.deleteMessage
+							{
+								padding: 5px;
+								@extend .arrowVoterExtra; 
+							}
+						}
+
+						.voter
+						{
+							margin-bottom: 20px;
+
+							.voteButton
+							{
+
+								
+								width: 93%;
+
+								.voteUp
+								{
+									@extend .arrowVoterExtra;
+									float: left;
+									padding: 7px 5px;
+								}
+
+								.voteDown
+								{
+									@extend .arrowVoterExtra;
+									float: right;
+									margin-top: 7px;
+									padding: 7px 5px;
+								}
+							}
+
+							@extend .voterExtra;
+
+							#voteBoxMod
+							{
+								border:none;
+								position: absolute;
+								bottom: 15px;
+								left:15px;
+							}
+
+
+							.voteBox
+							{
+								
+								@extend .voteBoxExtra;
+
+								.voteText
+								{
+									/*top: 30%;
+									/*left: 35%;
+									position: relative;*/
+									text-align: center;
+
+									.votes
+									{
+										margin-top: 10px;
+										@include font-size(0.9);
+									}
+
+									.staticText
+									{
+										margin-top: -7px;
+										@include font-size(0.65);
+									}
+								}
+							}
+
+						}
+					}
+
+				}	
+			}
+		}
+	}
+}

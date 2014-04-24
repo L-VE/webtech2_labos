@@ -1,0 +1,43 @@
+$headerColor : #01a1af;
+
+			#login
+			{
+				background-color: darken($headerColor, 10%);
+				color: white;
+				width: 40%;
+				margin: 13% 30%;
+				height: 160px;
+
+				h2
+				{
+					text-align: center;
+					padding-top: 10px;
+				}
+
+				.socialMedia
+				{
+					width: 60px;
+					cursor: pointer;
+				}
+
+				ul
+				{
+					margin: 30px 25%;
+					width: 50%;					
+					li 
+					{
+
+						#admin
+						{
+							@extend .socialMedia;
+							float: right;
+						}
+
+						#facebook						
+						{
+							@extend .socialMedia;
+							float: left;
+						}
+					}
+				}
+			}

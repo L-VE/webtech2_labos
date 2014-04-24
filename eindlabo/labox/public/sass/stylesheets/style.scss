@@ -1,0 +1,12 @@
+
+@import 'modules/mixins';
+@import 'partials/_fonts';
+@import 'partials/_cssAnimations';
+@import '_base_index';
+@import '_base_ask';
+@import '_base_questions';
+
+@import 'partials/_mediaQueries';
+
+/* media queries importen na de _base, want anders worden
+de gewenste css prop niet overschreven*/

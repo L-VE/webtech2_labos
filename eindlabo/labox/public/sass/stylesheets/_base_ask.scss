@@ -1,0 +1,237 @@
+
+$headerColor : #01a1af;
+$backgroundColor: #feffff;
+/*#33b6c0*/
+$font-roboto: 'roboto-regular', sans-serif;
+$font-oxygen: 'oxygen-regular', sans-serif;
+
+
+
+body
+{
+
+	
+		overflow: hidden;
+		font-family:  $font-roboto;
+		@include font-size(1.6) ;
+		background-color: #e4f6ff;
+		background-color: darken($backgroundColor,1%);
+	
+
+
+	#wholeContainer
+	{
+		
+		#baseContent
+		{
+			
+			@include add-transition(1.6s);
+
+
+			.twosides
+			{
+				/*margin: 20px;*/
+				margin: 30px 2%;
+				
+				/*background-color: darken($backgroundColor,2%);*/
+			}
+
+			#header
+			{	
+				h1
+				{
+					text-align: center;
+					background-color: darken($headerColor, 10%);
+					padding: 20px 0;
+					font-family:  $font-oxygen;
+					@include font-size(1.6) ;
+					color: white;
+				}
+				
+				.extendIcons
+				{
+					position: absolute;
+					cursor: pointer;
+				}
+
+				#goBackArrow
+				{
+					@extend .extendIcons;
+					/*left: 20px;
+					top: 20px;*/
+					left: 0;
+					top: 0;
+					padding: 21px 17px;
+					width: 60px;
+					display: none;
+				}
+
+				#accountPic
+				{					
+					width: 25px;
+					@extend .extendIcons;
+					/*right: 20px;
+					top: 10px;*/
+					right: 0;
+					top: 0;
+					padding: 11px 25px;
+					/*display: none;*/
+				}
+
+			}
+			
+			#content
+			{
+				
+				#leftSide
+				{
+					float: left;
+					width: 58%;
+					@extend .twosides;
+					
+					#topicList
+					{
+						.topics
+						{
+							@include line-height(2) ;
+							@include font-size(1.1) ;
+							
+							span
+							{
+								cursor: pointer;
+							}
+						}
+
+						.arrow
+						{
+							width: 30px;
+							margin-left: 20px;
+						}
+					}
+
+					#topicDetails
+					{
+						display: none;
+					}
+
+					.category
+					{
+						@include font-size(1.1) ;
+						background-color: $headerColor;
+						color: white;
+						padding: 10px;
+					}
+				}
+				
+				#rightSide
+				{
+					float: right;
+					width: 30%;
+					@extend .twosides;
+
+					.questionHeader
+					{
+						@include font-size(1.1) ;
+						margin: 0 10%;
+						padding: 10px;
+						text-align: center;
+						/*background-color: #017c48;*/
+						background-color: $headerColor;
+						color: white;
+						width: 78%;
+					}
+
+
+					#form
+					{
+						margin: 0 10%;
+
+						.errorMessage
+						{
+							color: red;
+							display: none;
+							@include font-size(0.9) ;
+						}
+
+						.extraInputStyle
+						{
+							width: 100%;
+							font-family:  $font-roboto;
+						}
+
+						input[type=text]
+						{
+							padding: 5px;
+							@extend .extraInputStyle;
+						}
+
+						input[type=submit]
+						{
+							padding: 5px;
+							@extend .extraInputStyle;
+							background-color: #ec4b2e;
+							/*background-color: #bc2b11;*/
+							color: white;
+							border: none;
+							@include font-size(1.2) ;
+						}
+
+						textarea
+						{
+							padding: 5px 7px 5px 5px;
+							@extend .extraInputStyle;
+						}
+
+						#sendTypes
+						{
+							margin: 10px 0;
+
+							label
+							{
+								@include font-size(0.9) ;
+							}
+
+							input
+							{
+								width: 1.5em;
+								height: 1.5em;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		#accountOptions
+		{
+			background-color: darken($headerColor,20%);
+			color: white;
+			position: absolute;
+			right: -150px;
+			top: 0;
+			height: 100%;
+			width: 150px;
+			@include add-transition(1.6s);
+			@include font-size(1.2);
+
+			#options
+			{
+				padding-top: 5px;
+				h2
+				{
+					text-align: center;
+					padding: 10px;
+					border-bottom: 1px dashed darken($headerColor,30%);
+				}
+
+				p.logout
+				{
+					cursor: pointer;
+					padding: 10px;
+				}
+				
+			}
+		}
+	}
+
+}
