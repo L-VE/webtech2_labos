@@ -56,7 +56,10 @@ body
 
 				#goBackArrow
 				{
-					@extend .extendIcons;
+					/*@extend .extendIcons;*/
+					position: absolute;
+					cursor: pointer;
+
 					/*left: 20px;
 					top: 20px;*/
 					left: 0;
@@ -69,7 +72,13 @@ body
 				#accountPic
 				{					
 					width: 25px;
-					@extend .extendIcons;
+
+
+					/*@extend .extendIcons;*/
+					position: absolute;
+					cursor: pointer;
+
+
 					/*right: 20px;
 					top: 10px;*/
 					right: 0;
@@ -87,7 +96,8 @@ body
 				{
 					float: left;
 					width: 58%;
-					@extend .twosides;
+					/*@extend .twosides;*/
+					margin: 30px 2%;
 					
 					#topicList
 					{
@@ -109,11 +119,7 @@ body
 						}
 					}
 
-					#topicDetails
-					{
-						display: none;
-					}
-
+					
 					.category
 					{
 						@include font-size(1.1) ;
@@ -127,7 +133,8 @@ body
 				{
 					float: right;
 					width: 30%;
-					@extend .twosides;
+					/*@extend .twosides;*/
+					margin: 30px 2%;
 
 					.questionHeader
 					{
@@ -162,14 +169,21 @@ body
 						input[type=text]
 						{
 							padding: 5px;
-							@extend .extraInputStyle;
+							/*@extend .extraInputStyle;*/
+							width: 100%;
+							font-family:  $font-roboto;
 						}
 
 						input[type=submit]
 						{
 							padding: 5px;
-							@extend .extraInputStyle;
+							/*@extend .extraInputStyle;*/
+
+							width: 100%;
+							font-family:  $font-roboto;
 							background-color: #ec4b2e;
+
+
 							/*background-color: #bc2b11;*/
 							color: white;
 							border: none;
@@ -179,7 +193,11 @@ body
 						textarea
 						{
 							padding: 5px 7px 5px 5px;
-							@extend .extraInputStyle;
+							/*@extend .extraInputStyle;*/
+
+							width: 100%;
+							font-family:  $font-roboto;
+							/* @extend wordt niet opgrvraagd*/
 						}
 
 						#sendTypes

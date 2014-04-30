@@ -1,13 +1,11 @@
 // GLOBALE VARS
 var messageId = 0;
 var client = null;
+var indexPagePath = "";
 // DOCUMENT READY
 // ----------------------------------------------------------------
 $(document).ready(function (e){
 
-// default het vragenformulier uitschakelen
-// wanneer er toch geen topic gekozen is.
-	$("#form :input").prop('disabled', true);
 
 	checkIfThereArePosts();
 	
@@ -31,12 +29,12 @@ $(document).ready(function (e){
 //  Wanneer er op een topic geklikt wordt, kan men beginnen vragen te versturen
 //  en verdwijnt het beginscherm en kan man zowel vragen stellen, antwoorden
 //  en alle vragen en antwoorden ook bekijken en voten
-	$("#topicList span").on('click', function (argument){
+/*	$("#topicList span").on('click', function (argument){
 		$("#topicList").hide();
 		$('#topicDetails').show();
 		$("#form :input").prop('disabled', false);
 		$("#goBackArrow").show();
-	});// END ON CLICK topicList span
+	});*/// END ON CLICK topicList span
 
 // Wanneer er vanaf de vragen op de back-pijl wordt geklikt 
 // wordt het beginscherm met de lijst van topics weer getoond.
@@ -45,7 +43,7 @@ $(document).ready(function (e){
     	$(".errorMessage").css('display','none');
 		$("#topicList").show();
 		$('#topicDetails').hide();
-		$("#form :input").prop('disabled', true);
+		//$("#form :input").prop('disabled', true);
 		$("#goBackArrow").hide();
 	});// END ON CLICK goBackArrow
 
@@ -75,7 +73,7 @@ $(document).ready(function (e){
 			toGoPath = currentPath.substr(0,currentPath.indexOf('ask'));
 		
 		}
-		
+		indexPagePath = toGoPath;
 		$(location).attr('href',toGoPath);
 		//console.log(indexPath);
 		//checkContentVisibility();
@@ -88,9 +86,23 @@ $(document).ready(function (e){
 // zodat deze zeker groot genoeg is.
 	calculatePaddingForMessages ();
 
+	$(".moderatorAccount").on('load', function (){
+		var currentPath = $(location).attr('href');
+		var toGoPath = currentPath.substr(0,currentPath.indexOf('moderator'));
+		indexPagePath = toGoPath;
+	});
 
+	$(".ordinaryUser").on('load', function (){
+		var currentPath = $(location).attr('href');
+		var toGoPath = currentPath.substr(0,currentPath.indexOf('ask'));
+		indexPagePath = toGoPath;
+	});
 // nu de client definieëren
-	client = new Faye.Client('http://localhost:3002/faye/',{
+
+	/*client = new Faye.Client('http://localhost:3002/faye/',{
+				timeout: 20
+	});*/
+	client = new Faye.Client(indexPagePath + 'faye/',{
 				timeout: 20
 	});
 
@@ -101,7 +113,7 @@ $(document).ready(function (e){
 	  var currentDateTime = new Date();
       var currentdate = createDateStringOnlyTime(currentDateTime);
 
-	  var listItemInstance = "<li class='questionItem animateQuestion' id='message" + messageId + "' data-votedup='false' data-voteddown='false'>"
+	  var listItemInstanceAsk = "<li class='questionItem animateQuestion' id='message" + messageId + "' data-votedup='false' data-voteddown='false'>"
 	  						+ "<div class='messageCon even " + message.chatMessageType +  "'>"
 	  						+ 	"<span class='typeColor" + message.chatMessageType + "'>"
 							+ 	"</span>"
@@ -119,6 +131,36 @@ $(document).ready(function (e){
 							+						"<li><span class='up voteUp'></span></li>"
 							+						"<li><span class='down voteDown'></span></li>"
 							+					"</ul>"
+							+				"</div>"
+							+			"</div>"
+							+		"</div>"
+							+		"<div class='messageContent'>"
+							+			"<div class='name'>"
+							+				"<h1>" +  message.user + "</h1>"
+							+			"</div>"
+							+			"<div class='text'>"
+							+				"<h2>" + message.chat + "</h2>"
+							+			"</div>"
+							+			"<div class='time'>"
+							+				"<h3>" + currentdate + "</h3>"
+							+			"</div>"
+							+		"</div>"
+							+	"</div>"
+							+	"</div>"
+					   		+ "</li>";
+
+	var listItemInstance = "<li class='questionItem animateQuestion' id='message" + messageId + "' data-votedup='false' data-voteddown='false'>"
+	  						+ "<div class='messageCon even " + message.chatMessageType +  "'>"
+	  						+ 	"<span class='typeColor" + message.chatMessageType + "'>"
+							+ 	"</span>"
+							+ 	"<div class='messageConSec'>"
+							+ 		"<div class='messageDetails'>"
+							+			"<div class='profile'>"
+							+				"<img src='../images/profilePic.png' alt=''>"
+							+			"</div>"
+							+			"<div class='votes'>"
+							+				"<div class='voteInfo'>"
+							+					"<h1 class='votesNr'><span class='voteCounter'>0</span> votes</h1>"
 							+				"</div>"
 							+			"</div>"
 							+		"</div>"
@@ -184,7 +226,8 @@ $(document).ready(function (e){
 		messageId++;
 		sortMessages (listItemInstance, 0); 
 		sortMessagesModerator (listItemInstanceModerator, 0);
-	  calculatePaddingForMessages();
+		sortMessagesAsk (listItemInstanceAsk, 0);
+	  	calculatePaddingForMessages();
 	   checkIfThereArePosts();
 	});// END SUBSCRIBE
 
@@ -210,7 +253,7 @@ $(document).ready(function (e){
 	    		$(".errorMessage").text("") ;
     			$(".errorMessage").css('display','none');
     			var publicationAsk = client.publish('/message', {chat : chatMessage, user : chatUser, chatMessageType : chatMessageType});
-    			var publicationAsk = client.publish('/moderate', {chat : chatMessage, user : chatUser, chatMessageType : chatMessageType});
+    			//var publicationAsk = client.publish('/moderate', {chat : chatMessage, user : chatUser, chatMessageType : chatMessageType});
     			$("#questionField").val("");
 	    	}
     	}
@@ -318,7 +361,8 @@ $(document).ready(function (e){
 
     var subscriptionVote = client.subscribe('/vote', function(message) {
 		var test = $(message.chosenQuestion).find(".voteCounter")[0];
-		var currentVotes = parseInt(test.innerText);
+		var currentVotes = parseInt(getTextType(test));
+		//var currentVotes = parseInt(test.text());/*parseInt(test.innerText);*/
 		var voteValue = message.voteValue;
 		switch (voteValue)
 		{
@@ -336,7 +380,21 @@ $(document).ready(function (e){
 			else
 				currentVotes--;	
 		 	*/
-	    test.innerText = currentVotes;
+
+		
+	    //test.innerText = currentVotes;
+	    //test.text(currentVotes);
+
+	
+	    changeText(test, currentVotes);
+	    
+	    if($("ul#questionList").children().length > 1)
+  		{
+		    sortMessages ($(message.chosenQuestion), currentVotes); 
+		    sortMessagesAsk($(message.chosenQuestion), currentVotes); 
+			sortMessagesModerator ($(message.chosenQuestion), currentVotes);
+		}
+
     });// END SUBSCRIBE VOTE
 
     $( "#questionList" ).on( "click", ".delete", function (event){
@@ -431,7 +489,8 @@ function checkIfNoVotes (p_elementID)
 	console.log("r",$(p_elementID));
 	console.log("e",$(p_elementID).children().find("span.voteCounter"));
 	// het downvoten van vragen disablen als er 0 votes zijn
-		if($(p_elementID).find(".voteCounter")[0].innerText == "0" || $(p_elementID).find(".voteCounter")[0].innerText == 0 )
+		//if($(p_elementID).find(".voteCounter")[0].innerText == "0" || $(p_elementID).find(".voteCounter")[0].innerText == 0 )
+		if(getTextType($(p_elementID).find(".voteCounter")[0]) == "0")
 		{
 			$(p_elementID).find(".voteDown").prop('disabled', true);
 			setHoverImage ($(p_elementID).find(".voteDown")[0], "../images/minus_sign_gray.png");
@@ -496,6 +555,7 @@ function checkVotingAvailibility (p_currentMessageId, p_dataAtrrDisable, p_dataA
 	}
 
 
+
 }
 
 function setInitialVotingSituation (p_currentMessageId)
@@ -544,38 +604,77 @@ function deleteMessage(p_messageId)
 
 function sortMessages (element, value) 
 {
+	var selector = $(".allQuestion");
+	
 
-  var selector = $(".allQuestion");
+	  if ($(selector).length > 0) 
+	  {
+	    $(selector).attr("inserted", "false");
+	   /* $(selector).children().each(function() {
+	      if (parseInt($(this).text()) > parseInt(value)) {
+	        $(this).before(element);
+	        $(selector).attr("inserted", "true");
+	        return false;
+	      }
+	    });*/
+	
+	  
+		    $(".allQuestion ").children().each(function() {
+		      if (parseInt($(this).find(".voteCounter").text()) < parseInt(value)) {
+		        $(this).before(element);
+		        $(selector).attr("inserted", "true");
+		        return false;
+		      }
+		    });
 
-  if ($(selector).length > 0) 
-  {
-    $(selector).attr("inserted", "false");
-   /* $(selector).children().each(function() {
-      if (parseInt($(this).text()) > parseInt(value)) {
-        $(this).before(element);
-        $(selector).attr("inserted", "true");
-        return false;
-      }
-    });*/
+	    if ($(selector).attr("inserted") == "false") {
+	      $(selector).append(element);
+	    }
+	  } 
+	  else 
+	  {
+	    $(selector).append(element);
+	  }
 
-    $(".allQuestion ").children().each(function() {
-      if (parseInt($(this).find(".voteCounter").text()) < parseInt(value)) {
-        $(this).before(element);
-        $(selector).attr("inserted", "true");
-        return false;
-      }
-    });
+	  $(selector).removeAttr("inserted");
 
-    if ($(selector).attr("inserted") == "false") {
-      $(selector).append(element);
-    }
-  } 
-  else 
-  {
-    $(selector).append(element);
-  }
+	  //$(element).addClass('animateQuestion');
+};
 
-  $(selector).removeAttr("inserted");
+function sortMessagesAsk (element, value) 
+{
+	var selector = $(".allCurrentQuestion");
+	
+	  
+	  if ($(selector).length > 0) 
+	  {
+	    $(selector).attr("inserted", "false");
+	   /* $(selector).children().each(function() {
+	      if (parseInt($(this).text()) > parseInt(value)) {
+	        $(this).before(element);
+	        $(selector).attr("inserted", "true");
+	        return false;
+	      }
+	    });*/
+	
+		    $(".allCurrentQuestion").children().each(function() {
+		      if (parseInt($(this).find(".voteCounter").text()) < parseInt(value)) {
+		        $(this).before(element);
+		        $(selector).attr("inserted", "true");
+		        return false;
+		      }
+		    });
+
+	    if ($(selector).attr("inserted") == "false") {
+	      $(selector).append(element);
+	    }
+	  } 
+	  else 
+	  {
+	    $(selector).append(element);
+	  }
+
+	  $(selector).removeAttr("inserted");
 
 };
 
@@ -583,7 +682,6 @@ function sortMessagesModerator (element, value)
 {
 
   var selector = $(".moderator");
-
   if ($(selector).length > 0) 
   {
     $(selector).attr("inserted", "false");
@@ -595,13 +693,14 @@ function sortMessagesModerator (element, value)
       }
     });*/
 
-    $(".moderator").children().each(function() {
-      if (parseInt($(this).find(".voteCounter").text()) < parseInt(value)) {
-        $(this).before(element);
-        $(selector).attr("inserted", "true");
-        return false;
-      }
-    });
+	    $(".moderator").children().each(function() {
+	      if (parseInt($(this).find(".voteCounter").text()) < parseInt(value)) {
+	      	$(element).addClass('moveUp');
+	        $(this).before(element);
+	        $(selector).attr("inserted", "true");
+	        return false;
+	      }
+	    });
 
     if ($(selector).attr("inserted") == "false") {
       $(selector).append(element);
@@ -616,4 +715,25 @@ function sortMessagesModerator (element, value)
 
 };
 
+
+function changeText(elem, changeVal) {
+    if ((elem.textContent) && (typeof (elem.textContent) != "undefined") && (typeof (elem.textContent) != "NaN")) {
+        elem.textContent = changeVal;
+    } else {
+        elem.innerText = changeVal;
+    }
+}
+
+function getTextType(elem) {
+	var result = "";
+    if ((elem.textContent) && (typeof (elem.textContent) != "undefined") && (typeof (elem.textContent) != "NaN")) 
+    {
+        result = elem.textContent;
+    } else 
+    {
+       result =  elem.innerText ;
+    }
+
+    return result;
+}
 

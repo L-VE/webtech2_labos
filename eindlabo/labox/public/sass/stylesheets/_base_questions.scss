@@ -56,7 +56,7 @@ body
 					{
 						padding: 0 3px;
 						margin-left: -0.5px;
-						@include border-radius-topBottom(10px)  
+						@include border-radius-topBottom(10px);  
 					}
 
 					.profilePicExtra
@@ -111,13 +111,22 @@ body
 
 						.typeColorquestion
 						{
-							@extend .extraTypeColor;
+							/*@extend .extraTypeColor;*/
+							padding: 0 3px;
+							margin-left: -0.5px;
+							@include border-radius-topBottom(10px);
+
 							background-color: #950d01;
+
 						}
 
 						.typeColoranswer
 						{
-							@extend .extraTypeColor;
+							/*@extend .extraTypeColor;*/
+							padding: 0 3px;
+							margin-left: -0.5px;
+							@include border-radius-topBottom(10px);
+
 							background-color: #01950d;
 						}
 
@@ -136,8 +145,11 @@ body
 
 							.messageDetails
 							{
-								@extend .extraForDetailsContent;
-								width: 10%;
+								/*@extend .extraForDetailsContent;*/
+								float: left; 
+
+								/*width: 10%;*/
+								width: 15%;
 								margin-right: 2.5%;
 								/*height: 100px;*/
 
@@ -147,14 +159,7 @@ body
 									width: 75%;
 								}
 
-								.profile
-								{
-									img
-									{
-
-									}
-								}
-
+								
 								.votes
 								{
 									margin-top: 10px;
@@ -193,7 +198,13 @@ body
 
 										span.delete
 										{
-											@extend .extraAImage;
+											/*@extend .extraAImage;*/
+											display: block;
+											text-indent: -9999px;
+											width: 25px;
+											height: 25px;
+
+
 											background-image: url('../../images/x_sign_dark.png');
 											background-repeat: no-repeat;
 											margin: 0 auto;
@@ -228,7 +239,13 @@ body
 
 												span.up
 												{
-													@extend .extraAImage;
+													/*@extend .extraAImage;*/
+													display: block;
+													text-indent: -9999px;
+													width: 25px;
+													height: 25px;
+
+
 													background-image: url('../../images/vote_up_unvoted.png');
 													background-repeat: no-repeat;
 													margin: 0 auto;
@@ -236,7 +253,13 @@ body
 
 												span.down
 												{
-													@extend .extraAImage;
+													/*@extend .extraAImage;*/
+													display: block;
+													text-indent: -9999px;
+													width: 25px;
+													height: 25px;
+
+
 													background-image: url('../../images/vote_down_unvoted.png');
 													background-repeat: no-repeat;
 													margin: 0 auto;
@@ -257,7 +280,13 @@ body
 
 												span.inactiveUp
 												{
-													@extend .extraAImage;
+													/*@extend .extraAImage;*/
+													display: block;
+													text-indent: -9999px;
+													width: 25px;
+													height: 25px;
+
+
 													background-image: url('../../images/vote_up_inactive.png');
 													background-repeat: no-repeat;
 													margin: 0 auto;
@@ -272,7 +301,13 @@ body
 
 												span.chosenUp
 												{
-													@extend .extraAImage;
+													/*@extend .extraAImage;*/
+													display: block;
+													text-indent: -9999px;
+													width: 25px;
+													height: 25px;
+
+
 													background-image: url('../../images/vote_up_dark.png');
 													background-repeat: no-repeat;
 													margin: 0 auto;
@@ -285,7 +320,13 @@ body
 
 												span.inactiveDown
 												{
-													@extend .extraAImage;
+													/*@extend .extraAImage;*/
+													display: block;
+													text-indent: -9999px;
+													width: 25px;
+													height: 25px;
+
+
 													background-image: url('../../images/vote_down_inactive.png');
 													background-repeat: no-repeat;
 													margin: 0 auto;
@@ -299,7 +340,13 @@ body
 
 												span.chosenDown
 												{
-													@extend .extraAImage;
+													/*@extend .extraAImage;*/
+													display: block;
+													text-indent: -9999px;
+													width: 25px;
+													height: 25px;
+
+
 													background-image: url('../../images/vote_down_dark.png');
 													background-repeat: no-repeat;
 													margin: 0 auto;
@@ -317,8 +364,12 @@ body
 							
 							.messageContent
 							{
-								@extend .extraForDetailsContent;
-								width:87.5%;
+								/*@extend .extraForDetailsContent;*/
+								float: left; 
+
+
+								/*width:87.5%;*/
+								width: 78.5%;
 
 								.extraForh1h2h3
 								{
@@ -335,7 +386,13 @@ body
 									font-weight: bold;
 									h1
 									{
-										@extend .extraForh1h2h3;
+										/*@extend .extraForh1h2h3;*/
+										font-size: 16px;
+										font-weight: normal;
+										margin: 0;
+										padding: 0;
+
+
 										font-size: 18px;
 										font-weight: bold;
 									}
@@ -347,7 +404,13 @@ body
 
 									h2
 									{
-										@extend .extraForh1h2h3;
+										/*@extend .extraForh1h2h3;*/
+										font-size: 16px;
+										font-weight: normal;
+										margin: 0;
+										padding: 0;
+
+
 										word-wrap: break-word;
 									}
 								}
@@ -363,7 +426,13 @@ body
 
 									h3
 									{
-										@extend .extraForh1h2h3;
+										/*@extend .extraForh1h2h3;*/
+										font-size: 16px;
+										font-weight: normal;
+										margin: 0;
+										padding: 0;
+
+
 										text-align: right;
 									}
 								}

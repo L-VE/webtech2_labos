@@ -1,12 +1,18 @@
 $headerColor : #01a1af;
-
+$baseColor: #16a085;
+	#indexBody
+	{
+		background-color: $baseColor;
 			#login
 			{
-				background-color: darken($headerColor, 10%);
-				color: white;
+				background-color: lighten($baseColor, 60%);
+				color: darken(#2980b9,30%);
 				width: 40%;
-				margin: 13% 30%;
-				height: 160px;
+				margin: 10% 30%;
+				padding-bottom: 20px;
+				padding-top: 20px;
+				@include border-radius(40px);
+				
 
 				h2
 				{
@@ -20,7 +26,82 @@ $headerColor : #01a1af;
 					cursor: pointer;
 				}
 
-				ul
+				#login1
+				{
+					
+					@include font-size(1.1) ;
+					
+						width: 60%;
+						margin: 20px 20%;
+
+					
+					li.facebookButton
+					{
+						background-color: #2980b9 /*#5070A9*/;
+						min-width: 236px;
+						height: 50px;
+						background-image: url("../../images/facebook.png");
+						background-repeat: no-repeat;
+						background-size: 35px;
+						background-position: 10px;
+
+						a
+						{
+							text-decoration: none;
+							color:white;
+
+
+							.loginText
+							{
+								margin-top: 5px;
+								position: absolute;
+								margin: 15px 55px;
+								display: block;
+
+							}
+						}
+					}
+					
+				}
+					
+				#loginDiff
+				{
+					text-align: center;
+					margin: 0 47%;
+				}
+
+				ul#login2
+				{
+						@include font-size(1.1) ;
+					
+						width: 60%;
+						margin: 20px 20%;
+
+					li
+					{
+
+						input[type="text"]
+						{
+							width: 90%;
+							padding: 10px;
+							@include font-size(1.1) ;
+						}
+
+						input[type="submit"]
+						{
+							width: 100%;
+							padding: 10px;
+							background-color: darken(#1abc9c, 15%);
+							color:white;
+							@include font-size(1.1) ;
+							border:none;
+						}
+					}
+					
+				}
+
+
+				ul#loginImg
 				{
 					margin: 30px 25%;
 					width: 50%;					
@@ -41,3 +122,4 @@ $headerColor : #01a1af;
 					}
 				}
 			}
+	}
