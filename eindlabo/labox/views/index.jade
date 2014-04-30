@@ -1,9 +1,31 @@
-extends layout
-
-block content
-    #login
-        h2 Login here
-        ul
-            li: a(class='facebookLogin', href="/auth/facebook")
-                    img(id="facebook", src="../images/facebook_white.png")
-            li: img(id="admin", src="../images/gears.png")
+doctype html
+html
+  head
+    title= title
+    //link(rel='stylesheet', href='../stylesheets/css/reset.css')
+    //link(rel='stylesheet', href='../stylesheets/css/style.css')
+    //link(rel='stylesheet', href='/stylesheets/reset.css')
+    //link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='../../build/css/build.css')
+  body#indexBody
+    block content
+        #login
+            h2 Welcome back!
+            ul#login1
+                li(class='facebookButton'): a(class='facebookLogin', href="/auth/facebook") 
+                                                span(class="loginText") Login with Facebook
+                                               // | img(id="facebook", src="../images/facebook.png")
+            span(id="loginDiff") or
+            ul#login2
+                li: input(type='text', name='username', id='questionType', placeholder='username')
+                li: input(type='text', name='username', id='questionType', placeholder='password')
+                li: input#submitQuestion(type="submit", value="Login as Admin")
+            //ul#loginImg
+            //    li: a(class='facebookLogin', href="/auth/facebook")
+            //        img(id="facebook", src="../images/facebook_white.png")
+            //    li: img(id="admin", src="../images/gears.png")
+    script(src="../javascripts/jquery-1.10.2.min.js")
+    script(src="../javascripts/faye/browser/faye-browser.js")
+    script(src="../javascripts/live.js")
+    //script(src="../javascripts/script.js")
+    script(src="../../build/js/script.js", type='text/javascript')

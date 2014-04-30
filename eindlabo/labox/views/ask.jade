@@ -8,7 +8,7 @@ block content
                 img(id="goBackArrow", src="../images/arrow_goBack_white.png")
             h1 IMD WALL
             #account
-                img(id="accountPic", src="../images/user_white.png")
+                img(id="accountPic", src="../images/profilePic.png")
           //#login
           //  h2 Login here
           //  ul
@@ -17,25 +17,9 @@ block content
           #content
             #leftSide
                 p.category 
-                    span Current topics
+                    span Current questions
                 #topicList
-                    p.topics 
-                        span Eerste Topic
-                            img(class="arrow", src="../images/arrow_black.png")
-                    p.topics 
-                        span Tweede Topic
-                            img(class="arrow", src="../images/arrow_black.png")
-                    p.topics 
-                        span Derde Topic
-                            img(class="arrow", src="../images/arrow_black.png")
-                    p.topics 
-                        span Vierde Topic
-                            img(class="arrow", src="../images/arrow_black.png")
-                #topicDetails
-                    p
-                        | Dit zijn allemaal details
-                        | van het huidige topic
-                        | qvybuhijhgytfrdtfhuijgutyhujgytfygftyhuygutgu
+                    ul#questionList(class='allCurrentQuestion')
             #rightSide
                 p.questionHeader
                     span Ask a question
