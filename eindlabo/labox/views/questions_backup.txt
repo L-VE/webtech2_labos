@@ -1,0 +1,32 @@
+extends layout
+
+block content
+    #wholeContainer
+        #header
+            h1 IMD WALL
+        #content(class="posts")
+            ul#questionList(class='allQuestion')
+                li= count
+                    for q in questions
+                        li(class="test")
+                            tttttt
+            //    each chat in chats
+            //        li (class='questionItem animateQuestion', id='message" + #{chat.id} + "', data-votedup='false', data-voteddown='false')
+            //            div (class='messageCon even " + #{chat.chatMessageType} +  "')
+            //                span (class='typeColor" + #{chat.chatMessageType} + "')
+            //                    .messageConSec
+            //                        .messageDetails
+            //                            .profile
+            //                                img(src='../public/images/profilePic.png' alt='')
+            //                            .votes
+            //                                .voteInfo
+            //                                    h1.votesNr
+            //                                        .voteCounter 0
+            //                                    votes
+            //                        .messageContent
+            //                            .name
+            //                                h1 #{chat.sender}
+            //                            .text
+            //                                h2 #{chat.chatMessage}
+            //                            .time
+            //                                h3 #{chat.sendTime}

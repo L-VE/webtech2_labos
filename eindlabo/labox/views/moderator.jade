@@ -16,23 +16,28 @@ block content
           //      li: img(id="twitter", src="../images/twitter_white.png")
           #content(class="posts")
             ul#questionList(class='moderator')
-            //    li(class="questionItem"): .question
-            //        span.typeColor
-            //        span 
-            //            img(src="../images/profilePic.png", class="profilePic")
-            //        .delete 
-            //            img(class="deleteMessage", src="../images/x_sign_dark.png")
-            //        span.user User1
-            //        span.typeTextMod Vraag1
-                    
-            //    li(class="questionItem"): .answer
-            //        span.typeColor
-            //        span 
-            //            img(src="../images/profilePic.png", class="profilePic")
-            //        .delete 
-            //            img(class="deleteMessage", src="../images/x_sign_dark.png")
-            //        span.user User3
-            //        span.typeTextMod Antwoord1
+                for q in questions
+                        li(id='message#{q.id}', class='questionItem animateQuestion', data-votedup='false', data-voteddown='false')
+                            div(class='messageCon even #{q.chatType}')
+                                span(class='typeColor#{q.chatType}')
+                                .messageConSec
+                                    .messageDetails
+                                        .profile
+                                            img(src='../images/profilePic.png' alt='')
+                                        .votes
+                                            .voteInfo
+                                                h1.votesNr
+                                                    .voteCounter 0
+                                                    | votes
+                                            .deleteAction
+                                                span(class='delete')
+                                    .messageContent
+                                        .name
+                                            h1 #{q.sender}
+                                        .text
+                                            h2 #{q.message}
+                                        .time
+                                            h3 #{q.chatTime.toDateString()}
 
 
 
