@@ -7,6 +7,7 @@ var indexPagePath = "";
 $(document).ready(function (e){
 
 
+
 	checkIfThereArePosts();
 	
 
@@ -47,7 +48,7 @@ $(document).ready(function (e){
 		$("#goBackArrow").hide();
 	});// END ON CLICK goBackArrow
 
-// TEST TEST TEST NIET VOOR ECHT
+
 	$(".facebookLogin").on('click', function (argument){
 		var currentPath = $(location).attr('href');
 		$(location).attr('href',currentPath + "ask");
@@ -110,10 +111,9 @@ $(document).ready(function (e){
 	var subscription = client.subscribe('/message', function(message) {
 	  //console.log(message.chat + " " + message.user + " " + message.chatMessageType);
 
-	  var currentDateTime = new Date();
-      var currentdate = createDateStringOnlyTime(currentDateTime);
+	  
 
-	  var listItemInstanceAsk = "<li class='questionItem animateQuestion' id='message" + messageId + "' data-votedup='false' data-voteddown='false'>"
+	  var listItemInstanceAsk = "<li id='message" + messageId + "' data-votedup='false' data-voteddown='false' class='questionItem animateQuestion'>"
 	  						+ "<div class='messageCon even " + message.chatMessageType +  "'>"
 	  						+ 	"<span class='typeColor" + message.chatMessageType + "'>"
 							+ 	"</span>"
@@ -142,14 +142,14 @@ $(document).ready(function (e){
 							+				"<h2>" + message.chat + "</h2>"
 							+			"</div>"
 							+			"<div class='time'>"
-							+				"<h3>" + currentdate + "</h3>"
+							+				"<h3>" + message.chatTime + "</h3>"
 							+			"</div>"
 							+		"</div>"
 							+	"</div>"
 							+	"</div>"
 					   		+ "</li>";
 
-	var listItemInstance = "<li class='questionItem animateQuestion' id='message" + messageId + "' data-votedup='false' data-voteddown='false'>"
+	var listItemInstance = "<li id='message" + messageId + "' data-votedup='false' data-voteddown='false' class='questionItem animateQuestion'>"
 	  						+ "<div class='messageCon even " + message.chatMessageType +  "'>"
 	  						+ 	"<span class='typeColor" + message.chatMessageType + "'>"
 							+ 	"</span>"
@@ -172,14 +172,14 @@ $(document).ready(function (e){
 							+				"<h2>" + message.chat + "</h2>"
 							+			"</div>"
 							+			"<div class='time'>"
-							+				"<h3>" + currentdate + "</h3>"
+							+				"<h3>" + message.chatTime + "</h3>"
 							+			"</div>"
 							+		"</div>"
 							+	"</div>"
 							+	"</div>"
 					   		+ "</li>";
 
-	var listItemInstanceModerator = "<li class='questionItem animateQuestion' id='message" + messageId + "' data-votedup='false' data-voteddown='false'>"
+	var listItemInstanceModerator = "<li id='message" + messageId + "' data-votedup='false' data-voteddown='false' class='questionItem animateQuestion'>"
 	  						+ "<div class='messageCon even " + message.chatMessageType +  "'>"
 	  						+ 	"<span class='typeColor" + message.chatMessageType + "'>"
 							+ 	"</span>"
@@ -205,7 +205,7 @@ $(document).ready(function (e){
 							+				"<h2>" +  message.chat + "</h2>"
 							+			"</div>"
 							+			"<div class='time'>"
-							+				"<h3>" + currentdate + "</h3>"
+							+				"<h3>" + message.chatTime + "</h3>"
 							+			"</div>"
 							+		"</div>"
 							+	"</div>"
@@ -239,6 +239,11 @@ $(document).ready(function (e){
 		var messageIllegalCharsFound = illegalCharsFound(chatMessage);
         var userIllegalCharsFound = illegalCharsFound(chatUser);
 		var chatMessageType = $("#sendTypes input[type='radio']:checked").val();
+		var currentDateTime = new Date();
+      	//var currentdate = createDateStringOnlyTime(currentDateTime); 
+      	var currentdate = createDateString(currentDateTime);
+
+		var insertInDb = {action : "addChat", chat : chatMessage, user : chatUser, chatMessageType : chatMessageType, chatTime : currentDateTime};
 
 		if(chatMessage != "" && chatUser != "" && chatMessageType != undefined )
     	{
@@ -252,9 +257,36 @@ $(document).ready(function (e){
 	    	{
 	    		$(".errorMessage").text("") ;
     			$(".errorMessage").css('display','none');
-    			var publicationAsk = client.publish('/message', {chat : chatMessage, user : chatUser, chatMessageType : chatMessageType});
+    			var publicationAsk = client.publish('/message', {chat : chatMessage, user : chatUser, chatMessageType : chatMessageType, chatTime : currentdate});
     			//var publicationAsk = client.publish('/moderate', {chat : chatMessage, user : chatUser, chatMessageType : chatMessageType});
     			$("#questionField").val("");
+ 
+
+    			/* var request = $.ajax({ // create an AJAX call...
+							data: {dbData:  insertInDb}, // get the form data
+							type: "POST", // GET or POST
+							url: "ajax/addQuestion.php",//$(this).attr('action'),
+							dataType: "json",
+							error: function( xhr, status ) {
+								console.log("Kon de actie niet uitvoeren.");
+								return false;
+								e.preventDefault();
+							 }, // the file to call
+							success: function(response) { // on success..
+								//showAbsences();
+								//humane.log("Was een succes!");
+								console.log("geluktsucces");
+							}
+						});//einde ajax
+
+					request.done(function(msg) {
+					   if(msg.status == 'success')
+					  {
+							console.log("gelukt!!!done");		
+					  }
+
+					});*/
+			
 	    	}
     	}
     	else
@@ -514,6 +546,24 @@ function createDateStringOnlyTime(currentdate)
     var currentDateTime = currentHour + ":"  
                     + currentMinutes + ":" 
                     + currentSecond;
+    return currentDateTime;
+}
+
+function createDateString(currentdate)
+{
+    var currentDay = checkDate(currentdate.getDate());
+    var currentMonth = checkDate(currentdate.getMonth()+1);
+    var currentYear = checkDate(currentdate.getFullYear());
+    var currentHour = checkDate(currentdate.getHours());
+    var currentMinutes = checkDate(currentdate.getMinutes());    
+    var currentSecond = checkDate(currentdate.getSeconds());  
+
+    var currentDateTime = currentDay + "/"
+                    + currentMonth + "/" 
+                    + currentYear + " ("  
+                    + currentHour + ":"  
+                    + currentMinutes + ":" 
+                    + currentSecond + ") " ;
     return currentDateTime;
 }
 

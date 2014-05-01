@@ -197,16 +197,18 @@ body {
       width: 58%;
       /*@extend .twosides;*/
       margin: 30px 2%; }
-      body #wholeContainer #baseContent #content #leftSide #topicList .topics {
-        line-height: 20px;
-        line-height: 2rem;
-        font-size: 11px;
-        font-size: 1.1rem; }
-        body #wholeContainer #baseContent #content #leftSide #topicList .topics span {
-          cursor: pointer; }
-      body #wholeContainer #baseContent #content #leftSide #topicList .arrow {
-        width: 30px;
-        margin-left: 20px; }
+      body #wholeContainer #baseContent #content #leftSide #topicList {
+        overflow: scroll; }
+        body #wholeContainer #baseContent #content #leftSide #topicList .topics {
+          line-height: 20px;
+          line-height: 2rem;
+          font-size: 11px;
+          font-size: 1.1rem; }
+          body #wholeContainer #baseContent #content #leftSide #topicList .topics span {
+            cursor: pointer; }
+        body #wholeContainer #baseContent #content #leftSide #topicList .arrow {
+          width: 30px;
+          margin-left: 20px; }
       body #wholeContainer #baseContent #content #leftSide .category {
         font-size: 11px;
         font-size: 1.1rem;

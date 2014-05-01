@@ -101,6 +101,7 @@ body
 					
 					#topicList
 					{
+						overflow: scroll;
 						.topics
 						{
 							@include line-height(2) ;
