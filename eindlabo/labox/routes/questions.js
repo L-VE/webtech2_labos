@@ -10,7 +10,7 @@ exports.list = function(req, res){
     res.render( 'questions', {
       title : 'IMD WALL',
       questions : questions,
-      count : count
+      count : allChats.length
     });
   });
 };
