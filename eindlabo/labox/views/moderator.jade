@@ -15,6 +15,7 @@ block content
           //      li: img(id="facebook", src="../images/facebook_white.png")
           //      li: img(id="twitter", src="../images/twitter_white.png")
           #content(class="posts")
+            span(class='hiddenMessageCount') #{count}
             ul#questionList(class='moderator')
                 for q in questions
                         li(id='message#{q.id}', class='questionItem animateQuestion', data-votedup='false', data-voteddown='false')
@@ -27,7 +28,7 @@ block content
                                         .votes
                                             .voteInfo
                                                 h1.votesNr
-                                                    .voteCounter 0
+                                                    .voteCounter #{q.votes}
                                                     | votes
                                             .deleteAction
                                                 span(class='delete')

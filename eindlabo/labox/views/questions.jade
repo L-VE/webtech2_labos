@@ -5,6 +5,7 @@ block content
         #header
             h1 IMD WALL
         #content(class="posts")
+            span(class='hiddenMessageCount') #{count}
             ul#questionList(class='allQuestion')
                     for q in questions
                         li(id='message#{q.id}', class='questionItem animateQuestion', data-votedup='false', data-voteddown='false')
@@ -17,7 +18,7 @@ block content
                                         .votes
                                             .voteInfo
                                                 h1.votesNr
-                                                    .voteCounter 0
+                                                    .voteCounter #{q.votes}
                                                     | votes
                                     .messageContent
                                         .name

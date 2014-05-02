@@ -19,6 +19,7 @@ block content
                 p.category 
                     span Current questions
                 #topicList
+                    span(class='hiddenMessageCount') #{count}
                     ul#questionList(class='allCurrentQuestion')
                         for q in questions
                             li(id='message#{q.id}', class='questionItem animateQuestion', data-votedup='false', data-voteddown='false')
@@ -31,7 +32,7 @@ block content
                                             .votes
                                                 .voteInfo
                                                     h1.votesNr
-                                                        .voteCounter 0
+                                                        .voteCounter #{q.votes}
                                                         | votes
                                                 .voteAction
                                                     ul
