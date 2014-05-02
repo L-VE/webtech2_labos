@@ -31,8 +31,15 @@ var chatSchema = new Schema({
 
 });
 
-mongoose.model( 'Moderator', moderatorSchema );
-mongoose.model( 'Chat', chatSchema );
+var chatCountSchema = new Schema({
+                          id:  Number,
+                          messagesCount: Number,
+                          description : String
+});
+
+mongoose.model( 'Moderator', moderatorSchema, 'moderators' );
+mongoose.model( 'Chat', chatSchema, 'chats' );
+mongoose.model( 'ChatCount', chatCountSchema, 'chatcount' );
 
 
 
