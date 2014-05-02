@@ -11,6 +11,7 @@ var passport = require('passport'), FacebookStrategy = require('passport-faceboo
 // VAR VOOR DE GET /ASK OM CHATS OP TE HALEN
 var mongoose = require( 'mongoose' );
 var Chat     = mongoose.model( 'Chat' );
+var ChatCount = mongoose.model('ChatCount');
 var allChats = "";
 
 
@@ -36,6 +37,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
+app.use( express.bodyParser());
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
@@ -72,23 +74,34 @@ app.get('/users', user.list);
 
 
 
-
+// BIJ HET NAVIGEREN NAAR /ASK
 app.get('/ask', function(req, res){
+
+    var totalMessagesSent = 0;
+      ChatCount.find({}, function(err, chatCounts){
+                    
+                    //console.log(chatCounts);
+        totalMessagesSent = chatCounts[0].messagesCount;   
+    });
 
     //res.render('questions', { title: 'IMD WALL' });
       Chat.find( function ( err, questions, count ){
         allChats = questions;
-        console.log(allChats);
+        //console.log(allChats);
           res.render( 'ask', {
             title : 'IMD WALL',
             questions : questions,
-            facebookUserID : facebookUserId
+            facebookUserID : facebookUserId,
+            count : totalMessagesSent
           });
       });
+
+       
 	
 });
 
-
+//BIJ HET MAKEN VAN EEN CHAT IN /ASK
+app.post( '/create', askQuestion.create );
 
 // BIJ HET NAVIGEREN NAAR /QUESTIONS
 app.get('/questions', allQuestions.list);
@@ -98,14 +111,51 @@ app.get('/moderator', function(req, res){
     //res.render('questions', { title: 'IMD WALL' });
       Chat.find( function ( err, questions, count ){
         allChats = questions;
-        console.log(allChats);
+        //console.log(allChats);
           res.render( 'moderator', {
             title : 'IMD WALL',
             questions : questions,
-            facebookUserID : facebookUserId
+            facebookUserID : facebookUserId,
+            count : allChats.length
           });
       });
   
+});
+
+//app.delete( '/destroy', moderate.destroy );
+app.post('/destroy/:id', function (req, res){
+  return Chat.find({ id : req.params.id}, function (err, chat) {
+    return Chat.remove(function (err) {
+      if (!err) {
+        console.log("removed");
+        return res.send('');
+      } else {
+        console.log(err);
+      }
+    });
+  });
+});
+
+app.post('/vote/:id/:vote', function (req, res){
+  return Chat.find({ id : req.params.id}, function (err, chat) {
+        console.log(req.params.id);
+        console.log(req.params.vote);
+          var conditions = { id: req.params.id }
+          , update = { votes : req.params.vote}
+          , options = { multi: true };
+
+        Chat.update(conditions, update, options, callback);
+
+        function callback (err, numAffected) {
+                // numAffected is the number of updated documents
+            if(!err)
+              console.log("geupdated");
+            else
+              console.log(err);
+        };
+
+          
+  });
 });
 
 
@@ -121,6 +171,7 @@ passport.use(new FacebookStrategy({
       return done(err, user);
     });*/
 	facebookUserId = profile.id;
+  console.log(facebookUserId);
 	return done(null, profile);
 	// NU NOG DE PROFILE GEGEVENS OPHALEN
 	// DB AAN VASTHANGEN
