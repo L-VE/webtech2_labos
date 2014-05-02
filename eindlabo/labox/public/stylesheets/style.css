@@ -199,6 +199,8 @@ body {
       margin: 30px 2%; }
       body #wholeContainer #baseContent #content #leftSide #topicList {
         overflow: scroll; }
+        body #wholeContainer #baseContent #content #leftSide #topicList .hiddenMessageCount {
+          display: none; }
         body #wholeContainer #baseContent #content #leftSide #topicList .topics {
           line-height: 20px;
           line-height: 2rem;
@@ -303,6 +305,8 @@ body #wholeContainer #header h1 {
   color: white; }
 body #wholeContainer #content {
   margin: 20px 5%; }
+  body #wholeContainer #content .hiddenMessageCount {
+    display: none; }
   body #wholeContainer #content #noMessages {
     text-align: center;
     margin-top: 100px; }

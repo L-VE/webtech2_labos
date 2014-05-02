@@ -101,6 +101,11 @@ body
 					
 					#topicList
 					{
+						.hiddenMessageCount
+						{
+							display: none;
+						}
+
 						overflow: scroll;
 						.topics
 						{

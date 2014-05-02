@@ -2,6 +2,7 @@
 var messageId = 0;
 var client = null;
 var indexPagePath = "";
+var maxRandomIdGenerator = 589;
 // DOCUMENT READY
 // ----------------------------------------------------------------
 $(document).ready(function (e){
@@ -113,7 +114,7 @@ $(document).ready(function (e){
 
 	  
 
-	  var listItemInstanceAsk = "<li id='message" + messageId + "' data-votedup='false' data-voteddown='false' class='questionItem animateQuestion'>"
+	  var listItemInstanceAsk = "<li id='" + message.id + "' data-votedup='false' data-voteddown='false' class='questionItem animateQuestion'>"
 	  						+ "<div class='messageCon even " + message.chatMessageType +  "'>"
 	  						+ 	"<span class='typeColor" + message.chatMessageType + "'>"
 							+ 	"</span>"
@@ -149,7 +150,7 @@ $(document).ready(function (e){
 							+	"</div>"
 					   		+ "</li>";
 
-	var listItemInstance = "<li id='message" + messageId + "' data-votedup='false' data-voteddown='false' class='questionItem animateQuestion'>"
+	var listItemInstance = "<li id='" + message.id + "' data-votedup='false' data-voteddown='false' class='questionItem animateQuestion'>"
 	  						+ "<div class='messageCon even " + message.chatMessageType +  "'>"
 	  						+ 	"<span class='typeColor" + message.chatMessageType + "'>"
 							+ 	"</span>"
@@ -179,7 +180,7 @@ $(document).ready(function (e){
 							+	"</div>"
 					   		+ "</li>";
 
-	var listItemInstanceModerator = "<li id='message" + messageId + "' data-votedup='false' data-voteddown='false' class='questionItem animateQuestion'>"
+	var listItemInstanceModerator = "<li id='" + message.id + "' data-votedup='false' data-voteddown='false' class='questionItem animateQuestion'>"
 	  						+ "<div class='messageCon even " + message.chatMessageType +  "'>"
 	  						+ 	"<span class='typeColor" + message.chatMessageType + "'>"
 							+ 	"</span>"
@@ -223,7 +224,7 @@ $(document).ready(function (e){
 	  //console.log($("#message" + messageId).find(".voteDown"));
 	  
 	  //checkIfNoVotes ("#message" + messageId);
-		messageId++;
+
 		sortMessages (listItemInstance, 0); 
 		sortMessagesModerator (listItemInstanceModerator, 0);
 		sortMessagesAsk (listItemInstanceAsk, 0);
@@ -234,6 +235,7 @@ $(document).ready(function (e){
 
 // deze client moet ook zijn vragen kunnen stellen, dus publiceren naar /message
 	$("#submitQuestion").on('click', function (e){
+		e.preventDefault();
 		var chatUser = "Test";  //MOET HIER NOG UITGEVIST WORDEN
 		var chatMessage = $("#questionField").val();
 		var messageIllegalCharsFound = illegalCharsFound(chatMessage);
@@ -243,8 +245,8 @@ $(document).ready(function (e){
       	//var currentdate = createDateStringOnlyTime(currentDateTime); 
       	var currentdate = createDateString(currentDateTime);
 
-		var insertInDb = {action : "addChat", chat : chatMessage, user : chatUser, chatMessageType : chatMessageType, chatTime : currentDateTime};
 
+		
 		if(chatMessage != "" && chatUser != "" && chatMessageType != undefined )
     	{
    
@@ -257,36 +259,35 @@ $(document).ready(function (e){
 	    	{
 	    		$(".errorMessage").text("") ;
     			$(".errorMessage").css('display','none');
-    			var publicationAsk = client.publish('/message', {chat : chatMessage, user : chatUser, chatMessageType : chatMessageType, chatTime : currentdate});
+    			var totalMessagesCount = parseInt(getTextType($("span.hiddenMessageCount")[0]));
+    			totalMessagesCount++;
+    			var insertInDb = {id : totalMessagesCount, message : chatMessage, sender : chatUser, chatType : chatMessageType, chatTime : currentDateTime};
+		
+    			var publicationAsk = client.publish('/message', {id : "message"+totalMessagesCount, chat : chatMessage, user : chatUser, chatMessageType : chatMessageType, chatTime : currentdate});
     			//var publicationAsk = client.publish('/moderate', {chat : chatMessage, user : chatUser, chatMessageType : chatMessageType});
+    				  //alert(parseInt(getTextType($("span.hiddenMessageCount")[0])));
+				
     			$("#questionField").val("");
- 
+ 				//alert(uniqId());
 
-    			/* var request = $.ajax({ // create an AJAX call...
-							data: {dbData:  insertInDb}, // get the form data
+    			 var request = $.ajax({ // create an AJAX call...
+							data: {chatContent :  insertInDb }, // get the form data
 							type: "POST", // GET or POST
-							url: "ajax/addQuestion.php",//$(this).attr('action'),
+							url: "/create",//$(this).attr('action'),
 							dataType: "json",
 							error: function( xhr, status ) {
 								console.log("Kon de actie niet uitvoeren.");
-								return false;
 								e.preventDefault();
 							 }, // the file to call
 							success: function(response) { // on success..
 								//showAbsences();
 								//humane.log("Was een succes!");
 								console.log("geluktsucces");
+								e.preventDefault();
+								
 							}
 						});//einde ajax
-
-					request.done(function(msg) {
-					   if(msg.status == 'success')
-					  {
-							console.log("gelukt!!!done");		
-					  }
-
-					});*/
-			
+			//messageId++;
 	    	}
     	}
     	else
@@ -294,7 +295,7 @@ $(document).ready(function (e){
     		$(".errorMessage").text("You must fill in both your message and a message type!") ;
     		$(".errorMessage").css('display','block');
     	}
-		e.preventDefault();
+		
 	});// END ON CLICK submitQuestion
 
 	
@@ -393,6 +394,14 @@ $(document).ready(function (e){
 
     var subscriptionVote = client.subscribe('/vote', function(message) {
 		var test = $(message.chosenQuestion).find(".voteCounter")[0];
+		var mesId = message.chosenQuestion; // #message5
+		alert(mesId);
+    	//alert($(this).parents(".questionItem")[0].id);
+    	var mesString = "#message";
+    	var mesStinglength = mesString.length;
+    	//alert(mesStinglength);
+    	//alert(mesId.substr(mesStinglength,mesId.length));
+    	var id = mesId.substr(mesStinglength,mesId.length);
 		var currentVotes = parseInt(getTextType(test));
 		//var currentVotes = parseInt(test.text());/*parseInt(test.innerText);*/
 		var voteValue = message.voteValue;
@@ -419,6 +428,22 @@ $(document).ready(function (e){
 
 	
 	    changeText(test, currentVotes);
+	    var request = $.ajax({ 
+							type: "POST", // GET or POST
+							url: "/vote/" + id + "/" + currentVotes,//$(this).attr('action'),
+							dataType: "json",
+							error: function( xhr, status ) {
+								//console.log("Kon de actie niet uitvoeren.");
+								event.preventDefault();
+							 }, // the file to call
+							success: function(response) { // on success..
+								//showAbsences();
+								//humane.log("Was een succes!");
+								//console.log("geluktsucces");
+								event.preventDefault();
+								
+							}
+						});//einde ajax
 	    
 	    if($("ul#questionList").children().length > 1)
   		{
@@ -431,7 +456,34 @@ $(document).ready(function (e){
 
     $( "#questionList" ).on( "click", ".delete", function (event){
     	var currentMessageId = "#" + $(this).parents(".questionItem")[0].id;
-    	deleteMessage(currentMessageId);
+    	var mesId = $(this).parents(".questionItem")[0].id;
+    	//alert($(this).parents(".questionItem")[0].id);
+    	var mesString = "message";
+    	var mesStinglength = mesString.length;
+    	//alert(mesStinglength);
+    	//alert(mesId.substr(mesStinglength,mesId.length));
+    	var id = mesId.substr(mesStinglength,mesId.length);
+		
+    	//alert(messageIdString.substr(2,3));
+		 var request = $.ajax({ // create an AJAX call...
+							/*data: {id :  id }, */// get the form data
+							type: "POST", // GET or POST
+							url: "/destroy/" + id,//$(this).attr('action'),
+							dataType: "json",
+							error: function( xhr, status ) {
+								//console.log("Kon de actie niet uitvoeren.");
+								event.preventDefault();
+							 }, // the file to call
+							success: function(response) { // on success..
+								//showAbsences();
+								//humane.log("Was een succes!");
+								//console.log("geluktsucces");
+								deleteMessage(currentMessageId);
+								event.preventDefault();
+								
+							}
+						});//einde ajax
+    	
     });// END ON CLICK .DELETE
 
     var subscriptionDeleteVote = client.subscribe('/deleteVote', function(message) {
@@ -641,6 +693,7 @@ function voteMessage(p_messageId, p_voteType, p_voteValue)
 {
     var publicationVote = client.publish('/vote', {chosenQuestion : p_messageId, voteType : p_voteType, voteValue : p_voteValue});
     
+    
 }
 
 function deleteMessage(p_messageId)
@@ -785,5 +838,11 @@ function getTextType(elem) {
     }
 
     return result;
+}
+
+
+function uniqId() {
+	var result = Math.round(messageId + (Math.random() * maxRandomIdGenerator));
+  return result;
 }
 

@@ -28,6 +28,12 @@ body
 		{
 			margin: 20px 5%;
 
+			.hiddenMessageCount
+			{
+				display: none;
+			}
+
+
 			#noMessages
 			{
 				text-align: center;
