@@ -27,7 +27,8 @@ var chatSchema = new Schema({
                           chatTime: { type: Date, default: Date.now },
                           votes : Number,
                           message : String,
-                          chatType : { type: String, default: "question" }
+                          chatType : { type: String, default: "question" },
+                          senderPicURL : String
 
 });
 
@@ -37,7 +38,7 @@ var chatCountSchema = new Schema({
                           description : String
 });
 
-mongoose.model( 'Moderator', moderatorSchema, 'moderators' );
+mongoose.model( 'Moderator', moderatorSchema, 'moderator' );
 mongoose.model( 'Chat', chatSchema, 'chats' );
 mongoose.model( 'ChatCount', chatCountSchema, 'chatcount' );
 
