@@ -7,6 +7,32 @@ var maxRandomIdGenerator = 589;
 // ----------------------------------------------------------------
 $(document).ready(function (e){
 
+// COOKIE BIJHOUDEN VOOR HET ONTHOUDEN OP WELKE MESSAGES WE AL GEVOTED HEBBEN
+
+    $("#indexBody").ready(function (event){
+    	if(cookiesAreEnabled)
+		{
+			var CookieSet = $.cookie('myVotesIMDWALL');
+			    $.cookie.json = true;
+
+			     if (CookieSet == null) {
+			          //alert("cookie bestaat niet");
+			          //var newVote = {messages : { messageId : "#message7", voteValue : "1up"}};
+			          //var newVote = {messages : { message :	{"messageId" : "messageValue",votedUp : "true/false",votedDown : "votedDown"}}};
+			          var newVote =  { message : {"messageId" : "message1", "messageValue" : "1up",votedUp : "true/false",votedDown : "true/false"}};
+			          $.cookie("myVotesIMDWALL", newVote, { expires: 365 });
+
+			     }
+			    /* else
+			     {
+			     	//alert("coockie bestaat");
+			     	/* $.cookie.json = true;
+			     	var allMyvotes = $.cookie('myVotesIMDWALL');
+			     	$.cookie('myVotesIMDWALL',allMyvotes, { expires: 365 });
+			     	console.log(e,$.cookie('myVotesIMDWALL'));
+			     }*/
+		}
+    });// END OF ON INDEXBODY LOAD
 
 
 	checkIfThereArePosts();
@@ -16,16 +42,11 @@ $(document).ready(function (e){
 // schuift het uitlog menu'tje van recht uit
 // en kruipt weer op zijn plaats als er nog eens op geklikt wordt
 	$("#accountPic").on('click', function (argument){
-		if($("#accountOptions").hasClass('moveRight'))
-		{
-			$("#accountOptions").removeClass('moveRight');
-			$("#baseContent").removeClass('moveRight');
-		}
-		else
-		{
-			$("#accountOptions").addClass('moveRight');
-			$("#baseContent").addClass('moveRight');
-		}
+		showLogoutSidebar()
+	});// END ON CLICK accountPic
+
+	$("#accountPicMod").on('click', function (argument){
+		showLogoutSidebar()
 	});// END ON CLICK accountPic
 
 //  Wanneer er op een topic geklikt wordt, kan men beginnen vragen te versturen
@@ -50,36 +71,70 @@ $(document).ready(function (e){
 	});// END ON CLICK goBackArrow
 
 
-	$(".facebookLogin").on('click', function (argument){
-		var currentPath = $(location).attr('href');
-		$(location).attr('href',currentPath + "ask");
-	});// END ON CLICK #login
-
-	$("#admin").on('click', function (argument){
-		var currentPath = $(location).attr('href');
-		$(location).attr('href',currentPath + "moderator");
-	});// END ON CLICK #login
-
-// Wanneer men uitlogt verdwijnt het huidige scherm
-// en komt het loginscherm weer tevoorschijn
-	$("p.logout").on('click', function (argument){
-		var currentPath = $(location).attr('href');
-		var toGoPath = "";
-		if($("#wholeContainer").hasClass("moderatorAccount"))
+	$("#modLogin").on('click', function (argument){
+		
+		var username = $("#username").val();
+		var password = $("#password").val();
+		$(".errorMessage").text("") ;
+    	$(".errorMessage").css('display','none');
+		if(username != "" && password != "")
 		{
-			
-			toGoPath = currentPath.substr(0,currentPath.indexOf('moderator'));
+			 var request = $.ajax({ 
+								type: "POST", // GET or POST
+								url: "/loginMod/" + username + '/' + password,
+								dataType: "json",
+								error: function( xhr, status ) {
+									console.log("Kon de actie niet uitvoeren.");
+									$(".errorMessage").text("You didn't fill in the correct login!") ;
+    								$(".errorMessage").css('display','block');
+									argument.preventDefault();
+								 }, // the file to call
+								success: function(response) { // on success..
+									//showAbsences();
+									//humane.log("Was een succes!");
+									console.log(JSON.stringify(response));
+									$(".errorMessage").text("") ;
+    								$(".errorMessage").css('display','none');
+									argument.preventDefault();
+
+									if(JSON.stringify(response) == "false")
+									{
+										$(".errorMessage").text("You didn't fill in the correct login!") ;
+    									$(".errorMessage").css('display','block');
+									}
+									else
+									{
+										$(".errorMessage").text("Y") ;
+    									$(".errorMessage").css('display','none');
+    									 $("#username").val("");
+										$("#password").val("");
+										var currentPath = $(location).attr('href');
+										var toGoPath = "";
+										if($("#wholeContainer").hasClass("moderatorAccount"))
+										{
+											
+											toGoPath = currentPath.substr(0,currentPath.indexOf('moderator'));
+										}
+										else
+										{
+											toGoPath = currentPath.substr(0,currentPath.indexOf('ask'));
+										
+										}
+										indexPagePath = toGoPath;
+										$(location).attr('href',toGoPath + "moderator");
+									}
+									
+								}
+							});//einde ajax
 		}
 		else
 		{
-			toGoPath = currentPath.substr(0,currentPath.indexOf('ask'));
-		
+			$(".errorMessage").text("You have to fill in both inputs!") ;
+    		$(".errorMessage").css('display','block');
 		}
-		indexPagePath = toGoPath;
-		$(location).attr('href',toGoPath);
-		//console.log(indexPath);
-		//checkContentVisibility();
 	});// END ON CLICK p.logout
+
+
 
 
 // de kleine kleurband die de vragen van antwoorden onderscheidt
@@ -94,16 +149,86 @@ $(document).ready(function (e){
 		indexPagePath = toGoPath;
 	});
 
-	$(".ordinaryUser").on('load', function (){
-		var currentPath = $(location).attr('href');
-		var toGoPath = currentPath.substr(0,currentPath.indexOf('ask'));
-		indexPagePath = toGoPath;
-	});
+
+	$(".ordinaryUser").ready(function (){
+			$("#questionList li.questionItem").each(function( index ) {
+				var currentId = $(this)[0].id;
+				var idList = $.cookie("myVotesIMDWALL");
+				var dataArray = [];
+
+				$.each(idList, function (index, value) {
+					//console.log(idList.messages);//Object {messageId: "messageValue"} 
+					console.log("index: " +index + ", value: " +value);//index: messageId, value: messageValue
+					var savedId = value.messageId;
+					var savedMesValue = value.messageValue;
+					var savedDataUp = value.votedUp;
+					var savedDataDown = value.votedDown;
+					//var mesObj = [idList.messages[index].value[0],idList.messages[index].value[1],idList.messages[index].value[2]]; 
+				    //dataArray.push(mesObj);
+				    //console.log(dataArray);
+				    
+				    if(currentId == savedId)
+				    {// HIER NOG IETS AANPASSEN DAT HIJ WEET DAT ALS JE VOTEUP/VOTEDOWN ONTHEFT? DAN NEUTRAAL 5IETS MET DATA_ATTR?-
+						switch(savedMesValue)
+						{
+							case "1up" : 	if(savedDataUp == true && savedDataDown == false)//van 0 @ 1
+											{
+												$("#" + currentId).data("votedup",true);//true
+												$("#" + currentId).data("voteddown",false);//false
+												$("#" + currentId).find(".voteUp").removeClass('up');
+												$("#" + currentId).find(".voteUp").addClass('chosenUp');
+											}
+											else if(savedDataUp == false && savedDataDown == false)// van -1 @ 0
+											{
+												$("#" + currentId).data("votedup",false);//true
+												$("#" + currentId).data("voteddown",false);//false
+												$("#" + currentId).find(".voteDown").removeClass('chosenDown');
+												$("#" + currentId).find(".voteDown").addClass('down');
+											}
+								break;
+							case "2up" : 	if(savedDataUp == true && savedDataDown == false)// van -1 @ 1
+											{
+												$("#" + currentId).data("votedup",true);//true
+												$("#" + currentId).data("voteddown",false);//false
+												$("#" + currentId).find(".voteUp").removeClass('up');
+												$("#" + currentId).find(".voteUp").addClass('chosenUp');
+											}
+								break;
+							case "1down" : 	if(savedDataUp == false && savedDataDown == true)//van 0 @ -1
+											{
+												$("#" + currentId).data("votedup",false);//true
+												$("#" + currentId).data("voteddown",true);//false
+												$("#" + currentId).find(".voteDown").removeClass('down');
+												$("#" + currentId).find(".voteDown").addClass('chosenDown');
+											}
+											else if(savedDataUp == false && savedDataDown == false)// van 1 @ 0
+											{
+												$("#" + currentId).data("votedup",false);//true
+												$("#" + currentId).data("voteddown",false);//false
+												$("#" + currentId).find(".voteUp").removeClass('chosenUp');
+												$("#" + currentId).find(".voteUp").addClass('up');
+											}
+								break;
+							case "2down" : 	if(savedDataUp == false && savedDataDown == true)// van 1 @ -1
+											{
+												$("#" + currentId).data("votedup",false);//true
+												$("#" + currentId).data("voteddown",true);//false
+												$("#" + currentId).find(".voteDown").removeClass('down');
+												$("#" + currentId).find(".voteDown").addClass('chosenDown');
+											}
+								break;
+						}
+				    }
+				});
+			});
+		});
+
 // nu de client definieëren
 
 	/*client = new Faye.Client('http://localhost:3002/faye/',{
 				timeout: 20
 	});*/
+
 	client = new Faye.Client(indexPagePath + 'faye/',{
 				timeout: 20
 	});
@@ -121,7 +246,7 @@ $(document).ready(function (e){
 							+ 	"<div class='messageConSec'>"
 							+ 		"<div class='messageDetails'>"
 							+			"<div class='profile'>"
-							+				"<img src='../images/profilePic.png' alt=''>"
+							+				"<img src='" + message.senderPicURL + "' alt='senderPic'>"
 							+			"</div>"
 							+			"<div class='votes'>"
 							+				"<div class='voteInfo'>"
@@ -157,7 +282,7 @@ $(document).ready(function (e){
 							+ 	"<div class='messageConSec'>"
 							+ 		"<div class='messageDetails'>"
 							+			"<div class='profile'>"
-							+				"<img src='../images/profilePic.png' alt=''>"
+							+				"<img src='" + message.senderPicURL + "' alt='SenderPic'>"
 							+			"</div>"
 							+			"<div class='votes'>"
 							+				"<div class='voteInfo'>"
@@ -187,7 +312,7 @@ $(document).ready(function (e){
 							+ 	"<div class='messageConSec'>"
 							+ 		"<div class='messageDetails'>"
 							+			"<div class='profile'>"
-							+				"<img src='../images/profilePic.png' alt=''>"
+							+				"<img src='" + message.senderPicURL + "' alt='SenderPic'>"
 							+			"</div>"
 							+			"<div class='votes'>"
 							+				"<div class='voteInfo'>"
@@ -236,7 +361,8 @@ $(document).ready(function (e){
 // deze client moet ook zijn vragen kunnen stellen, dus publiceren naar /message
 	$("#submitQuestion").on('click', function (e){
 		e.preventDefault();
-		var chatUser = "Test";  //MOET HIER NOG UITGEVIST WORDEN
+		var chatUser = getTextType($("h2.fbUsername")[0]);  //MOET HIER NOG UITGEVIST WORDEN
+		console.log(chatUser);
 		var chatMessage = $("#questionField").val();
 		var messageIllegalCharsFound = illegalCharsFound(chatMessage);
         var userIllegalCharsFound = illegalCharsFound(chatUser);
@@ -261,9 +387,10 @@ $(document).ready(function (e){
     			$(".errorMessage").css('display','none');
     			var totalMessagesCount = parseInt(getTextType($("span.hiddenMessageCount")[0]));
     			totalMessagesCount++;
-    			var insertInDb = {id : totalMessagesCount, message : chatMessage, sender : chatUser, chatType : chatMessageType, chatTime : currentDateTime};
+    			var senderPic = $("#accountPic").attr("src");
+    			var insertInDb = {id : totalMessagesCount, message : chatMessage, sender : chatUser, chatType : chatMessageType, chatTime : currentDateTime, senderPicURL : senderPic};
 		
-    			var publicationAsk = client.publish('/message', {id : "message"+totalMessagesCount, chat : chatMessage, user : chatUser, chatMessageType : chatMessageType, chatTime : currentdate});
+    			var publicationAsk = client.publish('/message', {id : "message"+totalMessagesCount, chat : chatMessage, user : chatUser, chatMessageType : chatMessageType, chatTime : currentdate, senderPicURL :senderPic});
     			//var publicationAsk = client.publish('/moderate', {chat : chatMessage, user : chatUser, chatMessageType : chatMessageType});
     				  //alert(parseInt(getTextType($("span.hiddenMessageCount")[0])));
 				
@@ -282,12 +409,16 @@ $(document).ready(function (e){
 							success: function(response) { // on success..
 								//showAbsences();
 								//humane.log("Was een succes!");
+								if(JSON.stringify(response) == "true")
+								{
+									$("#sender").attr("src", senderPic);
+								}
 								console.log("geluktsucces");
 								e.preventDefault();
 								
 							}
 						});//einde ajax
-			//messageId++;
+				changeText($("span.hiddenMessageCount")[0],totalMessagesCount);
 	    	}
     	}
     	else
@@ -322,7 +453,7 @@ $(document).ready(function (e){
 	    	$(currentMessageId).data("votedup",true);
 			$(currentMessageId).find(".voteUp").removeClass('up');
 			$(currentMessageId).find(".voteUp").addClass('chosenUp');
-			voteMessage(currentMessageId, "up", "1up");
+			voteMessage(currentMessageId, "up", "1up",true,false);
 	    }
 	    else if($(currentMessageId).data("votedup") === false && $(currentMessageId).data("voteddown") === true)
 	    {
@@ -333,12 +464,12 @@ $(document).ready(function (e){
 			$(currentMessageId).find(".voteUp").addClass('chosenUp');
 			$(currentMessageId).find(".voteDown").removeClass('chosenDown');
 			$(currentMessageId).find(".voteDown").addClass('down');
-	    	voteMessage(currentMessageId, "up", "2up");
+	    	voteMessage(currentMessageId, "up", "2up",true,false);
 	    }
 	    else
 	    {
 	    	setInitialVotingSituation (currentMessageId);
-	    	voteMessage(currentMessageId, "up", "1down");
+	    	voteMessage(currentMessageId, "up", "1down",false,false);
 	    }
 	    
        // checkIfNoVotes ("#" + currentMessageId);
@@ -368,7 +499,7 @@ $(document).ready(function (e){
 		    	$(currentMessageId).data("voteddown",true);
 				$(currentMessageId).find(".voteDown").removeClass('down');
 				$(currentMessageId).find(".voteDown").addClass('chosenDown');
-		    	voteMessage(currentMessageId, "down", "1down");
+		    	voteMessage(currentMessageId, "down", "1down",false,true);
 		    }
 		    else if($(currentMessageId).data("voteddown") === false && $(currentMessageId).data("votedup") === true)
 		    {
@@ -379,12 +510,12 @@ $(document).ready(function (e){
 				$(currentMessageId).find(".voteDown").addClass('chosenDown');
 				$(currentMessageId).find(".voteUp").removeClass('chosenUp');
 				$(currentMessageId).find(".voteUp").addClass('up');
-		    	voteMessage(currentMessageId, "down", "2down");
+		    	voteMessage(currentMessageId, "down", "2down",false,true);
 		    }
 		    else
 		    {
 		    	setInitialVotingSituation (currentMessageId);
-		    	voteMessage(currentMessageId, "down", "1up");
+		    	voteMessage(currentMessageId, "down", "1up",false,false);
 		    }
 		    
 		        
@@ -478,7 +609,11 @@ $(document).ready(function (e){
 								//showAbsences();
 								//humane.log("Was een succes!");
 								//console.log("geluktsucces");
-								deleteMessage(currentMessageId);
+								if(JSON.stringify(response) == "true")
+								{
+									deleteMessage(currentMessageId);
+								}
+								
 								event.preventDefault();
 								
 							}
@@ -689,8 +824,34 @@ function checkIfThereArePosts()
 	}   
 }
 
-function voteMessage(p_messageId, p_voteType, p_voteValue)
+function voteMessage(p_messageId, p_voteType, p_voteValue,p_dataAttrVotedUp, p_dataAttrVotedDown)
 {
+	// IN EEN COOKIE SCHRIJVEN OP WELKE MESSAGES WE AL GEVOTED HEBBEN
+	if(cookiesAreEnabled)
+	{
+		$.cookie.json = true;
+	    var allMyvotes = $.cookie('myVotesIMDWALL');
+	    alert(allMyvotes);
+	    //alert("id: " + p_messageId.substr(1,p_messageId.length));
+	    var id = p_messageId.substr(1,p_messageId.length);
+	    //var incId = uniqId();
+
+	    $.each(allMyvotes, function (index, value) {
+			var dupMEsId = index;
+
+			if(id == dupMEsId)
+			{
+				delete allMyvotes[id];
+			}
+		});
+
+	    var test = {"messageId" : id, "messageValue" : p_voteValue,votedUp : p_dataAttrVotedUp,votedDown : p_dataAttrVotedDown};
+	    allMyvotes[id ] = test;
+	    messageId++;
+	    $.cookie('myVotesIMDWALL',allMyvotes, { expires: 365 });
+
+	}
+
     var publicationVote = client.publish('/vote', {chosenQuestion : p_messageId, voteType : p_voteType, voteValue : p_voteValue});
     
     
@@ -846,3 +1007,25 @@ function uniqId() {
   return result;
 }
 
+function showLogoutSidebar()
+{
+	if($("#accountOptions").hasClass('moveRight'))
+		{
+			$("#accountOptions").removeClass('moveRight');
+			$("#baseContent").removeClass('moveRight');
+		}
+		else
+		{
+			$("#accountOptions").addClass('moveRight');
+			$("#baseContent").addClass('moveRight');
+		}
+}
+
+
+function cookiesAreEnabled()
+{
+	if (navigator.cookieEnabled === true)
+		return true;
+	else
+		return false;
+}
