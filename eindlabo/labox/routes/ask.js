@@ -10,13 +10,9 @@ var ChatCount = mongoose.model('ChatCount');
 
 exports.ask = function(req, res){
 
-  res.render('ask', { title: 'IMD WALL' });
+  res.render('askQuestion', { title: 'IMD WALL' });
 };
 
-exports.vote = function(req, res){
-
- 
-};
 
 
 
@@ -27,37 +23,25 @@ exports.create = function ( req, res ){
 		    votes : 0,
 		    message : req.body.chatContent.message,
 		    chatType : req.body.chatContent.chatType,
-		    chatTime : Date.now()
+		    chatTime : Date.now(),
+		    senderPicURL : req.body.chatContent.senderPicURL
 	  }).save( function( err, question, count ){
 	  	var mesCount = "";
 	  		if(! err)
 	  		{
 	  			console.log("insert gelukt");
 
-			  	
-				  	/* Chat.find( function ( err, questions, count ){
-				       if(! err)
-				       {
-				       		 allChats = questions;
-					        //console.log(allChats);
-					        mesCount = allChats.length;
-					        mesCount++;
-					        console.log(err + ' - ' + questions + ' - ' + count);
-				       }
-				      });
-					*/
-				  	 	/*ChatCount.find({ description : "count"}, function(err, chatCounts){
-          					console.log(chatCounts);
-       					 });*/
-
 	  					ChatCount.find({}, function(err, chatCounts){
           					
           					//console.log(chatCounts);
 	  						var count = chatCounts[0].messagesCount;
           					count++;
+          					var defaultMessagesCount = 0;
 
+          					/*hier de messagesCount op 0 zetten als begin,
+          					wanneer er nog geen chats in de databank zouden zitten*/
 	  						var conditions = { id: 1 }
-							  , update = { messagesCount : count}
+							  , update = { messagesCount : count }
 							  , options = { multi: true };
 
 							ChatCount.update(conditions, update, options, callback);
@@ -72,11 +56,15 @@ exports.create = function ( req, res ){
 
           					
        					 });
-
-	  		
-
+	  					res.send(JSON.stringify(true));
+	  		}
+	  		else
+	  		{
+	  			res.send(JSON.stringify(false));
 	  		}
 		  	
 		    //res.redirect( '/ask' );
 	  });
+
+
 };

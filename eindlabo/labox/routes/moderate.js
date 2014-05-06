@@ -27,11 +27,19 @@ exports.destroy = function ( req, res ){
 	Chat.findOneAndRemove(conditions, callback);
 
 	function callback (err, numAffected) {
+    var result = false;
 							  // numAffected is the number of updated documents
 							  if(!err)
-          							console.log("gedeleted");
-          						else
-          							console.log(" niet gedeleted");
-							};
-
+                {
+          					console.log("gedeleted");
+                    result = true;
+                }
+          			else
+          			{
+                  console.log(" niet gedeleted");
+                  result = false;
+                }
+		};
+              console.log(result);
+      res.send(JSON.stringify(result));
 };
