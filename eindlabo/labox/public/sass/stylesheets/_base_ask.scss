@@ -71,8 +71,8 @@ body
 
 				#accountPic
 				{					
-					width: 25px;
-
+					/*width: 25px;*/
+					width: 40px;
 
 					/*@extend .extendIcons;*/
 					position: absolute;
@@ -81,6 +81,21 @@ body
 
 					/*right: 20px;
 					top: 10px;*/
+					right: 0;
+					top: 0;
+					/*padding: 11px 25px;*/
+					padding: 7px 21px;
+					/*display: none;*/
+				}
+
+				#accountPicMod
+				{
+					width: 25px;
+
+					/*@extend .extendIcons;*/
+					position: absolute;
+					cursor: pointer;
+
 					right: 0;
 					top: 0;
 					padding: 11px 25px;
@@ -132,6 +147,11 @@ body
 						background-color: $headerColor;
 						color: white;
 						padding: 10px;
+
+						.hiddenSpan
+						{
+							display: none;
+						}
 					}
 				}
 				
@@ -248,10 +268,16 @@ body
 					border-bottom: 1px dashed darken($headerColor,30%);
 				}
 
-				p.logout
+				a.logout
+				{
+					padding: 10px;
+					text-decoration: none;
+					color: white;
+				}
+
+				a.logout:hover
 				{
 					cursor: pointer;
-					padding: 10px;
 				}
 				
 			}

@@ -74,19 +74,25 @@
 }
 
 */
+/*#16a085;*/
 #indexBody {
-  background-color: #16a085; }
+  background-color: #1abc9c; }
   #indexBody #login {
-    background-color: #ecfcf9;
-    color: #0d2a3c;
-    width: 40%;
-    margin: 10% 30%;
-    padding-bottom: 20px;
-    padding-top: 20px;
-    -webkit-border-radius: 40px;
-    -moz-border-radius: 40px;
-    -ms-border-radius: 40px;
-    border-radius: 40px; }
+    color: #2c3e50;
+    width: 30%;
+    margin: 10% 35%; }
+    #indexBody #login #logo {
+      width: 40%;
+      margin: 20px 30%; }
+    #indexBody #login .loginBackground {
+      background-color: #e7eaed;
+      /*lighten($baseColor, 60%);*/
+      -webkit-border-radius: 6px;
+      -moz-border-radius: 6px;
+      -ms-border-radius: 6px;
+      border-radius: 6px;
+      padding-bottom: 20px;
+      padding-top: 20px; }
     #indexBody #login h2 {
       text-align: center;
       padding-top: 10px; }
@@ -96,46 +102,84 @@
     #indexBody #login #login1 {
       font-size: 11px;
       font-size: 1.1rem;
-      width: 60%;
-      margin: 20px 20%; }
-      #indexBody #login #login1 li.facebookButton {
-        background-color: #2980b9;
-        /*#5070A9*/
-        min-width: 236px;
-        height: 50px;
-        background-image: url("../../images/facebook.png");
-        background-repeat: no-repeat;
-        background-size: 35px;
-        background-position: 10px; }
-        #indexBody #login #login1 li.facebookButton a {
+      width: 70%;
+      margin: 20px 15%; }
+      #indexBody #login #login1 li {
+        /*background-color: #2980b9 ;
+						min-width: 236px;
+						height: 50px;
+						background-image: url("../../images/facebook.png");
+						background-repeat: no-repeat;
+						background-size: 35px;
+						background-position: 10px;
+						@include border-radius(6px);*/ }
+        #indexBody #login #login1 li a {
           text-decoration: none;
           color: white; }
-          #indexBody #login #login1 li.facebookButton a .loginText {
-            margin-top: 5px;
-            position: absolute;
-            margin: 15px 55px;
-            display: block; }
+          #indexBody #login #login1 li a .innerLogin {
+            display: block;
+            background-color: #2980b9;
+            /*#5070A9*/
+            min-width: 236px;
+            height: 50px;
+            background-image: url("../../images/facebook.png");
+            background-repeat: no-repeat;
+            background-size: 35px;
+            background-position: 10px;
+            -webkit-border-radius: 6px;
+            -moz-border-radius: 6px;
+            -ms-border-radius: 6px;
+            border-radius: 6px; }
+            #indexBody #login #login1 li a .innerLogin .loginText {
+              display: inline-block;
+              margin: 4% 22%;
+              width: inherit;
+              width: 53%; }
     #indexBody #login #loginDiff {
       text-align: center;
       margin: 0 47%; }
     #indexBody #login ul#login2 {
       font-size: 11px;
       font-size: 1.1rem;
-      width: 60%;
-      margin: 20px 20%; }
-      #indexBody #login ul#login2 li input[type="text"] {
-        width: 90%;
-        padding: 10px;
+      width: 70%;
+      margin: 20px 15%; }
+      #indexBody #login ul#login2 li input[type="text"], #indexBody #login ul#login2 li input[type="password"] {
         font-size: 11px;
-        font-size: 1.1rem; }
+        font-size: 1.1rem;
+        border-color: transparent;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        -ms-border-radius: 6px;
+        border-radius: 6px;
+        text-indent: 15px;
+        margin-bottom: 20px;
+        width: 100%;
+        height: 45px; }
+      #indexBody #login ul#login2 li input[type="password"] {
+        background-image: url("../../images/pass.png"); }
+      #indexBody #login ul#login2 li input[type="text"] {
+        background-image: url("../../images/user.png"); }
       #indexBody #login ul#login2 li input[type="submit"] {
         width: 100%;
         padding: 10px;
-        background-color: #117964;
+        background-color: #1abc9c;
         color: white;
         font-size: 11px;
         font-size: 1.1rem;
-        border: none; }
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        -ms-border-radius: 6px;
+        border-radius: 6px;
+        border: none;
+        margin-bottom: 20px;
+        height: 45px; }
+      #indexBody #login ul#login2 li #modLogin:hover {
+        cursor: pointer;
+        background-color: #1bc5a3; }
+      #indexBody #login ul#login2 li .login-icon {
+        background-repeat: no-repeat;
+        background-size: 20px;
+        background-position: right 5px center; }
     #indexBody #login ul#loginImg {
       margin: 30px 25%;
       width: 50%; }
@@ -182,12 +226,23 @@ body {
       width: 60px;
       display: none; }
     body #wholeContainer #baseContent #header #accountPic {
-      width: 25px;
+      /*width: 25px;*/
+      width: 40px;
       /*@extend .extendIcons;*/
       position: absolute;
       cursor: pointer;
       /*right: 20px;
 					top: 10px;*/
+      right: 0;
+      top: 0;
+      /*padding: 11px 25px;*/
+      padding: 7px 21px;
+      /*display: none;*/ }
+    body #wholeContainer #baseContent #header #accountPicMod {
+      width: 25px;
+      /*@extend .extendIcons;*/
+      position: absolute;
+      cursor: pointer;
       right: 0;
       top: 0;
       padding: 11px 25px;
@@ -217,6 +272,8 @@ body {
         background-color: #01a1af;
         color: white;
         padding: 10px; }
+        body #wholeContainer #baseContent #content #leftSide .category .hiddenSpan {
+          display: none; }
     body #wholeContainer #baseContent #content #rightSide {
       float: right;
       width: 30%;
@@ -290,9 +347,12 @@ body {
         text-align: center;
         padding: 10px;
         border-bottom: 1px dashed #001517; }
-      body #wholeContainer #accountOptions #options p.logout {
-        cursor: pointer;
-        padding: 10px; }
+      body #wholeContainer #accountOptions #options a.logout {
+        padding: 10px;
+        text-decoration: none;
+        color: white; }
+      body #wholeContainer #accountOptions #options a.logout:hover {
+        cursor: pointer; }
 
 /*#33b6c0*/
 body #wholeContainer #header h1 {
