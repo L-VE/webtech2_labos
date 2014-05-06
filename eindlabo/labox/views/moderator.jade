@@ -8,7 +8,7 @@ block content
                 img(id="goBackArrow", src="../images/arrow_goBack_white.png")
             h1 IMD WALL
             #account
-                img(id="accountPic", src="../images/user_white.png")
+                img(id="accountPicMod", src="../images/user_white.png")
           //#login
           //  h2 Login here
           //  ul
@@ -24,7 +24,7 @@ block content
                                 .messageConSec
                                     .messageDetails
                                         .profile
-                                            img(src='../images/profilePic.png' alt='')
+                                            img(src= "#{q.senderPicURL}", alt='sender', id='sender')
                                         .votes
                                             .voteInfo
                                                 h1.votesNr
@@ -47,4 +47,4 @@ block content
             #options 
                 h2 My account
                 </br>
-                p.logout Logout
+                a(class='logout', href='/logout') Logout
