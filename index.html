@@ -163,49 +163,55 @@ transition: background-color 5s linear 1s;
 <ul>
 <li>
 <strong>Transformations</strong>: Transformations are a different form of animation. Instead of bridging two states on an element, a transformation physically changes the look of the element. You can transform many aspects of an element, such as: scaling—changing the size of the element,rotating—spinning the element and translating—moving the element</li>
-</ul><p><code>&lt;div id="shape"&gt;&lt;/div&gt;</code></p>
+</ul><pre><code>&lt;div id="shape"&gt;&lt;/div&gt;
 
-<pre><code>#shape
-{
-   width: 150px;
-   height: 150px;
-  `background-color: #e74c3c;
-   transition: -webkit-transform 1s;
-}`
-</code></pre>
+    #shape
+    {
+       width: 150px;
+       height: 150px;
+      `background-color: #e74c3c;
+       transition: -webkit-transform 1s;
+    }
 
-<p><code>#shape:hover
+
+#shape:hover
   {
     -webkit-transform: scale(2) translateY(100px) rotate(45deg);
-  };</code></p>
+  };
+
+</code></pre>
 
 <ul>
 <li>
 <strong>Translations</strong>: Translations are a transformation function that moves the element across the x- or y-axis. So, when you translate an element you are transforming it’s location. </li>
-</ul><p><code>div
+</ul><pre><code>div
   {
     -ms-transform: translate(50px,100px); /* IE 9 */
     -webkit-transform: translate(50px,100px); /* Chrome, Safari, Opera */
     transform: translate(50px,100px);
-   }</code></p>
+   }
+</code></pre>
 
 <ul>
 <li>
 <strong>Animations</strong>: CSS animations make it possible to animate transitions from one CSS style configuration to another. Animations consist of two components, a style describing the CSS animation and a set of keyframes that indicate the start and end states of the animation's style, as well as possible intermediate waypoints along the way.</li>
-</ul><p>`.automatic
+</ul><pre><code>.automatic
   {
    -webkit-animation: moveIt 2s infinite;
-  }</p>
+  }
 
-<p></p><div></div>
 
-<p>@-webkit-keyframes moveIt
+  &lt;div id="square" class="automatic"&gt;&lt;/div&gt;
+
+
+  @-webkit-keyframes moveIt
   {
      0% { }
      25% { -webkit-transform: rotate(45deg);}
      50% { left:50%; top: 50%; -webkit-transform: scale(2.5) rotate(45deg);}
      100% { -webkit-transform: rotate(0deg);}
-   }`</p>
+   }
+</code></pre>
 
 <h2>
 <a name="3-advanced-javascript" class="anchor" href="#3-advanced-javascript"><span class="octicon octicon-link"></span></a><a name="lab3">3. Advanced Javascript</a>
@@ -226,12 +232,11 @@ transition: background-color 5s linear 1s;
 
 <p>Functions like <code>$(“ul#todo li”).css(“color”, “red”);</code> in jQuery can be written like </p>
 
-<p>` HTMLElement.prototype.changeColor = function(color)
-  {</p>
-
-<p>this.style["color"] = color;</p>
-
-<p>}`</p>
+<pre><code>  HTMLElement.prototype.changeColor = function(color)
+  {
+      this.style["color"] = color;
+  }
+</code></pre>
 
 <p>Then we can use our own function to change the text color of an element:</p>
 
