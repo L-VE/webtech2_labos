@@ -152,13 +152,72 @@ We then had to upload it to our git accounts. Thus making use of all the git com
 <h3>
 <a name="more-about-css-animations" class="anchor" href="#more-about-css-animations"><span class="octicon octicon-link"></span></a>More about CSS-Animations:</h3>
 
-<h2>
+<ul>
+<li><p><strong>Transitions</strong>: A transition is an animation that happens between changes.It is placed between the off and on states.
+<code>transition: property duration timing-function delay;
+transition: background-color 5s linear 1s;</code></p></li>
+<li>
+<p>**Transformations **: Transformations are a different form of animation. Instead of bridging two states on an element, a transformation physically changes the look of the element. You can transform many aspects of an element, such as: scaling—changing the size of the element,rotating—spinning the element and translating—moving the element
+`</p>
+<div></div>
+
+<h1>
+<a name="shape" class="anchor" href="#shape"><span class="octicon octicon-link"></span></a>shape</h1>
+
+<p>{
+   width: 150px;
+   height: 150px;
+   background-color: #e74c3c;
+   transition: -webkit-transform 1s;
+}</p>
+
+<h1>
+<a name="shapehover" class="anchor" href="#shapehover"><span class="octicon octicon-link"></span></a>shape:hover</h1>
+
+<p>{
+  -webkit-transform: scale(2) translateY(100px) rotate(45deg);
+};`</p>
+</li>
+<li><p><strong>Translations</strong>: Translations are a transformation function that moves the element across the x- or y-axis. So, when you translate an element you are transforming it’s location. 
+<code>div
+{
+  -ms-transform: translate(50px,100px); /* IE 9 */
+  -webkit-transform: translate(50px,100px); /* Chrome, Safari, Opera */
+  transform: translate(50px,100px);
+}</code></p></li>
+<li>
+<p>**Animations **: CSS animations make it possible to animate transitions from one CSS style configuration to another. Animations consist of two components, a style describing the CSS animation and a set of keyframes that indicate the start and end states of the animation's style, as well as possible intermediate waypoints along the way.
+`  .automatic
+{
+-webkit-animation: moveIt 2s infinite;
+}</p>
+
+<div></div>
+
+<p>@-webkit-keyframes moveIt
+{
+   0% { }
+   25% { -webkit-transform: rotate(45deg);}
+   50% { left:50%; top: 50%; -webkit-transform: scale(2.5) rotate(45deg);}
+   100% { -webkit-transform: rotate(0deg);}
+}`</p>
+</li>
+</ul><h2>
 <a name="3-advanced-javascript" class="anchor" href="#3-advanced-javascript"><span class="octicon octicon-link"></span></a><a name="lab3">3. Advanced Javascript</a>
 </h2>
 
-<hr><p>In deze oefening wordt het principe van jQuery wat nagebouwd. Inleidingsoefening om met prototypical inheritance te werken voor verdere opdrachten.</p>
+<hr><h3>
+<a name="lab-contents-2" class="anchor" href="#lab-contents-2"><span class="octicon octicon-link"></span></a>Lab contents:</h3>
 
-<p>Html-elementen selecteren dmv id, class of element-naam.  </p>
+<p>In this lab we had to write a mini-framework to write a little todo-app. A framework like jQuery.</p>
+
+<h3>
+<a name="lessons-learned-2" class="anchor" href="#lessons-learned-2"><span class="octicon octicon-link"></span></a>Lessons learned:</h3>
+
+<p>After this course I understood how a framework like jQuery works. And that you can write your own prototype functions.</p>
+
+<h3>
+<a name="more-about-advanced-javascript" class="anchor" href="#more-about-advanced-javascript"><span class="octicon octicon-link"></span></a>More about Advanced Javascript:</h3>
 
 <h2>
 <a name="4-building-an-app-prototype" class="anchor" href="#4-building-an-app-prototype"><span class="octicon octicon-link"></span></a><a name="lab4">4. Building An App Prototype</a>
