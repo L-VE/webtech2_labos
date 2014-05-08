@@ -155,38 +155,38 @@ We then had to upload it to our git accounts. Thus making use of all the git com
 <ul>
 <li>
 <strong>Transitions</strong>: A transition is an animation that happens between changes.It is placed between the off and on states.</li>
-</ul><p>`transition: property duration timing-function delay;</p>
+</ul><p><code>transition: property duration timing-function delay;</code></p>
 
-<p>transition: background-color 5s linear 1s;`</p>
+<p><code>transition: background-color 5s linear 1s;</code></p>
 
 <ul>
 <li>
 <strong>Transformations</strong>: Transformations are a different form of animation. Instead of bridging two states on an element, a transformation physically changes the look of the element. You can transform many aspects of an element, such as: scaling—changing the size of the element,rotating—spinning the element and translating—moving the element</li>
-</ul><p>`</p><div></div>
+</ul><p><code>&lt;div id="shape"&gt;&lt;/div&gt;</code></p>
 
-<pre><code>#shape
-{
-   width: 150px;
-   height: 150px;
-   background-color: #e74c3c;
-   transition: -webkit-transform 1s;
-}
+<pre><code>`#shape`
+`{`
+   `width: 150px;`
+   `height: 150px;`
+   `background-color: #e74c3c;`
+   `transition: -webkit-transform 1s;`
+`}`
 </code></pre>
 
-<p>#shape:hover
-  {
-    -webkit-transform: scale(2) translateY(100px) rotate(45deg);
-  };`</p>
+<p><code>#shape:hover</code>
+  <code>{</code>
+    <code>-webkit-transform: scale(2) translateY(100px) rotate(45deg);</code>
+  <code>};</code></p>
 
 <ul>
 <li>
 <strong>Translations</strong>: Translations are a transformation function that moves the element across the x- or y-axis. So, when you translate an element you are transforming it’s location. </li>
-</ul><p><code>div
-  {
-    -ms-transform: translate(50px,100px); /* IE 9 */
-    -webkit-transform: translate(50px,100px); /* Chrome, Safari, Opera */
-    transform: translate(50px,100px);
-   }</code></p>
+</ul><p><code>div</code>
+  <code>{</code>
+    <code>-ms-transform: translate(50px,100px); /* IE 9 */</code>
+    <code>-webkit-transform: translate(50px,100px); /* Chrome, Safari, Opera */</code>
+    <code>transform: translate(50px,100px);</code>
+   <code>}</code></p>
 
 <ul>
 <li>
