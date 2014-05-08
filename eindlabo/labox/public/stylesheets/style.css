@@ -237,7 +237,8 @@
 /*#01a1af;*/
 /*#33b6c0*/
 body {
-  overflow: hidden;
+  /*overflow: hidden;*/
+  overflow: auto;
   font-family: 'oxygen-regular', sans-serif;
   font-size: 16px;
   font-size: 1.6rem;
@@ -564,6 +565,8 @@ body {
           width: 25%;
           /*@extend .twosides;*/
           margin: 30px 0;
+          right: 25px;
+          position: fixed;
           overflow: hidden; }
           body #wholeContainer #baseContent #content #rightSide .questionHeader {
             font-size: 11px;
@@ -634,14 +637,17 @@ body {
               resize: none;
               /* @extend wordt niet opgrvraagd*/ }
             body #wholeContainer #baseContent #content #rightSide #form #sendTypes {
-              margin: 10px 0; }
+              margin: 10px 0;
+              /*input
+							{
+								width: 1.5em;
+								height: 1.5em;
+								
+							}*/ }
               body #wholeContainer #baseContent #content #rightSide #form #sendTypes label {
                 font-size: 10px;
                 font-size: 1rem;
                 color: white; }
-              body #wholeContainer #baseContent #content #rightSide #form #sendTypes input {
-                width: 1.5em;
-                height: 1.5em; }
     body #wholeContainer #footerAsk {
       position: absolute;
       width: 100%;
@@ -681,6 +687,12 @@ body {
     font-size: 0.95rem; } }
 
 @media all and (max-width: 700px) {
+  /*body #wholeContainer #baseContent #content #rightSide #form #sendTypes input
+	{
+		width: 1.3em;
+		height: 1.3em;
+	}
+*/
   body #wholeContainer #baseContent #content #rightSide #form .errorMessage {
     text-align: center;
     color: white; }
@@ -696,9 +708,6 @@ body {
   body #wholeContainer #baseContent #content #rightSide #form #sendTypes {
     margin: 10px 20% 0;
     width: 100%; }
-  body #wholeContainer #baseContent #content #rightSide #form #sendTypes input {
-    width: 2.5em;
-    height: 2.5em; }
   body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails .votes .voteInfo {
     margin-left: 10px; }
   body #wholeContainer #baseContent #content #rightSide {
