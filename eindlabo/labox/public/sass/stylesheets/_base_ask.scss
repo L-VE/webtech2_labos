@@ -490,7 +490,7 @@ body
 					width: 25%;
 					/*@extend .twosides;*/
 					margin: 30px 0;
-					right: 25px;
+					
 					position: fixed;
 					overflow: hidden;
 
@@ -684,6 +684,8 @@ body
 /*------------------MEDIA QUERIES-------------------------*/
 /*--------------------------------------------------------*/
 
+
+
 @media all and (max-width : 1175px) {
 	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails 
 	.votes .voteAction ul li span.up, 
@@ -722,6 +724,12 @@ body
 
 }
 
+@media all and (min-width : 700px) {
+	body #wholeContainer #baseContent #content #rightSide
+	{
+		right: 25px;
+	}
+}
 
 @media all and (max-width : 700px) {
 
