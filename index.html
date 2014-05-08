@@ -157,7 +157,7 @@ We then had to upload it to our git accounts. Thus making use of all the git com
 <code>transition: property duration timing-function delay;
 transition: background-color 5s linear 1s;</code></p></li>
 <li>
-<p>**Transformations **: Transformations are a different form of animation. Instead of bridging two states on an element, a transformation physically changes the look of the element. You can transform many aspects of an element, such as: scaling—changing the size of the element,rotating—spinning the element and translating—moving the element
+<p><strong>Transformations</strong>: Transformations are a different form of animation. Instead of bridging two states on an element, a transformation physically changes the look of the element. You can transform many aspects of an element, such as: scaling—changing the size of the element,rotating—spinning the element and translating—moving the element
 `</p>
 <div></div>
 
@@ -186,7 +186,7 @@ transition: background-color 5s linear 1s;</code></p></li>
   transform: translate(50px,100px);
 }</code></p></li>
 <li>
-<p>**Animations **: CSS animations make it possible to animate transitions from one CSS style configuration to another. Animations consist of two components, a style describing the CSS animation and a set of keyframes that indicate the start and end states of the animation's style, as well as possible intermediate waypoints along the way.
+<p><strong>Animations</strong>: CSS animations make it possible to animate transitions from one CSS style configuration to another. Animations consist of two components, a style describing the CSS animation and a set of keyframes that indicate the start and end states of the animation's style, as well as possible intermediate waypoints along the way.
 `  .automatic
 {
 -webkit-animation: moveIt 2s infinite;
@@ -219,17 +219,56 @@ transition: background-color 5s linear 1s;</code></p></li>
 <h3>
 <a name="more-about-advanced-javascript" class="anchor" href="#more-about-advanced-javascript"><span class="octicon octicon-link"></span></a>More about Advanced Javascript:</h3>
 
+<p>Functions like <code>$(“ul#todo li”).css(“color”, “red”);</code> in jQuery can be written like 
+<code>HTMLElement.prototype.changeColor = function(color)
+   {
+   this.style["color"] = color;
+   }
+</code>
+Then we can use our own function to change the text color of an element:
+<code>document.getElementById("todo-item1").changeColor("purple");</code></p>
+
+<p>More information about Advanced Javascript can be found on the following sites:
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript">Introduction to Object-Oriented JavaScript</a>
+<a href="http://ejohn.org/apps/learn/#31">Learning advanced javascript</a></p>
+
 <h2>
 <a name="4-building-an-app-prototype" class="anchor" href="#4-building-an-app-prototype"><span class="octicon octicon-link"></span></a><a name="lab4">4. Building An App Prototype</a>
 </h2>
 
-<hr><p>In deze oefening staat het gebruik van API's centraal alsook prototypical inheritance en het gebruik van de LocalStorage.  </p>
+<hr><h3>
+<a name="lab-contents-3" class="anchor" href="#lab-contents-3"><span class="octicon octicon-link"></span></a>Lab contents:</h3>
+
+<p>In lab 4 we had to create a weatherapp using weather api's, localstorage, ajax calls as well as use prototypical inheritance.</p>
+
+<h3>
+<a name="lessons-learned-3" class="anchor" href="#lessons-learned-3"><span class="octicon octicon-link"></span></a>Lessons learned:</h3>
+
+<p>I found this was the second most hardest subject we saw in our course Webtechnology 2. I already had experience with object oriented programming and this made me remember my Java programming lessons while studying Applied Informatics. I like this way of programming, it gives a more well-arranges structure. But still I had to get used to using it in Javascript.</p>
+
+<h3>
+<a name="more-about-advanced-javascript-1" class="anchor" href="#more-about-advanced-javascript-1"><span class="octicon octicon-link"></span></a>More about Advanced Javascript:</h3>
+
+<p>More info in the previous section (Lab3).</p>
 
 <h2>
 <a name="5-terrappke---weather-app-apis" class="anchor" href="#5-terrappke---weather-app-apis"><span class="octicon octicon-link"></span></a><a name="lab5">5. TerrAppke - Weather-app (API's)</a>
 </h2>
 
-<hr><p>Deze webpagina geeft het huidige weer en temperatuur weer en is een inschrijvingspagina voor mensen die meer willen te weten komen over de richting Interactive Multimedia Design aan de Thomas More hogeschool te Mechelen.  </p>
+<hr><h3>
+<a name="lab-contents-4" class="anchor" href="#lab-contents-4"><span class="octicon octicon-link"></span></a>Lab contents:</h3>
+
+<p>For this lab we had to build an app that the teacher suggested or build your own idea. I worked together with a classmate (<a href="https://github.com/tommooredotbe/webtech2-bestrepositoryeu">Tom De Moore</a>) to build this app. It's basically another weatherapp that show the current temperature along with information about our college and our fields of study and a subscription field. It's created to get new students (a sort of campagne). If it's sunny and warm outside, then they're invited to come and take a look at our school and enjoy a fresh drink and such. The background color as well as the temperature and the description change when the weather changes. </p>
+
+<h3>
+<a name="lessons-learned-4" class="anchor" href="#lessons-learned-4"><span class="octicon octicon-link"></span></a>Lessons learned:</h3>
+
+<p>It started out as a simple app to build, but I got kind of caught up in it and it started to become more than a school assignment. I had a lot of fun building this app alongside <a href="https://github.com/tommooredotbe/webtech2-bestrepositoryeu">Tom</a>.</p>
+
+<h3>
+<a name="more-about-advanced-javascript-2" class="anchor" href="#more-about-advanced-javascript-2"><span class="octicon octicon-link"></span></a>More about Advanced Javascript:</h3>
+
+<p>More info in the previous section (Lab3). </p>
 
 <h2>
 <a name="6-nodejs" class="anchor" href="#6-nodejs"><span class="octicon octicon-link"></span></a><a name="lab6">6. NodeJs</a>
