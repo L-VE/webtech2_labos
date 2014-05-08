@@ -2,12 +2,15 @@
 /*
  * GET home page.
  */
+
+ // ALLE REQUIRED MODULES INCLUDEN
+
 var mongoose = require( 'mongoose' );
 var db = mongoose.connection;
 var Chat     = mongoose.model( 'Chat' );
 var ChatCount = mongoose.model('ChatCount');
 
-
+// DEZE FUNCTIE WORDT OOK UITEINDELIJK IN DE APP.JS  UITGEWERKT
 exports.ask = function(req, res){
 
   res.render('askQuestion', { title: 'IMD WALL' });
@@ -15,8 +18,14 @@ exports.ask = function(req, res){
 
 
 
-
+// BIJ HET CREEEREN VAN EEN POST, WORDEN DE JUISTE PROPERTIES INGESTELD
+// VOTES KRIJGT BIJ AANMAAK AUTOMATISCH 0		
+// OOK BIJ DE AANMAAK VAN EEN POST, WORDT HET AANTAL POSTS IN DE CHATCOUNT COLLECTION
+// MET 1 VERHOOGD
+// DIT IS HANDIG OM EEN ID TE SETTEN BIJ DE AANMAAK VAN EEN NIEUWE POST, ZODAT
+// ER NOOIT 2 POSTS DEZELFDE ID HEBBEN
 exports.create = function ( req, res ){
+	var result = false;
   new Chat({
 		    id    : req.body.chatContent.id,
 		    sender : req.body.chatContent.sender,
@@ -29,7 +38,7 @@ exports.create = function ( req, res ){
 	  	var mesCount = "";
 	  		if(! err)
 	  		{
-	  			console.log("insert gelukt");
+	  			//console.log("insert gelukt");
 
 	  					ChatCount.find({}, function(err, chatCounts){
           					
@@ -49,9 +58,11 @@ exports.create = function ( req, res ){
 							function callback (err, numAffected) {
 							  // numAffected is the number of updated documents
 							  if(!err)
-          							console.log("gesaved");
+          							//console.log("gesaved");
+          							result = true;
           						else
-          							console.log(" niet gesaved");
+          							//console.log(" niet gesaved");
+          							result = false;
 							};
 
           					

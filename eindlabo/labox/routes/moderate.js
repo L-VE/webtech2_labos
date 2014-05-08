@@ -1,9 +1,16 @@
 /*var mongoose = require( 'mongoose' );
 var Chat     = mongoose.model( 'Chat' );
 */
+
+// DEZE METHODEN WERDEN UITEINDELIJK NIET GEBRUIKT,
+// DE UITEINDELIJKE UITWERKING VINDT PLAATS IN DE APP.JS
+
 exports.list = function(req, res){
   res.render('moderator', { title: 'IMD WALL' });
 };
+
+
+// 
 
 exports.destroy = function ( req, res ){
  /* Chat.findById( req.body.id, function ( err, chat ){
@@ -31,15 +38,15 @@ exports.destroy = function ( req, res ){
 							  // numAffected is the number of updated documents
 							  if(!err)
                 {
-          					console.log("gedeleted");
+          					//console.log("gedeleted");
                     result = true;
                 }
           			else
           			{
-                  console.log(" niet gedeleted");
+                  //console.log(" niet gedeleted");
                   result = false;
                 }
 		};
-              console.log(result);
+              //console.log(result);
       res.send(JSON.stringify(result));
 };
