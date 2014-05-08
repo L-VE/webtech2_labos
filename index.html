@@ -155,155 +155,136 @@ We then had to upload it to our git accounts. Thus making use of all the git com
 <ul>
 <li>
 <strong>Transitions</strong>: A transition is an animation that happens between changes.It is placed between the off and on states.</li>
-</ul><p><code>transition: property duration timing-function delay;</code></p>
+</ul><p>```transition: property duration timing-function delay;
+   transition: background-color 5s linear 1s;</p>
 
-<p><code>transition: background-color 5s linear 1s;</code></p>
+<pre><code>
+* **Transformations**: Transformations are a different form of animation. Instead of bridging two states on an element, a transformation physically changes the look of the element. You can transform many aspects of an element, such as: scaling—changing the size of the element,rotating—spinning the element and translating—moving the element
 
-<ul>
-<li>
-<strong>Transformations</strong>: Transformations are a different form of animation. Instead of bridging two states on an element, a transformation physically changes the look of the element. You can transform many aspects of an element, such as: scaling—changing the size of the element,rotating—spinning the element and translating—moving the element</li>
-</ul><p><code>&lt;div id="shape"&gt;&lt;/div&gt;</code></p>
 
-<pre><code>`#shape`
-`{`
-   `width: 150px;`
-   `height: 150px;`
-   `background-color: #e74c3c;`
-   `transition: -webkit-transform 1s;`
-`}`
-</code></pre>
+`&lt;div id="shape"&gt;&lt;/div&gt;`
 
-<p><code>#shape:hover</code>
-  <code>{</code>
-    <code>-webkit-transform: scale(2) translateY(100px) rotate(45deg);</code>
-  <code>};</code></p>
+    `#shape`
+    `{`
+       `width: 150px;`
+       `height: 150px;`
+       `background-color: #e74c3c;`
+       `transition: -webkit-transform 1s;`
+    `}`
 
-<ul>
-<li>
-<strong>Translations</strong>: Translations are a transformation function that moves the element across the x- or y-axis. So, when you translate an element you are transforming it’s location. </li>
-</ul><p><code>div</code>
-  <code>{</code>
-    <code>-ms-transform: translate(50px,100px); /* IE 9 */</code>
-    <code>-webkit-transform: translate(50px,100px); /* Chrome, Safari, Opera */</code>
-    <code>transform: translate(50px,100px);</code>
-   <code>}</code></p>
 
-<ul>
-<li>
-<strong>Animations</strong>: CSS animations make it possible to animate transitions from one CSS style configuration to another. Animations consist of two components, a style describing the CSS animation and a set of keyframes that indicate the start and end states of the animation's style, as well as possible intermediate waypoints along the way.</li>
-</ul><p>`.automatic
+`#shape:hover`
+  `{`
+    `-webkit-transform: scale(2) translateY(100px) rotate(45deg);`
+  `};`
+
+
+* **Translations**: Translations are a transformation function that moves the element across the x- or y-axis. So, when you translate an element you are transforming it’s location. 
+
+
+`div`
+  `{`
+    `-ms-transform: translate(50px,100px); /* IE 9 */`
+    `-webkit-transform: translate(50px,100px); /* Chrome, Safari, Opera */`
+    `transform: translate(50px,100px);`
+   `}`
+
+
+* **Animations**: CSS animations make it possible to animate transitions from one CSS style configuration to another. Animations consist of two components, a style describing the CSS animation and a set of keyframes that indicate the start and end states of the animation's style, as well as possible intermediate waypoints along the way.
+
+
+`.automatic
   {
    -webkit-animation: moveIt 2s infinite;
-  }</p>
+  }
 
-<p></p><div></div>
 
-<p>@-webkit-keyframes moveIt
+  &lt;div id="square" class="automatic"&gt;&lt;/div&gt;
+
+
+  @-webkit-keyframes moveIt
   {
      0% { }
      25% { -webkit-transform: rotate(45deg);}
      50% { left:50%; top: 50%; -webkit-transform: scale(2.5) rotate(45deg);}
      100% { -webkit-transform: rotate(0deg);}
-   }`</p>
+   }`
 
-<h2>
-<a name="3-advanced-javascript" class="anchor" href="#3-advanced-javascript"><span class="octicon octicon-link"></span></a><a name="lab3">3. Advanced Javascript</a>
-</h2>
 
-<hr><h3>
-<a name="lab-contents-2" class="anchor" href="#lab-contents-2"><span class="octicon octicon-link"></span></a>Lab contents:</h3>
 
-<p>In this lab we had to write a mini-framework to write a little todo-app. A framework like jQuery.</p>
+## &lt;a name="lab3"&gt;3. Advanced Javascript&lt;/a&gt;
+------------------------------------------
+### Lab contents:
+In this lab we had to write a mini-framework to write a little todo-app. A framework like jQuery.
 
-<h3>
-<a name="lessons-learned-2" class="anchor" href="#lessons-learned-2"><span class="octicon octicon-link"></span></a>Lessons learned:</h3>
+### Lessons learned: 
+After this course I understood how a framework like jQuery works. And that you can write your own prototype functions.
 
-<p>After this course I understood how a framework like jQuery works. And that you can write your own prototype functions.</p>
+### More about Advanced Javascript:
+Functions like `$(“ul#todo li”).css(“color”, “red”);` in jQuery can be written like 
 
-<h3>
-<a name="more-about-advanced-javascript" class="anchor" href="#more-about-advanced-javascript"><span class="octicon octicon-link"></span></a>More about Advanced Javascript:</h3>
 
-<p>Functions like <code>$(“ul#todo li”).css(“color”, “red”);</code> in jQuery can be written like </p>
+` HTMLElement.prototype.changeColor = function(color)
+  {
 
-<p>` HTMLElement.prototype.changeColor = function(color)
-  {</p>
+  this.style["color"] = color;
 
-<p>this.style["color"] = color;</p>
+  }`
 
-<p>}`</p>
 
-<p>Then we can use our own function to change the text color of an element:</p>
+Then we can use our own function to change the text color of an element:
 
-<p><code>document.getElementById("todo-item1").changeColor("purple");</code></p>
+`document.getElementById("todo-item1").changeColor("purple");`
 
-<p>More information about Advanced Javascript can be found on the following sites:
-<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript">Introduction to Object-Oriented JavaScript</a></p>
+More information about Advanced Javascript can be found on the following sites:
+[Introduction to Object-Oriented JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript)
 
-<p><a href="http://ejohn.org/apps/learn/#31">Learning advanced javascript</a></p>
 
-<h2>
-<a name="4-building-an-app-prototype" class="anchor" href="#4-building-an-app-prototype"><span class="octicon octicon-link"></span></a><a name="lab4">4. Building An App Prototype</a>
-</h2>
+[Learning advanced javascript](http://ejohn.org/apps/learn/#31)
 
-<hr><h3>
-<a name="lab-contents-3" class="anchor" href="#lab-contents-3"><span class="octicon octicon-link"></span></a>Lab contents:</h3>
+## &lt;a name="lab4"&gt;4. Building An App Prototype&lt;/a&gt;
+------------------------------------------
+### Lab contents:
+In lab 4 we had to create a weatherapp using weather api's, localstorage, ajax calls as well as use prototypical inheritance.
 
-<p>In lab 4 we had to create a weatherapp using weather api's, localstorage, ajax calls as well as use prototypical inheritance.</p>
+### Lessons learned:
+I found this was the second most hardest subject we saw in our course Webtechnology 2. I already had experience with object oriented programming and this made me remember my Java programming lessons while studying Applied Informatics. I like this way of programming, it gives a more well-arranges structure. But still I had to get used to using it in Javascript.
 
-<h3>
-<a name="lessons-learned-3" class="anchor" href="#lessons-learned-3"><span class="octicon octicon-link"></span></a>Lessons learned:</h3>
+### More about Advanced Javascript:
+More info in the previous section (Lab3).
 
-<p>I found this was the second most hardest subject we saw in our course Webtechnology 2. I already had experience with object oriented programming and this made me remember my Java programming lessons while studying Applied Informatics. I like this way of programming, it gives a more well-arranges structure. But still I had to get used to using it in Javascript.</p>
 
-<h3>
-<a name="more-about-advanced-javascript-1" class="anchor" href="#more-about-advanced-javascript-1"><span class="octicon octicon-link"></span></a>More about Advanced Javascript:</h3>
+## &lt;a name="lab5"&gt;5. TerrAppke - Weather-app (API's)&lt;/a&gt;
+------------------------------------------
+### Lab contents:
+For this lab we had to build an app that the teacher suggested or build your own idea. I worked together with a classmate ([Tom De Moore](https://github.com/tommooredotbe/webtech2-bestrepositoryeu)) to build this app. It's basically another weatherapp that show the current temperature along with information about our college and our fields of study and a subscription field. It's created to get new students (a sort of campagne). If it's sunny and warm outside, then they're invited to come and take a look at our school and enjoy a fresh drink, talke to our teachers and such. The background color as well as the temperature and the description change when the weather changes. 
 
-<p>More info in the previous section (Lab3).</p>
+### Lessons learned:
+It started out as a simple app to build, but I got kind of caught up in it and it started to become more than a school assignment. I had a lot of fun building this app alongside [Tom](https://github.com/tommooredotbe/webtech2-bestrepositoryeu).
 
-<h2>
-<a name="5-terrappke---weather-app-apis" class="anchor" href="#5-terrappke---weather-app-apis"><span class="octicon octicon-link"></span></a><a name="lab5">5. TerrAppke - Weather-app (API's)</a>
-</h2>
+### More about TerrAppke :
+We've uses a lot of the subject mentioned above. And like I said before, I had a lot of fun with this app. My teammate and I formed a nice team and I'm proud of our little app. We worked hard so that maybe our app would be chosen for the school campaign.
 
-<hr><h3>
-<a name="lab-contents-4" class="anchor" href="#lab-contents-4"><span class="octicon octicon-link"></span></a>Lab contents:</h3>
 
-<p>For this lab we had to build an app that the teacher suggested or build your own idea. I worked together with a classmate (<a href="https://github.com/tommooredotbe/webtech2-bestrepositoryeu">Tom De Moore</a>) to build this app. It's basically another weatherapp that show the current temperature along with information about our college and our fields of study and a subscription field. It's created to get new students (a sort of campagne). If it's sunny and warm outside, then they're invited to come and take a look at our school and enjoy a fresh drink, talke to our teachers and such. The background color as well as the temperature and the description change when the weather changes. </p>
+## &lt;a name="lab6"&gt;6. NodeJs&lt;/a&gt;
+------------------------------------------
+### Lab contents:
+This was our second to last assignment for the semester. We had to build a little chat-app with NodeJs.
+So different people could send messages to each other and then vote these messages. The more votes a message had, the bigger the font of the message became. 
 
-<h3>
-<a name="lessons-learned-4" class="anchor" href="#lessons-learned-4"><span class="octicon octicon-link"></span></a>Lessons learned:</h3>
+### Lessons learned:
+I found that this was the hardest part of the course. And I found that a lot of fellow students had a lot of difficulties with this subject. At first, it was a lot of trial and error and research on the internet on how I could get my server up and running. That was the most difficult part. This was the most interesting assignment, I think. Especially because for my final project, I'm building another app in NodeJs.
 
-<p>It started out as a simple app to build, but I got kind of caught up in it and it started to become more than a school assignment. I had a lot of fun building this app alongside <a href="https://github.com/tommooredotbe/webtech2-bestrepositoryeu">Tom</a>.</p>
+### More about NodeJs:
+We've uses a lot of the subject mentioned above. And like I said before, I had a lot of fun with this app. My teammate and I formed a nice team and I'm proud of our little app. We worked hard so that maybe our app would be chosen for the school campaign.
 
-<h3>
-<a name="more-about-terrappke-" class="anchor" href="#more-about-terrappke-"><span class="octicon octicon-link"></span></a>More about TerrAppke :</h3>
+## &lt;a name="lab7"&gt;Lab 7: Final project: IMD WALL&lt;/a&gt;
+------------------------------------------
 
-<p>We've uses a lot of the subject mentioned above. And like I said before, I had a lot of fun with this app. My teammate and I formed a nice team and I'm proud of our little app. We worked hard so that maybe our app would be chosen for the school campaign.</p>
 
-<h2>
-<a name="6-nodejs" class="anchor" href="#6-nodejs"><span class="octicon octicon-link"></span></a><a name="lab6">6. NodeJs</a>
-</h2>
 
-<hr><h3>
-<a name="lab-contents-5" class="anchor" href="#lab-contents-5"><span class="octicon octicon-link"></span></a>Lab contents:</h3>
 
-<p>This was our second to last assignment for the semester. We had to build a little chat-app with NodeJs.
-So different people could send messages to each other and then vote these messages. The more votes a message had, the bigger the font of the message became. </p>
-
-<h3>
-<a name="lessons-learned-5" class="anchor" href="#lessons-learned-5"><span class="octicon octicon-link"></span></a>Lessons learned:</h3>
-
-<p>I found that this was the hardest part of the course. And I found that a lot of fellow students had a lot of difficulties with this subject. At first, it was a lot of trial and error and research on the internet on how I could get my server up and running. That was the most difficult part. This was the most interesting assignment, I think. Especially because for my final project, I'm building another app in NodeJs.</p>
-
-<h3>
-<a name="more-about-nodejs" class="anchor" href="#more-about-nodejs"><span class="octicon octicon-link"></span></a>More about NodeJs:</h3>
-
-<p>We've uses a lot of the subject mentioned above. And like I said before, I had a lot of fun with this app. My teammate and I formed a nice team and I'm proud of our little app. We worked hard so that maybe our app would be chosen for the school campaign.</p>
-
-<h2>
-<a name="lab-7-final-project-imd-wall" class="anchor" href="#lab-7-final-project-imd-wall"><span class="octicon octicon-link"></span></a><a name="lab7">Lab 7: Final project: IMD WALL</a>
-</h2>
-
-<hr>
+</code></pre>
       </section>
 
     </div>
