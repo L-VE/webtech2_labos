@@ -153,56 +153,59 @@ We then had to upload it to our git accounts. Thus making use of all the git com
 <a name="more-about-css-animations" class="anchor" href="#more-about-css-animations"><span class="octicon octicon-link"></span></a>More about CSS-Animations:</h3>
 
 <ul>
-<li><p><strong>Transitions</strong>: A transition is an animation that happens between changes.It is placed between the off and on states.
-<code>transition: property duration timing-function delay;
-transition: background-color 5s linear 1s;</code></p></li>
 <li>
-<p><strong>Transformations</strong>: Transformations are a different form of animation. Instead of bridging two states on an element, a transformation physically changes the look of the element. You can transform many aspects of an element, such as: scaling—changing the size of the element,rotating—spinning the element and translating—moving the element
-`</p>
-<div></div>
+<strong>Transitions</strong>: A transition is an animation that happens between changes.It is placed between the off and on states.</li>
+</ul><p><code>transition: property duration timing-function delay;
+transition: background-color 5s linear 1s;</code></p>
 
-<h1>
-<a name="shape" class="anchor" href="#shape"><span class="octicon octicon-link"></span></a>shape</h1>
-
-<p>{
-   width: 150px;
-   height: 150px;
-   background-color: #e74c3c;
-   transition: -webkit-transform 1s;
-}</p>
-
-<h1>
-<a name="shapehover" class="anchor" href="#shapehover"><span class="octicon octicon-link"></span></a>shape:hover</h1>
-
-<p>{
-  -webkit-transform: scale(2) translateY(100px) rotate(45deg);
-};`</p>
-</li>
-<li><p><strong>Translations</strong>: Translations are a transformation function that moves the element across the x- or y-axis. So, when you translate an element you are transforming it’s location. 
-<code>div
-{
-  -ms-transform: translate(50px,100px); /* IE 9 */
-  -webkit-transform: translate(50px,100px); /* Chrome, Safari, Opera */
-  transform: translate(50px,100px);
-}</code></p></li>
+<ul>
 <li>
-<p><strong>Animations</strong>: CSS animations make it possible to animate transitions from one CSS style configuration to another. Animations consist of two components, a style describing the CSS animation and a set of keyframes that indicate the start and end states of the animation's style, as well as possible intermediate waypoints along the way.
-`  .automatic
-{
--webkit-animation: moveIt 2s infinite;
-}</p>
+<strong>Transformations</strong>: Transformations are a different form of animation. Instead of bridging two states on an element, a transformation physically changes the look of the element. You can transform many aspects of an element, such as: scaling—changing the size of the element,rotating—spinning the element and translating—moving the element</li>
+</ul><p>`</p><div>
+ </div>
+    #shape
+    {
+       width: 150px;
+       height: 150px;
+       background-color: #e74c3c;
+       transition: -webkit-transform 1s;
+    }
 
-<div></div>
+<p>#shape:hover
+  {
+    -webkit-transform: scale(2) translateY(100px) rotate(45deg);
+  };`</p>
+
+<ul>
+<li>
+<strong>Translations</strong>: Translations are a transformation function that moves the element across the x- or y-axis. So, when you translate an element you are transforming it’s location. </li>
+</ul><p><code>div
+  {
+    -ms-transform: translate(50px,100px); /* IE 9 */
+    -webkit-transform: translate(50px,100px); /* Chrome, Safari, Opera */
+    transform: translate(50px,100px);
+   } 
+</code></p>
+
+<ul>
+<li>
+<strong>Animations</strong>: CSS animations make it possible to animate transitions from one CSS style configuration to another. Animations consist of two components, a style describing the CSS animation and a set of keyframes that indicate the start and end states of the animation's style, as well as possible intermediate waypoints along the way.</li>
+</ul><p>`  .automatic
+  {
+   -webkit-animation: moveIt 2s infinite;
+  }</p>
+
+<p></p><div></div>
 
 <p>@-webkit-keyframes moveIt
-{
-   0% { }
-   25% { -webkit-transform: rotate(45deg);}
-   50% { left:50%; top: 50%; -webkit-transform: scale(2.5) rotate(45deg);}
-   100% { -webkit-transform: rotate(0deg);}
-}`</p>
-</li>
-</ul><h2>
+  {
+     0% { }
+     25% { -webkit-transform: rotate(45deg);}
+     50% { left:50%; top: 50%; -webkit-transform: scale(2.5) rotate(45deg);}
+     100% { -webkit-transform: rotate(0deg);}
+   }`</p>
+
+<h2>
 <a name="3-advanced-javascript" class="anchor" href="#3-advanced-javascript"><span class="octicon octicon-link"></span></a><a name="lab3">3. Advanced Javascript</a>
 </h2>
 
@@ -219,18 +222,22 @@ transition: background-color 5s linear 1s;</code></p></li>
 <h3>
 <a name="more-about-advanced-javascript" class="anchor" href="#more-about-advanced-javascript"><span class="octicon octicon-link"></span></a>More about Advanced Javascript:</h3>
 
-<p>Functions like <code>$(“ul#todo li”).css(“color”, “red”);</code> in jQuery can be written like 
-<code>HTMLElement.prototype.changeColor = function(color)
+<p>Functions like <code>$(“ul#todo li”).css(“color”, “red”);</code> in jQuery can be written like </p>
+
+<p><code>HTMLElement.prototype.changeColor = function(color)
    {
    this.style["color"] = color;
    }
-</code>
-Then we can use our own function to change the text color of an element:
-<code>document.getElementById("todo-item1").changeColor("purple");</code></p>
+</code></p>
+
+<p>Then we can use our own function to change the text color of an element:</p>
+
+<p><code>document.getElementById("todo-item1").changeColor("purple");</code></p>
 
 <p>More information about Advanced Javascript can be found on the following sites:
-<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript">Introduction to Object-Oriented JavaScript</a>
-<a href="http://ejohn.org/apps/learn/#31">Learning advanced javascript</a></p>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript">Introduction to Object-Oriented JavaScript</a></p>
+
+<p><a href="http://ejohn.org/apps/learn/#31">Learning advanced javascript</a></p>
 
 <h2>
 <a name="4-building-an-app-prototype" class="anchor" href="#4-building-an-app-prototype"><span class="octicon octicon-link"></span></a><a name="lab4">4. Building An App Prototype</a>
