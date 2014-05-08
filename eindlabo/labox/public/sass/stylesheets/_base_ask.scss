@@ -1,6 +1,6 @@
 
-$headerColor : #01a1af;
-$backgroundColor: #feffff;
+$headerColor : #1abc9c; /*#01a1af;*/
+$backgroundColor: #2c3e50;
 /*#33b6c0*/
 $font-roboto: 'roboto-regular', sans-serif;
 $font-oxygen: 'oxygen-regular', sans-serif;
@@ -12,10 +12,10 @@ body
 
 	
 		overflow: hidden;
-		font-family:  $font-roboto;
+		font-family:  $font-oxygen;
 		@include font-size(1.6) ;
-		background-color: #e4f6ff;
-		background-color: darken($backgroundColor,1%);
+		
+		background-color: lighten($backgroundColor, 5%); /*darken($backgroundColor,1%);*/
 	
 
 
@@ -36,16 +36,27 @@ body
 				/*background-color: darken($backgroundColor,2%);*/
 			}
 
+
 			#header
 			{	
 				h1
 				{
 					text-align: center;
-					background-color: darken($headerColor, 10%);
-					padding: 20px 0;
+					background-color: $headerColor;/*darken($headerColor, 10%);*/
+					height: 100px;
 					font-family:  $font-oxygen;
 					@include font-size(1.6) ;
 					color: white;
+					background-image: url("../../images/imd_wall_logo.png");
+					background-repeat: no-repeat;
+					/*background-size: 7%;*/
+					background-size: 100px;
+					background-position: center center;
+
+					#logo-ask
+					{
+						width: 7%;
+					}
 				}
 				
 				.extendIcons
@@ -69,37 +80,69 @@ body
 					display: none;
 				}
 
-				#accountPic
-				{					
-					/*width: 25px;*/
-					width: 40px;
-
-					/*@extend .extendIcons;*/
+				#account
+				{
 					position: absolute;
-					cursor: pointer;
+					
 
+					h2
+					{
+						@include font-size(1) ;
+						color:white;
+						margin: 64px 100px;
 
-					/*right: 20px;
-					top: 10px;*/
-					right: 0;
-					top: 0;
-					/*padding: 11px 25px;*/
-					padding: 7px 21px;
-					/*display: none;*/
+						.accountname
+						{
+							font-weight: bold;
+						}
+					}
+
+					#accountPic
+					{					
+						width: 56px;
+						position: absolute;
+						top: 12px;
+						left: 25px;
+						@include border-radius(50%);
+
+					}
+
+					#accountPicMod
+					{
+						width: 25px;
+
+						/*@extend .extendIcons;*/
+						position: absolute;
+						cursor: pointer;
+
+						right: 0;
+						top: 0;
+						padding: 11px 25px;
+						/*display: none;*/
+					}
+
+					
 				}
 
-				#accountPicMod
+				.logout
 				{
-					width: 25px;
-
-					/*@extend .extendIcons;*/
+					background-image: url("../../images/logout.png");
+					background-repeat: no-repeat;
+					background-size: 46px;
+					background-position: right 19px center;
+					text-decoration: none;
+					color: white;
+					@include font-size(1.2) ;
 					position: absolute;
-					cursor: pointer;
+					right: 10px;
+					top: 20px;
+					padding: 20px;
 
-					right: 0;
-					top: 0;
-					padding: 11px 25px;
-					/*display: none;*/
+					.te
+					{
+						visibility: hidden;
+					}
+
 				}
 
 			}
@@ -107,13 +150,23 @@ body
 			#content
 			{
 				
+				/*margin: 20px 1.8%;*/
+				margin: 0 1.8%;
+
 				#leftSide
 				{
+					@include add-transition(2s);
 					float: left;
-					width: 58%;
+					/*width: 58%;*/
+					width: 72%;
 					/*@extend .twosides;*/
-					margin: 30px 2%;
+					margin: 30px 0;
 					
+					/*#questionList
+					{
+						margin-top: 20px;
+					}
+					*/
 					#topicList
 					{
 						.hiddenMessageCount
@@ -121,7 +174,7 @@ body
 							display: none;
 						}
 
-						overflow: scroll;
+						/*overflow: scroll;*/
 						.topics
 						{
 							@include line-height(2) ;
@@ -144,7 +197,7 @@ body
 					.category
 					{
 						@include font-size(1.1) ;
-						background-color: $headerColor;
+						background-color: darken($headerColor,10%);
 						color: white;
 						padding: 10px;
 
@@ -153,35 +206,319 @@ body
 							display: none;
 						}
 					}
+					.messageConSec
+					{
+						width: 97%;
+						font-family:  $font-roboto;
+						
+							.messageContent
+							{
+							
+								.name
+									{
+										margin-bottom: 5px;
+										@include font-size(1.1);
+										font-weight: bold;
+										h1
+										{
+											/*@extend .extraForh1h2h3;*/
+											@include font-size(1);
+											font-weight: normal;
+											margin: 0;
+											padding: 0;
+
+
+											@include font-size(1.1);
+											font-weight: bold;
+
+											.says
+											{
+												font-weight: normal;
+											}	
+										}
+									}
+
+								.text
+								{
+									margin-bottom: 25px;
+
+									h2
+									{
+										/*@extend .extraForh1h2h3;*/
+										@include font-size(1);
+										font-weight: normal;
+										margin: 0;
+										padding: 0;
+
+
+										word-wrap: break-word;
+									}
+								}
+
+								.time
+								{
+									
+									/*bottom: 4%;*/
+									/*top: 8%;*/
+									bottom: 8%;
+									right: 8%;
+									position: absolute;
+
+									h3
+									{
+										/*@extend .extraForh1h2h3;*/
+										@include font-size(0.8);
+										color:#95a5a6;
+										font-weight: normal;
+										margin: 0;
+										padding: 0;
+
+
+										text-align: right;
+									}
+								}
+							}
+
+						.messageDetails
+						{
+							width: 14%;
+							margin-right: 0;
+
+							.votes
+							{
+									margin-top: 10px;
+									position: absolute;
+									/*bottom: 3%;*/
+									bottom: 12%;
+									right: 3%;
+
+									.voteInfo
+									{
+										margin-bottom: 10px;
+										margin-left: 10px;
+										margin-top: 10px;
+
+										h1.votesNr
+										{
+											
+											@include font-size(1);
+											font-weight: normal;
+											text-align: center;
+											margin:0;
+
+											span.voteCounter
+											{
+												font-weight: bold;
+											}
+										}
+									}
+
+									.extraAImage
+										{
+											display: block;
+											text-indent: -9999px;
+											width: 25px;
+											height: 25px;
+										}
+
+									.voteAction
+									{
+
+										ul
+										{
+											margin:0;
+											padding:0;
+
+											li
+											{
+
+												/*margin:0;*/
+												margin: 0 0 0 3.5px;
+												padding:0;
+												/*width: 50%;*/
+												width: 45%;
+												/*float: left;*/
+												
+												
+
+												span.up
+												{
+													/*@extend .extraAImage;*/
+													display: block;
+													text-indent: -9999px;
+													width: 30px;
+													height: 30px;
+
+
+													background-image: url('../../images/vote_up_unvoted.png');
+													background-repeat: no-repeat;
+													background-size: 30px;
+													margin: 0 auto;
+												}
+
+												span.down
+												{
+													/*@extend .extraAImage;*/
+													display: block;
+													text-indent: -9999px;
+													width: 30px;
+													height: 30px;
+
+
+													background-image: url('../../images/vote_down_unvoted.png');
+													background-repeat: no-repeat;
+													background-size: 30px;
+													margin: 0 auto;
+												}
+
+												span.up:hover
+												{
+													background-image: url('../../images/vote_up_light.png');
+													cursor: pointer;
+												}
+
+												span.down:hover
+												{
+													background-image: url('../../images/vote_down_light.png');
+												
+													cursor: pointer;
+												}
+
+												span.inactiveUp
+												{
+													/*@extend .extraAImage;*/
+													display: block;
+													text-indent: -9999px;
+													width: 30px;
+													height: 30px;
+
+
+													background-image: url('../../images/vote_up_inactive.png');
+													background-repeat: no-repeat;
+													background-size: 30px;
+													margin: 0 auto;
+													cursor: default;
+												}
+
+												span.inactiveUp:hover
+												{
+													background-image: url('../../images/vote_up_inactive.png');
+													
+												}
+
+												span.chosenUp
+												{
+													/*@extend .extraAImage;*/
+													display: block;
+													text-indent: -9999px;
+													width: 30px;
+													height: 30px;
+
+
+													background-image: url('../../images/vote_up_dark.png');
+													background-repeat: no-repeat;
+													background-size: 30px;
+													margin: 0 auto;
+												}
+
+												span.chosenUp:hover
+												{
+													background-image: url('../../images/vote_up_light.png');
+												}
+
+												span.inactiveDown
+												{
+													/*@extend .extraAImage;*/
+													display: block;
+													text-indent: -9999px;
+													width: 30px;
+													height: 30px;
+
+
+													background-image: url('../../images/vote_down_inactive.png');
+													background-repeat: no-repeat;
+													background-size: 30px;
+													margin: 0 auto;
+													cursor: default;
+												}
+
+												span.inactiveDown:hover
+												{
+													background-image: url('../../images/vote_down_inactive.png');
+												}
+
+												span.chosenDown
+												{
+													/*@extend .extraAImage;*/
+													display: block;
+													text-indent: -9999px;
+													width: 30px;
+													height: 30px;
+
+
+													background-image: url('../../images/vote_down_dark.png');
+													background-repeat: no-repeat;
+													background-size: 30px;
+													margin: 0 auto;
+												}
+
+												span.chosenDown:hover
+												{
+													background-image: url('../../images/vote_down_light.png');
+												}
+											}
+										}
+								}
+							}
+
+							#sender
+							{
+								width: 47%;
+							}
+						}
+						
+					}
+					
 				}
 				
 				#rightSide
 				{
+					@include add-transition(0.5s);
 					float: right;
-					width: 30%;
+					/*width: 30%;*/
+					width: 25%;
 					/*@extend .twosides;*/
-					margin: 30px 2%;
-
+					margin: 30px 0;
+					
+					overflow: hidden;
 					.questionHeader
 					{
 						@include font-size(1.1) ;
-						margin: 0 10%;
-						padding: 10px;
+						/*margin: 0 10%;*/
+						padding: 10px 0;
 						text-align: center;
 						/*background-color: #017c48;*/
-						background-color: $headerColor;
+						background-color: darken($headerColor,10%);
 						color: white;
-						width: 78%;
+						width: 100%;
+						/*background-image: url('../../images/send-message.png');
+						background-repeat: no-repeat;
+						background-size: 30px;
+						background-position: right 20px center;*/
+
 					}
 
 
 					#form
 					{
-						margin: 0 10%;
-
+						/*margin: 0 10%;*/
+						/*display: none;*/
+						/*position: absolute;
+						bottom: -182px; */
 						.errorMessage
 						{
-							color: red;
+							/*color: #c0392b;*/
+							color: white;
 							display: none;
 							@include font-size(0.9) ;
 						}
@@ -194,37 +531,58 @@ body
 
 						input[type=text]
 						{
-							padding: 5px;
+							/*padding: 5px;*/
 							/*@extend .extraInputStyle;*/
 							width: 100%;
 							font-family:  $font-roboto;
+							border-radius: 6px;
+							text-indent: 15px;
+							margin-bottom: 20px;
+							height: 45px;
 						}
 
 						input[type=submit]
 						{
-							padding: 5px;
+							/*padding: 5px;*/
 							/*@extend .extraInputStyle;*/
 
 							width: 100%;
-							font-family:  $font-roboto;
-							background-color: #ec4b2e;
+							font-family:  $font-oxygen;
+							background-color: #e43725;
 
-
+							
 							/*background-color: #bc2b11;*/
 							color: white;
 							border: none;
 							@include font-size(1.2) ;
+							border-radius: 6px;
+							height: 45px;
+
+						}
+
+						input[type=submit]:hover
+						{
+							cursor: pointer;
+							background-color: #e74c3c;
 						}
 
 						textarea
 						{
-							padding: 5px 7px 5px 5px;
+							/*padding: 5px 7px 5px 5px;*/
 							/*@extend .extraInputStyle;*/
-
+							padding: 5px 0;
 							width: 100%;
 							font-family:  $font-roboto;
+							@include font-size(1) ;
+							border-radius: 6px;
+							text-indent: 15px;
+							margin-bottom: 20px;
+							margin-top: 21px;
+							/*border: 1px solid darken(#354b60,20%);*/
+							resize: none;
 							/* @extend wordt niet opgrvraagd*/
 						}
+					
 
 						#sendTypes
 						{
@@ -232,21 +590,42 @@ body
 
 							label
 							{
-								@include font-size(0.9) ;
+								@include font-size(1) ;
+								color:white;
 							}
 
-							input
+							/*input
 							{
 								width: 1.5em;
 								height: 1.5em;
-							}
+								
+							}*/
 						}
 					}
 				}
 			}
 		}
+		
 
-		#accountOptions
+		#footerAsk
+		{
+			position: absolute;
+			width: 100%;
+			height: 30px;
+			bottom: 0;
+			background-color: $headerColor;
+
+			.footerinfo
+			{
+				@include font-size(0.75);
+				text-align: center;
+				color: white;
+				margin: 8px 0;
+			}
+		}
+
+
+		/*#accountOptions
 		{
 			background-color: darken($headerColor,20%);
 			color: white;
@@ -281,7 +660,331 @@ body
 				}
 				
 			}
-		}
+		}*/
 	}
 
 }
+
+/*--------------------------------------------------------*/
+/*--------------------CSS ANIMATIONS----------------------*/
+/*--------------------------------------------------------*/
+
+.moveUp
+{
+	
+	@include add-translateY(-132px);
+}
+
+
+/*--------------------------------------------------------*/
+/*------------------MEDIA QUERIES-------------------------*/
+/*--------------------------------------------------------*/
+
+@media all and (max-width : 1175px) {
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails 
+	.votes .voteAction ul li span.up, 
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails 
+	.votes .voteAction ul li span.down, 
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails 
+	.votes .voteAction ul li span.chosenDown, 
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails 
+	.votes .voteAction ul li span.chosenUp, 
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails 
+	.votes .voteAction ul li span.inactiveDown, 
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails 
+	.votes .voteAction ul li span.inactiveUp
+	{
+		width: 23px;
+		height: 23px;
+		background-size: 23px;
+	}
+
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails .votes .voteInfo
+	{
+
+		margin-left: 7px;
+	}
+
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageContent .name h1
+	{
+		@include font-size(1);
+	}
+
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageContent .text h2
+	{
+		@include font-size(0.95);
+	}
+
+
+}
+
+
+@media all and (max-width : 700px) {
+
+	body #wholeContainer #baseContent #content #rightSide #form .errorMessage 
+	{
+		text-align: center;
+		color: white;
+	}
+
+	body #wholeContainer #baseContent #content 
+	{
+		margin: 0 1.8%;
+		margin-top: 75px;
+	}
+
+	body #wholeContainer #baseContent #content #leftSide::-webkit-scrollbar {width: 0px;}
+	
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails 
+	.votes .voteAction ul li span.up, 
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails 
+	.votes .voteAction ul li span.down, 
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails 
+	.votes .voteAction ul li span.chosenDown, 
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails 
+	.votes .voteAction ul li span.chosenUp, 
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails 
+	.votes .voteAction ul li span.inactiveDown, 
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails 
+	.votes .voteAction ul li span.inactiveUp
+	{
+		width: 30px;
+		height: 30px;
+		background-size: 30px;
+	}
+
+	body #wholeContainer #baseContent #content #rightSide #form #sendTypes 
+	{
+		margin: 10px 20% 0 ;
+		width: 100%;
+	}
+
+	/*body #wholeContainer #baseContent #content #rightSide #form #sendTypes input
+	{
+		width: 1.3em;
+		height: 1.3em;
+	}
+*/
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails .votes .voteInfo
+	{
+		
+		margin-left: 10px;
+	}
+
+	body #wholeContainer #baseContent #content #rightSide
+	{
+		float: none;
+		
+		width: 97%;
+	}
+
+	 body #wholeContainer #baseContent #content #leftSide
+	 {
+	 	float: none;
+	 	width: 100%;
+	 	bottom: 10px;
+	 	position: relative;
+	 }
+
+	body #wholeContainer #baseContent #content #rightSide #form #inlineButton
+	{
+		position:relative;
+	}
+
+	body #wholeContainer #baseContent #content #rightSide #form textarea
+	{
+		border-radius: 6px 0 0 6px;
+		width: 82%;
+		/*height: 70px;*/
+		height: 50px;
+		margin-bottom: 0;
+		@include font-size(0.9);
+	}
+
+	body #wholeContainer #baseContent #content #rightSide #form input[type=submit]
+	{
+		position: absolute;
+		bottom: 2.4px;
+		display: inline-block;
+		right: 6px;
+		/*height: 82.9px;*/
+		height: 62.9px;
+		width: 16.7%;
+		border-radius: 0 6px 6px 0;
+		background-image: url('../../images/send-message.png');
+		background-repeat: no-repeat;
+		background-size: 30px;
+		background-position: center center;
+		color: transparent;
+		@include font-size(0.9);
+	}
+
+
+	body #wholeContainer #baseContent #content #rightSide #form #sendTypes label
+	{
+		@include font-size(0.9);
+	}
+
+
+	body #wholeContainer #baseContent #content #rightSide
+	{
+		
+		position: fixed;
+		bottom: -162px;
+		
+		/*height: 17%;*/
+		height: 175px;
+		background-color: lighten($backgroundColor, 5%);
+		margin-top: 25px;
+		z-index: 4;
+
+		.questionHeader:hover
+		{
+			cursor: pointer;
+		}
+	}
+
+
+
+	 body #wholeContainer #baseContent #header
+	{
+		z-index: 2;
+		position: fixed;
+		height: 55px;
+		overflow: hidden;
+		top: 0px;width: 100%;
+	}
+
+	body #wholeContainer #baseContent #header #account #accountPic
+	{
+		width: 45px;
+		top: 10px;
+	}
+
+	body #wholeContainer #baseContent #header h1
+	{
+		background-size: 48px;
+		height: 53px;
+
+	}
+
+	body #wholeContainer #baseContent #header .logout
+	{
+		background-size: 37px;
+		top: 10px;
+	}
+
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails .votes
+	{
+		bottom: 5%;
+	}
+
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageContent .time
+	{
+		right: 10%;
+		@include font-size(0.75);
+	}
+
+	.fbUsername
+	{
+		visibility: hidden;
+	}
+
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails #sender
+	{
+		width: 60%;
+	}
+
+	body #wholeContainer #footerAsk
+	{
+		display: none;
+	}
+
+
+	body #wholeContainer #baseContent #header #account #accountPic {
+		width: 30px;
+		top:7px;
+		left: 15px;
+	}
+
+	body #wholeContainer #baseContent #header .logout {
+		background-size: 28px;
+		top: -2px;
+		right: -7px;
+	}
+
+
+	body #wholeContainer #baseContent #content #rightSide #form #sendTypes input[type="radio"]
+	{	
+		margin-left: 60px;
+	}
+
+	
+	
+}
+
+@media all and (max-width : 350px) {
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageContent .time
+	{
+		right: 13%;
+	}
+
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails #sender
+	{
+		width: 80%;
+	}
+
+
+
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails 
+	.votes .voteAction ul li span.up, 
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails 
+	.votes .voteAction ul li span.down, 
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails 
+	.votes .voteAction ul li span.chosenDown, 
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails 
+	.votes .voteAction ul li span.chosenUp, 
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails 
+	.votes .voteAction ul li span.inactiveDown, 
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails 
+	.votes .voteAction ul li span.inactiveUp
+	{
+		width: 25px;
+		height: 25px;
+		background-size: 25px;
+	}
+
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageContent .name h1
+	{
+		@include font-size(0.85);
+	}
+
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageContent .text h2
+	{
+		@include font-size(0.75);
+	}
+
+	body #wholeContainer #baseContent #content #leftSide .messageConSec .messageContent .time h3
+	{
+		@include font-size(0.65);
+	}
+
+	body #wholeContainer #content #questionList li.questionItem .messageCon .messageConSec .messageContent
+	{
+		margin-left: 7px;
+	}
+
+	body #wholeContainer #baseContent #content #leftSide .messageConSec
+	{
+		margin-left: 10px;
+	}
+
+
+	body #wholeContainer #baseContent #content #rightSide #form #sendTypes 
+	{
+		margin: 10px -2% 0;
+	}
+
+
+}
+

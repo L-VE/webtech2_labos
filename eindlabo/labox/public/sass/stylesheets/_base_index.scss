@@ -6,6 +6,7 @@ $baseColor: #1abc9c; /*#16a085;*/
 
 			#login
 			{
+
 				#logo
 			 	{
 			 		width: 40%;
@@ -14,16 +15,18 @@ $baseColor: #1abc9c; /*#16a085;*/
 
 			 	.loginBackground
 			 	{
-			 		background-color: darken(#edeff1, 2%);; /*lighten($baseColor, 60%);*/
+			 		background-color: darken(#edeff1, 2%);/*lighten($baseColor, 60%);*/
 					@include border-radius(6px);
 					padding-bottom: 20px;
 					padding-top: 20px;
+					border: 2px solid darken(#e7eaed,20%);
 			 	}
 
 				
 				color: #2c3e50;
 				width: 30%;
-				margin: 10% 35%;
+				/*margin: 10% 35%;*/
+				margin: 0 35%;
 				
 				
 
@@ -71,7 +74,6 @@ $baseColor: #1abc9c; /*#16a085;*/
 								
 								display: block;
 								background-color: #2980b9 /*#5070A9*/;
-								min-width: 236px;
 								height: 50px;
 								background-image: url("../../images/facebook.png");
 								background-repeat: no-repeat;
@@ -82,9 +84,8 @@ $baseColor: #1abc9c; /*#16a085;*/
 								.loginText
 								{
 									display: inline-block;
-									margin: 4% 22%;
-									width: inherit;
-									width: 53%;
+									margin-left: 56px;
+									margin-top: 16px;
 								}
 							}
 						}
@@ -186,3 +187,132 @@ $baseColor: #1abc9c; /*#16a085;*/
 				}
 			}
 	}
+
+
+/*--------------------------------------------------------*/
+/*------------------MEDIA QUERIES-------------------------*/
+/*--------------------------------------------------------*/
+
+@media only screen and (max-width : 1183px) {
+	#indexBody 
+	{
+		#login
+				{
+					
+					
+					width: 45%;
+					margin: 0 27.5%;
+				}
+	}
+}
+
+@media only screen and (max-width : 800px) {
+	#indexBody 
+	{
+		#login
+				{
+					
+					width: 60%;
+					margin: 0 20%;
+				}
+	}
+}
+
+@media only screen and (max-width : 495px) {
+	#indexBody 
+	{
+		#login
+				{
+					
+					width: 70%;
+					margin: 0 15%;
+					@include font-size(1) ;
+
+					#login1 
+					{
+						li 
+						{
+							a 
+								{
+									.innerLogin 
+									{
+										background-size: 25px;
+
+										.loginText 
+										{
+											display: inline-block;
+											
+											@include font-size(1) ;
+										}
+									}
+								}
+						}
+					}
+
+					ul#login2
+					{
+								li
+								{
+									input[type=password], input[type=text], input[type=submit]
+									{
+										@include font-size(1) ;
+									}
+								}
+					}
+				}
+	}
+}
+
+
+@media only screen and (max-width : 320px) {
+	#indexBody 
+	{
+		#login
+		{
+					
+					.loginBackground
+				 	{
+						padding-bottom: 0px;
+						padding-top: 10px;
+				 	}
+
+					width: 80%;
+					margin: 0 10%;
+					@include font-size(1) ;
+
+					#login1 
+					{
+						li 
+						{
+							a 
+								{
+									.innerLogin 
+									{
+									
+
+										.loginText 
+										{
+											display: inline-block;
+											
+											@include font-size(0.8) ;
+										}
+									}
+								}
+						}
+					}
+
+					ul#login2
+					{
+						li 
+						{
+							input[type=text], input[type=password]
+							{
+								@include font-size(0.8) ;
+							}
+						}
+					}
+		}
+	}
+}
+
+					

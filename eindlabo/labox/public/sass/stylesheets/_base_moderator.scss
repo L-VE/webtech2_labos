@@ -1,0 +1,86 @@
+body 
+{
+	.moderatorAccount
+	{
+		#content 
+		{
+			#questionList 
+			{
+				li.questionItem 
+				{
+					.messageCon 
+					{
+						.messageConSec 
+						{
+								.messageDetails 
+								{
+									.votesMod
+									{
+
+										margin-top: 10px;
+										position: absolute;
+										bottom: 2%;
+										right: 45px;
+
+										.voteInfo 
+										{
+											margin-bottom: 10px;
+											margin-left: 10px;
+											margin-top: 10px;
+
+											h1.votesNr
+											{
+												font-size: 10px;
+												font-size: 1rem;
+												font-weight: 400;
+												text-align: center;
+											}
+										}
+									}
+
+									.deleteAction
+										{
+											position: absolute;
+											/*top: 4%;*/
+											bottom: 10%;
+											right: 10px;
+
+											span.delete
+											{
+												/*@extend .extraAImage;*/
+												display: block;
+												text-indent: -9999px;
+												width: 30px;
+												height: 30px;
+
+
+												background-image: url('../../images/x_sign_dark.png');
+												background-repeat: no-repeat;
+												background-size: 30px;
+												margin: 0 auto;
+											}
+
+											span.delete:hover
+											{
+												background-image: url('../../images/x_sign_light.png');
+												cursor: pointer;
+											}
+										}
+								}
+
+								.messageContent
+								{
+									.time
+									{
+										top: 8%;
+										right: 4%;
+										position: absolute;
+									}
+								}
+						}
+					}
+				}
+			}
+		}
+	}
+}

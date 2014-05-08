@@ -18,6 +18,13 @@
    ms-transform: translateX($distance);
 }
 
+@mixin add-translateY($distance)
+{
+   -webkit-transform: translateY($distance);
+   transform: translateY($distance);
+   ms-transform: translateY($distance);
+}
+
 @mixin add-transition($time)
 {
 	transition: -webkit-transform $time;
