@@ -649,17 +649,16 @@ body {
                 font-size: 1rem;
                 color: white; }
     body #wholeContainer #footerAsk {
-      position: absolute;
       width: 100%;
-      height: 30px;
-      bottom: 0;
-      background-color: #1abc9c; }
+      height: 35px;
+      background-color: #148f77;
+      margin-top: 20px; }
       body #wholeContainer #footerAsk .footerinfo {
         font-size: 7.5px;
         font-size: 0.75rem;
         text-align: center;
         color: white;
-        margin: 8px 0; }
+        padding: 10px 0; }
 
 /*--------------------------------------------------------*/
 /*--------------------CSS ANIMATIONS----------------------*/
