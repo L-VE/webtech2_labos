@@ -2,6 +2,8 @@
 /**
  * Module dependencies.
  */
+
+ // ALLE MODULES DEPENDENCIES INSTELLEN
 require("./db");
 var express = require('express');
 var routes = require('./routes');
@@ -41,6 +43,7 @@ var userLoggedIn = false;
 
 
 // VOOR PASSPORT FACEBOOK RETURN
+// OM ZO DE USER PROPERTIES TE KUNNEN OPVRAGEN
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
@@ -49,14 +52,16 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-//callback urls voor lokaal en remote te testen
+
+//CALLBACK URLS OM ZO REMOTE EN LOCAL TE KUNNEN DEVELOPPEN
 var callbackURLLocal = "http://localhost:3002/auth/facebook/callback";
 var callbackURLRemote = "http://polar-hamlet-4269.herokuapp.com/auth/facebook/callback";
 
+// PASSPORT FACEBOOK LOGIN INSTELLEN
 passport.use(new FacebookStrategy({
     clientID: "311747825641524",
     clientSecret: "88978dea32c610c42185bd102cb5c14a",
-    callbackURL: /*__dirname + "/auth/facebook/callback"*/ callbackURLLocal,
+    callbackURL: /*__dirname + "/auth/facebook/callback"*/ callbackURLRemote,
     profileFields: ['id', 'displayName', 'photos']
   },
   function(accessToken, refreshToken, profile, done) {
@@ -103,7 +108,7 @@ if ('development' == app.get('env')) {
 }
 
 
-
+// DE FACEBOOK AUTHENTIFICATIE INSTELLEN
 
 app.get('/auth/facebook',passport.authenticate('facebook') ,
   function(req, res){
@@ -124,7 +129,7 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
 }));
 
 
-// ROUTES DEFINIEREN
+// ALLE ROUTES DEFINIEREN
 app.get('/', routes.index);
 //app.get('/users', user.list);
 //app.get('/ask', askQuestion.ask);
@@ -132,6 +137,12 @@ app.get('/', routes.index);
 
 
 // BIJ HET NAVIGEREN NAAR /ASK
+// MOETEN ALLE VORIGE POSTS AL WORDEN OPGEHAALD EN DOORGEGEVEN WORDEN NAAR DE VIEW
+// ENKEL ALS DE USER IS INGELOGD
+// MET SORTERING VAN DE VOTES VAN HOOG NAAR LAAG
+// OOK HET TOTALE AANTAL POSTS WORDT MEEGEGEVEN NAAR DE VIEW OM ZO EEN UNIEKE ID TE KUNNEN MEEGEVEN
+// AAN DE NIEUWE AANGEMAAKTE POST
+// OOK DE FACEBOOK PROFILE ID WORDT MEEGEGEVEN OM DEZE TE KUNNEN MEEGEVEN IN DE DATABANK VAN WIE DE SENDER IS
 app.get('/ask'/*, ensureAuthenticated*/, function(req, res){
     if(userLoggedIn)
     {
@@ -168,11 +179,17 @@ app.get('/ask'/*, ensureAuthenticated*/, function(req, res){
 
 
 //BIJ HET MAKEN VAN EEN CHAT IN /ASK
+// ZIE VERDER IN ASK.JS
 app.post( '/create', askQuestion.create );
 
 // BIJ HET NAVIGEREN NAAR /QUESTIONS
+// ZIE VERDER IN QUESTIONS.JS
 app.get('/questions', allQuestions.list);
+
 // BIJ HET NAVIGEREN NAA /MODERATOR
+// WORDEN ALLE VORIGE POSTS OPGEHAALD
+// ENKEL ALS DE MODERATOR IS INGELOGD
+// MET SORTERING VAN DE VOTES VAN HOOG NAAR LAAG
 app.get('/moderator', function(req, res){
 
     //res.render('questions', { title: 'IMD WALL' });
@@ -199,10 +216,14 @@ app.get('/moderator', function(req, res){
 });
 
 //app.delete( '/destroy', moderate.destroy );
+
+// BIJ HET VERWIJDEREN VAN EEN POST WORDT DE ID MEEGEGEVEN
+// OM ZO DE JUISTE MATCH TE VINDEN EN DEZE DAN TE VERWIJDEREN
 app.post('/destroy/:id', function (req, res){
   var result = false;
-   Chat.find({ id : req.params.id}, function (err, chat) {
-
+  /* Chat.findOne ({ id : req.params.id}, function (err, chat) {
+    console.log(req.params.id);
+    console.log(chat);
      Chat.remove(function (err) {
       if (!err) 
       {
@@ -217,14 +238,40 @@ app.post('/destroy/:id', function (req, res){
       }
     });
   });
+*/
 
+Chat.findOne({ id : req.params.id}, function (err, chat) {
+        //console.log(req.params.id);
+
+        Chat.findOne({ id : req.params.id}).remove(callback);
+
+        function callback (err, numAffected) {
+                // numAffected is the number of updated documents
+            if (!err) 
+            {
+              //console.log("removed");
+               res.send(JSON.stringify(true));
+
+            } 
+            else 
+            {
+              //console.log(err);
+              res.send(JSON.stringify(false));
+            }
+        };
+
+          
+  });
   
 });
 
+// BIJ HET VOTEN WORDT DE JUISTE ID MEEGEGEVEN
+// OM DE OVEREENKOMSTIGE POST IN DE DATABANK TE UPDATEN MET DE JUISTE VOTE VALUE
 app.post('/vote/:id/:vote', function (req, res){
+  var result = false;
   return Chat.find({ id : req.params.id}, function (err, chat) {
-        console.log(req.params.id);
-        console.log(req.params.vote);
+        //console.log(req.params.id);
+        //console.log(req.params.vote);
           var conditions = { id: req.params.id }
           , update = { votes : req.params.vote}
           , options = { multi: true };
@@ -234,9 +281,11 @@ app.post('/vote/:id/:vote', function (req, res){
         function callback (err, numAffected) {
                 // numAffected is the number of updated documents
             if(!err)
-              console.log("geupdated");
+              //console.log("geupdated");
+              result = true;
             else
-              console.log(err);
+              //console.log(err);
+              result = false;
         };
 
           
@@ -244,12 +293,16 @@ app.post('/vote/:id/:vote', function (req, res){
 });
 
 
+// BIJ HET INLOGGEN WORDT ER GECHECKT OF DE INLOGGEGEVENS
+// OVEREENKOMEN MET DE ADMINS IN DE DATABANK
+// WANNEER ZE OVEREENKOMEN DAN WORDT DE ADMIN NAAR DE VOLGENDE PAGINA GELEID
+// ANDERS NIET
 app.post('/loginMod/:username/:password', function(req, res){
   var name = req.params.username;
   var pass = req.params.password;
 
   Moderator.find({}, function (err, docs) {
-    console.log(docs);
+    //console.log(docs);
     var found = "";
     for (var i = 0; i < docs.length; i++)
      {
@@ -273,8 +326,10 @@ app.post('/loginMod/:username/:password', function(req, res){
   //console.log(name + ' ' + pass);
 });
 
+// BIJ HET SURFEN NAAR DE /LOGOUT URL WORDT DE 
+// HUIDIGE USER UITGELOGD EN GEREDIRECT NAAR DE INDEX PAGINA
 app.get('/logout', function(req, res){
-  console.log(req.logout());
+  //console.log(req.logout());
   moderatorLoggedIn = false;
   userLoggedIn = false;
   req.logout();
