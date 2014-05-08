@@ -2,6 +2,7 @@
 ------------------------
 
 This respository contains all my labs for the course Webtechnology 2.
+([visit my github Page:](http://l-ve.github.io/webtech2_labos/))
 
 ## Contents
 -----------
