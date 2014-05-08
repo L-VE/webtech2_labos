@@ -20,28 +20,32 @@ $(document).ready(function (e){
 
 // COOKIE BIJHOUDEN VOOR HET ONTHOUDEN OP WELKE MESSAGES WE AL GEVOTED HEBBEN
 // ZODAT BIJ EEN REFRESH JE NIET VERSCHILLENDE KEER KAN UP_ OF DOWNVOTED OP EEN POST
+// BETER MET LOCALSTORAGE DAN MET COOKIE
     $("#indexBody").ready(function (event){
-    	if(cookiesAreEnabled)
+    	/*if(cookiesAreEnabled)
 		{
 			var CookieSet = $.cookie('myVotesIMDWALL');
 			    $.cookie.json = true;
 
 			     if (CookieSet == null) {
-			          //alert("cookie bestaat niet");
-			          //var newVote = {messages : { messageId : "#message7", voteValue : "1up"}};
-			          //var newVote = {messages : { message :	{"messageId" : "messageValue",votedUp : "true/false",votedDown : "votedDown"}}};
 			          var newVote =  { message : {"messageId" : "message1", "messageValue" : "1up",votedUp : "true/false",votedDown : "true/false"}};
 			          $.cookie("myVotesIMDWALL", newVote, { expires: 365 });
 
 			     }
-			    /* else
-			     {
-			     	//alert("coockie bestaat");
-			     	/* $.cookie.json = true;
-			     	var allMyvotes = $.cookie('myVotesIMDWALL');
-			     	$.cookie('myVotesIMDWALL',allMyvotes, { expires: 365 });
-			     	console.log(e,$.cookie('myVotesIMDWALL'));
-			     }*/
+		}*/
+
+		if(localStorageAvailable())
+		{	
+			//alert("avail");
+
+			var savedVotes = localStorage.getItem('savedVotes');
+
+	    	if (savedVotes === null)
+		    {
+		    	var newVote =  { message : {"messageId" : "message1", "messageValue" : "1up",votedUp : "true/false",votedDown : "true/false"}};
+			          
+		    	localStorage.setItem('savedVotes',JSON.stringify(newVote));
+		    }   
 		}
     });// END OF ON INDEXBODY LOAD
 
@@ -179,7 +183,8 @@ $(document).ready(function (e){
 	$(".ordinaryUser").ready(function (){
 			$("#questionList li.questionItem").each(function( index ) {
 				var currentId = $(this)[0].id;
-				var idList = $.cookie("myVotesIMDWALL");
+				//var idList = $.cookie("myVotesIMDWALL");
+				var idList = JSON.parse(localStorage.getItem('savedVotes'));
 				var dataArray = [];
 
 				$.each(idList, function (index, value) {
@@ -922,14 +927,11 @@ function checkIfThereArePosts()
 function voteMessage(p_messageId, p_voteType, p_voteValue,p_dataAttrVotedUp, p_dataAttrVotedDown)
 {
 	// IN EEN COOKIE SCHRIJVEN OP WELKE MESSAGES WE AL GEVOTED HEBBEN
-	if(cookiesAreEnabled)
+	/*if(cookiesAreEnabled)
 	{
 		$.cookie.json = true;
 	    var allMyvotes = $.cookie('myVotesIMDWALL');
-	    //alert(allMyvotes);
-	    //alert("id: " + p_messageId.substr(1,p_messageId.length));
 	    var id = p_messageId.substr(1,p_messageId.length);
-	    //var incId = uniqId();
 
 	    $.each(allMyvotes, function (index, value) {
 			var dupMEsId = index;
@@ -945,6 +947,28 @@ function voteMessage(p_messageId, p_voteType, p_voteValue,p_dataAttrVotedUp, p_d
 	    messageId++;
 	    $.cookie('myVotesIMDWALL',allMyvotes, { expires: 365 });
 
+	}*/
+
+	// BETER MET LOCALSTORAGE DAN MET COOKIE
+	if(localStorageAvailable)
+	{
+			 var allMyvotes = JSON.parse(localStorage.getItem('savedVotes'));
+			 var id = p_messageId.substr(1,p_messageId.length);
+
+			 $.each(allMyvotes, function (index, value) {
+				var dupMEsId = index;
+
+				if(id == dupMEsId)
+				{
+					delete allMyvotes[id];
+				}
+			});
+
+	    var test = {"messageId" : id, "messageValue" : p_voteValue,votedUp : p_dataAttrVotedUp,votedDown : p_dataAttrVotedDown};
+	    allMyvotes[id ] = test;
+	    messageId++;
+	    localStorage.setItem('savedVotes',JSON.stringify(allMyvotes));
+	    //console.log(JSON.parse(localStorage.getItem('savedVotes')));
 	}
 
     var publicationVote = client.publish('/vote', {chosenQuestion : p_messageId, voteType : p_voteType, voteValue : p_voteValue});
@@ -1140,4 +1164,17 @@ function cookiesAreEnabled()
 		return true;
 	else
 		return false;
+}
+
+//BETER LOCALSTORAGE GEBRUIKEN DAN COOKIES
+function localStorageAvailable()
+{
+	if (Modernizr.localstorage) {
+	  // window.localStorage is available!
+	  return true;
+	} else {
+	  // no native support for local storage :(
+	  // try a fallback or another third-party solution
+	  return false;
+	}
 }
