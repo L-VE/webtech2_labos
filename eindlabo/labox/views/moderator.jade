@@ -4,16 +4,9 @@ block content
     #wholeContainer.moderatorAccount
         #baseContent
           #header
-            #goBack
-                img(id="goBackArrow", src="../images/arrow_goBack_white.png")
-            h1 IMD WALL
-            #account
-                img(id="accountPicMod", src="../images/user_white.png")
-          //#login
-          //  h2 Login here
-          //  ul
-          //      li: img(id="facebook", src="../images/facebook_white.png")
-          //      li: img(id="twitter", src="../images/twitter_white.png")
+            h1
+            a(class='logout', href='/logout', alt='Logout', title='logout')
+                .te  Logout
           #content(class="posts")
             span(class='hiddenMessageCount') #{count}
             ul#questionList(class='moderator')
@@ -25,13 +18,13 @@ block content
                                     .messageDetails
                                         .profile
                                             img(src= "#{q.senderPicURL}", alt='sender', id='sender')
-                                        .votes
+                                        .deleteAction
+                                                span(class='delete')
+                                        .votesMod
                                             .voteInfo
                                                 h1.votesNr
                                                     .voteCounter #{q.votes}
                                                     | votes
-                                            .deleteAction
-                                                span(class='delete')
                                     .messageContent
                                         .name
                                             h1 #{q.sender}
@@ -39,12 +32,4 @@ block content
                                             h2 #{q.message}
                                         .time
                                             h3 #{q.chatTime.toDateString()}
-
-
-
-
-        #accountOptions
-            #options 
-                h2 My account
-                </br>
-                a(class='logout', href='/logout') Logout
+        #footer

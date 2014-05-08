@@ -3,13 +3,16 @@ extends layout
 block content
     #wholeContainer.ordinaryUser
         #baseContent
-          #header
-            #goBack
-                img(id="goBackArrow", src="../images/arrow_goBack_white.png")
-            h1 IMD WALL
+          #header 
             #account
-                  img(id="accountPic", src= "#{userImg}")
-          //      img(id="accountPic", src="../images/profilePic.png")
+                img(id="accountPic", src= "#{userImg}")          
+                h2(class="fbUsername") Hello, 
+                    span(class='accountname') #{user.displayname}
+                    ! 
+            h1
+            //#userlogout
+            a(class='logout', href='/logout', alt='Logout', title='logout')
+                .te  Logout
           //#login
           //  h2 Login here
           //  ul
@@ -18,7 +21,7 @@ block content
           #content.askBody
             #leftSide
                 p.category 
-                    span Current questions
+                    span Current questions (*)
                     span.hiddenSpan #{facebookUserID}
                 #topicList
                     span(class='hiddenMessageCount') #{count}
@@ -32,42 +35,45 @@ block content
                                             .profile
                                                 img(src= "#{q.senderPicURL}", alt='sender', id='sender')
                                             .votes
-                                                .voteInfo
-                                                    h1.votesNr
-                                                        .voteCounter #{q.votes}
-                                                        | votes
                                                 .voteAction
                                                     ul
                                                         li
                                                             span(class='up voteUp')
                                                         li
+                                                            .voteInfo
+                                                                h1.votesNr
+                                                                    .voteCounter #{q.votes}
+                                                        li
                                                             span(class='down voteDown')
                                         .messageContent
                                             .name
-                                                h1 #{q.sender}
+                                                h1 #{q.sender} 
+                                                    span(class='says') says:
                                             .text
                                                 h2 #{q.message}
                                             .time
                                                 h3 #{q.chatTime.toDateString()}
 
                             
-                                        
+                              
             #rightSide
                 p.questionHeader
-                    span Ask a question
-                </br>
-                ul#form
-                    li: textarea(name='questionField', id='questionField', placeholder="your message", maxlength="500", rows="3" )
-                    li: p.errorMessage 
-                    li: p.charactersLeft
+                    span Send a message
+            
+                ul#form 
                     li: #sendTypes
                             input(type='radio', name='questionType', id='questionType', value='question') 
-                            label(for='questionType', class='sendType') Question
+                            label(for='questionType', class='sendType', id='q') Question
                             input(type='radio',name='questionType', id='answerType', value='answer') 
-                            label(for='answerType', class='sendType') Answer
-                    li: input#submitQuestion(type="submit", value="Send")
-        #accountOptions
-            #options 
-                h2(class="fbUsername") #{user.displayname}
-                </br>
-                a(class='logout', href='/logout') Logout
+                            label(for='answerType', class='sendType', id='a') Answer
+                    li: p.errorMessage
+                    li: #inlineButton
+                            textarea(name='questionField', id='questionField', placeholder="your message", maxlength="500", rows="6" )
+                            input#submitQuestion(type="submit", value="Send")
+        //#accountOptions
+        //    #options 
+        //        h2(class="fbUsername") #{user.displayname}
+        //        </br>
+        //        a(class='logout', href='/logout') Logout
+        #footerAsk
+           p.footerinfo * red = question, green = answer

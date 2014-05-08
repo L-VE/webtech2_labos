@@ -3,7 +3,7 @@ extends layout
 block content
     #wholeContainer
         #header
-            h1 IMD WALL
+            h1
         #content(class="posts")
             span(class='hiddenMessageCount') #{count}
             ul#questionList(class='allQuestion')
@@ -27,3 +27,4 @@ block content
                                             h2 #{q.message}
                                         .time
                                             h3 #{q.chatTime.toDateString()}
+        #footer

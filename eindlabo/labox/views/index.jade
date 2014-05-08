@@ -3,6 +3,7 @@ html
   head
     title= title
     meta(name='viewport', content='width=device-width', initial-scale='1.0')
+    link(rel='shortcut icon', href='../images/favicon.ico')
     //link(rel='stylesheet', href='../stylesheets/css/reset.css')
     //link(rel='stylesheet', href='../stylesheets/css/style.css')
     //link(rel='stylesheet', href='/stylesheets/reset.css')
@@ -16,12 +17,12 @@ html
             .loginBackground
                 ul#login1
                     li: a(class='facebookLogin', href="/auth/facebook") 
-                                                    span(class="innerLogin") 
-                                                        span(class="loginText") Login with Facebook
+                                                    .innerLogin 
+                                                        .loginText Login with Facebook
                 span(id="loginDiff") or
                 ul#login2
-                    li: input(type='text',class="login-icon", name='username', id='username', placeholder='username')
-                    li: input(type='password',class="login-icon", name='password', id='password', placeholder='password')
+                    li: input(type='text',class="login-icon", name='username', id='username', placeholder='Username')
+                    li: input(type='password',class="login-icon", name='password', id='password', placeholder='Password')
                     li: p.errorMessage
                     li: input#modLogin(type="submit", value="Login as Admin")
     script(src="../javascripts/jquery-1.11.1.js")
