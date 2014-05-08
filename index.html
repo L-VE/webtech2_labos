@@ -155,21 +155,23 @@ We then had to upload it to our git accounts. Thus making use of all the git com
 <ul>
 <li>
 <strong>Transitions</strong>: A transition is an animation that happens between changes.It is placed between the off and on states.</li>
-</ul><p><code>transition: property duration timing-function delay;
-transition: background-color 5s linear 1s;</code></p>
+</ul><p>`transition: property duration timing-function delay;</p>
+
+<p>transition: background-color 5s linear 1s;`</p>
 
 <ul>
 <li>
 <strong>Transformations</strong>: Transformations are a different form of animation. Instead of bridging two states on an element, a transformation physically changes the look of the element. You can transform many aspects of an element, such as: scaling—changing the size of the element,rotating—spinning the element and translating—moving the element</li>
-</ul><p>`</p><div>
- </div>
-    #shape
-    {
-       width: 150px;
-       height: 150px;
-       background-color: #e74c3c;
-       transition: -webkit-transform 1s;
-    }
+</ul><p>`</p><div></div>
+
+<pre><code>#shape
+{
+   width: 150px;
+   height: 150px;
+   background-color: #e74c3c;
+   transition: -webkit-transform 1s;
+}
+</code></pre>
 
 <p>#shape:hover
   {
@@ -184,13 +186,12 @@ transition: background-color 5s linear 1s;</code></p>
     -ms-transform: translate(50px,100px); /* IE 9 */
     -webkit-transform: translate(50px,100px); /* Chrome, Safari, Opera */
     transform: translate(50px,100px);
-   } 
-</code></p>
+   }</code></p>
 
 <ul>
 <li>
 <strong>Animations</strong>: CSS animations make it possible to animate transitions from one CSS style configuration to another. Animations consist of two components, a style describing the CSS animation and a set of keyframes that indicate the start and end states of the animation's style, as well as possible intermediate waypoints along the way.</li>
-</ul><p>`  .automatic
+</ul><p>`.automatic
   {
    -webkit-animation: moveIt 2s infinite;
   }</p>
@@ -224,11 +225,12 @@ transition: background-color 5s linear 1s;</code></p>
 
 <p>Functions like <code>$(“ul#todo li”).css(“color”, “red”);</code> in jQuery can be written like </p>
 
-<p><code>HTMLElement.prototype.changeColor = function(color)
-   {
-   this.style["color"] = color;
-   }
-</code></p>
+<p>` HTMLElement.prototype.changeColor = function(color)
+  {</p>
+
+<p>this.style["color"] = color;</p>
+
+<p>}`</p>
 
 <p>Then we can use our own function to change the text color of an element:</p>
 
@@ -265,7 +267,7 @@ transition: background-color 5s linear 1s;</code></p>
 <hr><h3>
 <a name="lab-contents-4" class="anchor" href="#lab-contents-4"><span class="octicon octicon-link"></span></a>Lab contents:</h3>
 
-<p>For this lab we had to build an app that the teacher suggested or build your own idea. I worked together with a classmate (<a href="https://github.com/tommooredotbe/webtech2-bestrepositoryeu">Tom De Moore</a>) to build this app. It's basically another weatherapp that show the current temperature along with information about our college and our fields of study and a subscription field. It's created to get new students (a sort of campagne). If it's sunny and warm outside, then they're invited to come and take a look at our school and enjoy a fresh drink and such. The background color as well as the temperature and the description change when the weather changes. </p>
+<p>For this lab we had to build an app that the teacher suggested or build your own idea. I worked together with a classmate (<a href="https://github.com/tommooredotbe/webtech2-bestrepositoryeu">Tom De Moore</a>) to build this app. It's basically another weatherapp that show the current temperature along with information about our college and our fields of study and a subscription field. It's created to get new students (a sort of campagne). If it's sunny and warm outside, then they're invited to come and take a look at our school and enjoy a fresh drink, talke to our teachers and such. The background color as well as the temperature and the description change when the weather changes. </p>
 
 <h3>
 <a name="lessons-learned-4" class="anchor" href="#lessons-learned-4"><span class="octicon octicon-link"></span></a>Lessons learned:</h3>
@@ -273,15 +275,29 @@ transition: background-color 5s linear 1s;</code></p>
 <p>It started out as a simple app to build, but I got kind of caught up in it and it started to become more than a school assignment. I had a lot of fun building this app alongside <a href="https://github.com/tommooredotbe/webtech2-bestrepositoryeu">Tom</a>.</p>
 
 <h3>
-<a name="more-about-advanced-javascript-2" class="anchor" href="#more-about-advanced-javascript-2"><span class="octicon octicon-link"></span></a>More about Advanced Javascript:</h3>
+<a name="more-about-terrappke-" class="anchor" href="#more-about-terrappke-"><span class="octicon octicon-link"></span></a>More about TerrAppke :</h3>
 
-<p>More info in the previous section (Lab3). </p>
+<p>We've uses a lot of the subject mentioned above. And like I said before, I had a lot of fun with this app. My teammate and I formed a nice team and I'm proud of our little app. We worked hard so that maybe our app would be chosen for the school campaign.</p>
 
 <h2>
 <a name="6-nodejs" class="anchor" href="#6-nodejs"><span class="octicon octicon-link"></span></a><a name="lab6">6. NodeJs</a>
 </h2>
 
-<hr><p>Deze webpagina geeft het huidige weer en temperatuur weer en is een inschrijvingspagina voor mensen die meer willen te weten komen over de richting Interactive Multimedia Design aan de Thomas More hogeschool te Mechelen.  </p>
+<hr><h3>
+<a name="lab-contents-5" class="anchor" href="#lab-contents-5"><span class="octicon octicon-link"></span></a>Lab contents:</h3>
+
+<p>This was our second to last assignment for the semester. We had to build a little chat-app with NodeJs.
+So different people could send messages to each other and then vote these messages. The more votes a message had, the bigger the font of the message became. </p>
+
+<h3>
+<a name="lessons-learned-5" class="anchor" href="#lessons-learned-5"><span class="octicon octicon-link"></span></a>Lessons learned:</h3>
+
+<p>I found that this was the hardest part of the course. And I found that a lot of fellow students had a lot of difficulties with this subject. At first, it was a lot of trial and error and research on the internet on how I could get my server up and running. That was the most difficult part. This was the most interesting assignment, I think. Especially because for my final project, I'm building another app in NodeJs.</p>
+
+<h3>
+<a name="more-about-nodejs" class="anchor" href="#more-about-nodejs"><span class="octicon octicon-link"></span></a>More about NodeJs:</h3>
+
+<p>We've uses a lot of the subject mentioned above. And like I said before, I had a lot of fun with this app. My teammate and I formed a nice team and I'm proud of our little app. We worked hard so that maybe our app would be chosen for the school campaign.</p>
 
 <h2>
 <a name="lab-7-final-project-imd-wall" class="anchor" href="#lab-7-final-project-imd-wall"><span class="octicon octicon-link"></span></a><a name="lab7">Lab 7: Final project: IMD WALL</a>
