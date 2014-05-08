@@ -1,43 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Webtech2 labos by L-VE</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Webtech2 labos : Repository for webtech2 labs" />
 
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Webtech2 labos</title>
   </head>
+
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/L-VE/webtech2_labos">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/L-VE/webtech2_labos/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/L-VE/webtech2_labos/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
 
-    <div class="wrapper">
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/L-VE/webtech2_labos">View on GitHub</a>
 
-      <section>
-        <div id="title">
-          <h1>Webtech2 labos</h1>
-          <p>Repository for webtech2 labs</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/L-VE">L-VE</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
-        </div>
+          <h1 id="project_title">Webtech2 labos</h1>
+          <h2 id="project_tagline">Repository for webtech2 labs</h2>
 
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/L-VE/webtech2_labos/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/L-VE/webtech2_labos/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>
 <a name="my-webtech-2-labs" class="anchor" href="#my-webtech-2-labs"><span class="octicon octicon-link"></span></a>My Webtech 2 lab's</h1>
 
@@ -163,29 +156,29 @@ We then had to upload it to our git accounts. Thus making use of all the git com
 <strong>Transformations</strong>: Transformations are a different form of animation. Instead of bridging two states on an element, a transformation physically changes the look of the element. You can transform many aspects of an element, such as: scaling—changing the size of the element,rotating—spinning the element and translating—moving the element</li>
 </ul><p><code>&lt;div id="shape"&gt;&lt;/div&gt;</code></p>
 
-<pre><code>`#shape`
-`{`
-   `width: 150px;`
-   `height: 150px;`
-   `background-color: #e74c3c;`
-   `transition: -webkit-transform 1s;`
-`}`
+<pre><code>#shape
+{
+   width: 150px;
+   height: 150px;
+  `background-color: #e74c3c;
+   transition: -webkit-transform 1s;
+}`
 </code></pre>
 
-<p><code>#shape:hover</code>
-  <code>{</code>
-    <code>-webkit-transform: scale(2) translateY(100px) rotate(45deg);</code>
-  <code>};</code></p>
+<p><code>#shape:hover
+  {
+    -webkit-transform: scale(2) translateY(100px) rotate(45deg);
+  };</code></p>
 
 <ul>
 <li>
 <strong>Translations</strong>: Translations are a transformation function that moves the element across the x- or y-axis. So, when you translate an element you are transforming it’s location. </li>
-</ul><p><code>div</code>
-  <code>{</code>
-    <code>-ms-transform: translate(50px,100px); /* IE 9 */</code>
-    <code>-webkit-transform: translate(50px,100px); /* Chrome, Safari, Opera */</code>
-    <code>transform: translate(50px,100px);</code>
-   <code>}</code></p>
+</ul><p><code>div
+  {
+    -ms-transform: translate(50px,100px); /* IE 9 */
+    -webkit-transform: translate(50px,100px); /* Chrome, Safari, Opera */
+    transform: translate(50px,100px);
+   }</code></p>
 
 <ul>
 <li>
@@ -304,9 +297,17 @@ So different people could send messages to each other and then vote these messag
 
 <hr>
       </section>
-
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Webtech2 labos maintained by <a href="https://github.com/L-VE">L-VE</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
     
+
   </body>
 </html>
