@@ -7,8 +7,19 @@ var maxRandomIdGenerator = 589;
 // ----------------------------------------------------------------
 $(document).ready(function (e){
 
-// COOKIE BIJHOUDEN VOOR HET ONTHOUDEN OP WELKE MESSAGES WE AL GEVOTED HEBBEN
+	window.onresize=function()	{
+		if($(window).width() > 700)
+		{
+			if( $("#rightSide").hasClass("moveUp") )
+			{
+				$("#rightSide").removeClass("moveUp");
+				//$("#leftSide").removeClass("moveUp");
+			}
+		}
+	};
 
+// COOKIE BIJHOUDEN VOOR HET ONTHOUDEN OP WELKE MESSAGES WE AL GEVOTED HEBBEN
+// ZODAT BIJ EEN REFRESH JE NIET VERSCHILLENDE KEER KAN UP_ OF DOWNVOTED OP EEN POST
     $("#indexBody").ready(function (event){
     	if(cookiesAreEnabled)
 		{
@@ -34,43 +45,53 @@ $(document).ready(function (e){
 		}
     });// END OF ON INDEXBODY LOAD
 
-
+    // CHECKEN OF ER AL POSTS ZIJN, INDIEN WEL DAN WORDEN ZE GETOOND
+    // INDIEN NIET DAN WORDT ER GEZEGD DAT ER NOG GEEN POSTS ZIJN
 	checkIfThereArePosts();
 	
 
 // wanneer er op het user icoontje geklikt wordt
 // schuift het uitlog menu'tje van recht uit
 // en kruipt weer op zijn plaats als er nog eens op geklikt wordt
-	$("#accountPic").on('click', function (argument){
+/*	$("#accountPic").on('click', function (argument){
 		showLogoutSidebar()
-	});// END ON CLICK accountPic
+	});
 
 	$("#accountPicMod").on('click', function (argument){
 		showLogoutSidebar()
-	});// END ON CLICK accountPic
+	});
 
-//  Wanneer er op een topic geklikt wordt, kan men beginnen vragen te versturen
-//  en verdwijnt het beginscherm en kan man zowel vragen stellen, antwoorden
-//  en alle vragen en antwoorden ook bekijken en voten
-/*	$("#topicList span").on('click', function (argument){
-		$("#topicList").hide();
-		$('#topicDetails').show();
-		$("#form :input").prop('disabled', false);
-		$("#goBackArrow").show();
-	});*/// END ON CLICK topicList span
+*/
 
-// Wanneer er vanaf de vragen op de back-pijl wordt geklikt 
-// wordt het beginscherm met de lijst van topics weer getoond.
-	$("#goBackArrow").on('click', function (argument){
-		$(".errorMessage").text("") ;
-    	$(".errorMessage").css('display','none');
-		$("#topicList").show();
-		$('#topicDetails').hide();
-		//$("#form :input").prop('disabled', true);
-		$("#goBackArrow").hide();
-	});// END ON CLICK goBackArrow
+	// WANNEER ER OP DE SENDMESSAGE HEADER GEKLIKT WORDT, ENKEL WANNEER
+	// HET SCHERM KLEINER IS DAN 700PX (WANT DAN VERANDERT DE LAYOUT OOK)
+	// DAN SCHUIFT DEZE NAAR BOVEN OF BENEDEN ADHV CSS ANIMATIONS
+	$(".questionHeader").on('click', function (argument){
+		if($(window).width() <= 700)
+		{
+			if(/*$("#rightSide").hasClass("moveUp") &&*/ $("#rightSide").hasClass("moveUp") )
+			{
+				$("#rightSide").removeClass("moveUp");
+
+				if($(".errorMessage").css("display") == 'block' && $(window).width() <= 700)
+				{
+					$("#rightSide").height(175);
+				}
+				//$("#leftSide").removeClass("moveUp");
+			}
+			else
+			{
+				$("#rightSide").addClass("moveUp");
+				//$("#leftSide").addClass("moveUp");
+			}
+		}
+	});
 
 
+	// WANNEER ER OP DE "LOGIN AS ADMIN" GEKLIKT WORDT
+	// DAN WORDT ER EEN POST GEDAAN NAAR "/LOGINMOD/ADMINUSERNAME/ADMINPASSWORD"
+	// WANNEER DE ADMIN SUCCESVOL IS INGELOGD DAN WORDT HIJ DOORVERWEZEN NAAR DE ADMIN PAGINA
+	// WANNEER NIET SUCCESVOL DAN WORDT ER EEN FOUTBERICHT GETOOND ADHV VAN ER FOUT GING
 	$("#modLogin").on('click', function (argument){
 		
 		var username = $("#username").val();
@@ -84,7 +105,7 @@ $(document).ready(function (e){
 								url: "/loginMod/" + username + '/' + password,
 								dataType: "json",
 								error: function( xhr, status ) {
-									console.log("Kon de actie niet uitvoeren.");
+									//console.log("Kon de actie niet uitvoeren.");
 									$(".errorMessage").text("You didn't fill in the correct login!") ;
     								$(".errorMessage").css('display','block');
 									argument.preventDefault();
@@ -92,11 +113,13 @@ $(document).ready(function (e){
 								success: function(response) { // on success..
 									//showAbsences();
 									//humane.log("Was een succes!");
-									console.log(JSON.stringify(response));
+									//console.log(JSON.stringify(response));
 									$(".errorMessage").text("") ;
     								$(".errorMessage").css('display','none');
 									argument.preventDefault();
-
+									// WANNEER JUIST IS INGELOGD KRIJGEN WE VAN DE SERVER EEN TRUE BERICHT EN 
+									// GAAN WE DOOR NAAR DE VOLGENDE PAGINA
+									// BIJ FALSE WORDT ER EEN GEPASTE FOUTBOODSCHAP GETOOND
 									if(JSON.stringify(response) == "false")
 									{
 										$(".errorMessage").text("You didn't fill in the correct login!") ;
@@ -135,21 +158,24 @@ $(document).ready(function (e){
 	});// END ON CLICK p.logout
 
 
-
-
-// de kleine kleurband die de vragen van antwoorden onderscheidt
-// heeft een varierende lengte afhankelijk van de lengte van het bericht
-// daarom wordt de lengte van de berichtcontainer berekend en vermenigvuldigd met 3
-// zodat deze zeker groot genoeg is.
+// DEZE FUNCTIE HANGT EEN KLEINE KLEURBAND AAN DE POSTS DIE DE VRAGEN VAN ANTWOORDEN ONDERSCHEIDT
+// DEZE HEEFT EEN VARIERENDE LENGTE AFHANKELIJK VAN DE LENGTE VAN HET BERICHT
+// DAAROM WORDT DE LENGTE VAN DE BERICHTCONTAINER BEREKEND EN VERMENIGVULDIGD MET 3
+// ZODAT DEZE ZEKER GROOT GENOEG IS.
 	calculatePaddingForMessages ();
 
+// BIJ HET LADEN VAN DE MODERATOR ACCOUNT WORDT HET INDEXPAD GESET
 	$(".moderatorAccount").on('load', function (){
 		var currentPath = $(location).attr('href');
 		var toGoPath = currentPath.substr(0,currentPath.indexOf('moderator'));
 		indexPagePath = toGoPath;
 	});
 
-
+// BIJ HET KLAAR ZIJN VAN DE /ASK PAGINA WORDT ER 
+// VOOR ALLE POSTS DIE GETOOND WORDEN? WORDT GECHECKT OF DE HUIDIGE USER ER AL
+// HEEFT OP GEVOTED
+// DAARVOOR ROEPEN WE DE COOKIE AAN DIE TIJDENS HET VOTEN GEMAAKT IS 
+// EN SETTEN WE DE REEDS GEVOTED POSTS MET DE JUISTE KLEURPIJL EN DATA ATRRIBUTEN
 	$(".ordinaryUser").ready(function (){
 			$("#questionList li.questionItem").each(function( index ) {
 				var currentId = $(this)[0].id;
@@ -158,7 +184,7 @@ $(document).ready(function (e){
 
 				$.each(idList, function (index, value) {
 					//console.log(idList.messages);//Object {messageId: "messageValue"} 
-					console.log("index: " +index + ", value: " +value);//index: messageId, value: messageValue
+					//console.log("index: " +index + ", value: " +value);//index: messageId, value: messageValue
 					var savedId = value.messageId;
 					var savedMesValue = value.messageValue;
 					var savedDataUp = value.votedUp;
@@ -168,9 +194,16 @@ $(document).ready(function (e){
 				    //console.log(dataArray);
 				    
 				    if(currentId == savedId)
-				    {// HIER NOG IETS AANPASSEN DAT HIJ WEET DAT ALS JE VOTEUP/VOTEDOWN ONTHEFT? DAN NEUTRAAL 5IETS MET DATA_ATTR?-
+				    {
 						switch(savedMesValue)
 						{
+							// ALLE MOGELIJKHEDEN CHECKEN VAN HOE DE VOTE WAS, IS BELANGRIJK OM TE WETEN
+							// VOOR HOE DE PIJLTJES GESET WORDEN
+							// WANT 1DOWN KAN BV ZIJN WANNEER JE GEWOON NAAR BENEDEN VOTE
+							// MAAR OOK WANNEER JE JE UP VOTE WILT TERUGNEMEN OM TERUG NAAR DE 
+							// NEUTRALE SITUATIE TE GAAN
+							// 2 DOWN OF 2 UP STAAT DAN VOOR WANNEER JE AL GEDOWNVOTED OF GEUPVOTED HEBT
+							// OM DAN RESPECTIEVELIJK METEEN TE UPVOTED OF DOWNVOTEN
 							case "1up" : 	if(savedDataUp == true && savedDataDown == false)//van 0 @ 1
 											{
 												$("#" + currentId).data("votedup",true);//true
@@ -223,22 +256,24 @@ $(document).ready(function (e){
 			});
 		});
 
-// nu de client definieëren
-
 	/*client = new Faye.Client('http://localhost:3002/faye/',{
 				timeout: 20
 	});*/
 
+// DE CLIENT AFHANKELIJK VAN DE REMOTE OF LOCAL URL DEFINIEREN
 	client = new Faye.Client(indexPagePath + 'faye/',{
 				timeout: 20
 	});
 
-// deze client moet zich subscriben op het kanaal /message
+// OM ALLE GEMAAKTE POSTS TE ONTVANGEN MOET ELKE CLIENT NAAR DE /MESSAGE LUISTEREN
 	var subscription = client.subscribe('/message', function(message) {
 	  //console.log(message.chat + " " + message.user + " " + message.chatMessageType);
 
 	  
-
+	 // ER WORDEN 3 INSTANTIES GEMAAKT VAN DE GEMAAKTE POST: VOOR DE GEWONE USER MET VOTING CAPACITEITEN
+	 //														 VOOR DE MODERATOR MET ALLEEN DELETE CAPACITEITEN
+	 //														 VOOR DE QUESTIONS PAGINA MET GEEN ENKELE CAPACITEIT, ENKEL BEKIJKEN
+	 // HIER WORDEN DAN DE JUIST WAARDEN VAN DE PUBLISH IN GESTOKEN
 	  var listItemInstanceAsk = "<li id='" + message.id + "' data-votedup='false' data-voteddown='false' class='questionItem animateQuestion'>"
 	  						+ "<div class='messageCon even " + message.chatMessageType +  "'>"
 	  						+ 	"<span class='typeColor" + message.chatMessageType + "'>"
@@ -248,21 +283,31 @@ $(document).ready(function (e){
 							+			"<div class='profile'>"
 							+				"<img src='" + message.senderPicURL + "' alt='senderPic'>"
 							+			"</div>"
-							+			"<div class='votes'>"
-							+				"<div class='voteInfo'>"
-							+					"<h1 class='votesNr'><span class='voteCounter'>0</span> votes</h1>"
-							+				"</div>"
-							+				"<div class='voteAction'>"
-							+					"<ul>"
-							+						"<li><span class='up voteUp'></span></li>"
-							+						"<li><span class='down voteDown'></span></li>"
-							+					"</ul>"
-							+				"</div>"
-							+			"</div>"
+						    + "<div class='votes'>"
+						    +      "<div class='voteAction'>"
+						    +         "<ul>"
+						    +             "<li>"
+						    +                 "<span class='voteUp up'></span>"
+						    +             "</li>"
+						    +             "<li>"
+						    +                 "<div class='voteInfo'>"
+						    +                     "<h1 class='votesNr'>"
+						    +                         "<div class='voteCounter'>"
+						    +                           "0"
+						    +                         "</div>"
+						    +                     "</h1>"
+						    +                 "</div>"
+						    +             "</li>"
+						    +             "<li>"
+						    +                 "<span class='voteDown down'></span>"
+						    +             "</li>"
+						    +         "</ul>"
+						    +     "</div>"
+						    + "</div>"
 							+		"</div>"
 							+		"<div class='messageContent'>"
 							+			"<div class='name'>"
-							+				"<h1>" +  message.user + "</h1>"
+							+				"<h1>" +  message.user + " says:</h1>"
 							+			"</div>"
 							+			"<div class='text'>"
 							+				"<h2>" + message.chat + "</h2>"
@@ -292,7 +337,7 @@ $(document).ready(function (e){
 							+		"</div>"
 							+		"<div class='messageContent'>"
 							+			"<div class='name'>"
-							+				"<h1>" +  message.user + "</h1>"
+							+				"<h1>" +  message.user + " says:</h1>"
 							+			"</div>"
 							+			"<div class='text'>"
 							+				"<h2>" + message.chat + "</h2>"
@@ -314,18 +359,18 @@ $(document).ready(function (e){
 							+			"<div class='profile'>"
 							+				"<img src='" + message.senderPicURL + "' alt='SenderPic'>"
 							+			"</div>"
-							+			"<div class='votes'>"
-							+				"<div class='voteInfo'>"
-							+					"<h1 class='votesNr'><span class='voteCounter'>0</span> votes</h1>"
-							+				"</div>"
 							+				"<div class='deleteAction'>"
 							+					"<span class='delete'></span>"	
+							+				"</div>"
+							+			"<div class='votesMod'>"
+							+				"<div class='voteInfo'>"
+							+					"<h1 class='votesNr'><span class='voteCounter'>0</span> votes</h1>"
 							+				"</div>"
 							+			"</div>"
 							+		"</div>"
 							+		"<div class='messageContent'>"
 							+			"<div class='name'>"
-							+				"<h1>" +  message.user + "</h1>"
+							+				"<h1>" +  message.user + " says:</h1>"
 							+			"</div>"
 							+			"<div class='text'>"
 							+				"<h2>" +  message.chat + "</h2>"
@@ -350,6 +395,8 @@ $(document).ready(function (e){
 	  
 	  //checkIfNoVotes ("#message" + messageId);
 
+	  // BIJ HET MAKEN VAN DEZE BERICHTEN WORDT ER OOK UITGEREKEND WAAR ZE MOETEN KOMEN
+	  // VERMITS DE POSTS GERANGSCHIKT WORDEN OP VOTES VAN HOOG NAAR LAAG
 		sortMessages (listItemInstance, 0); 
 		sortMessagesModerator (listItemInstanceModerator, 0);
 		sortMessagesAsk (listItemInstanceAsk, 0);
@@ -359,10 +406,13 @@ $(document).ready(function (e){
 
 
 // deze client moet ook zijn vragen kunnen stellen, dus publiceren naar /message
+// DE CLIENT KAN OOK POSTS MAKEN MET HET FORMULIER
+// DEZE POST WORDT DAN GECHECKT OP ILLEGALE CHARACTERS EN OF ZE NIET LEEG OF UNDEFINED ZIJN
+// IN DEZE GEVALLEN WORDEN FOUTBOODSCHAPPEN GETOOND
 	$("#submitQuestion").on('click', function (e){
 		e.preventDefault();
-		var chatUser = getTextType($("h2.fbUsername")[0]);  //MOET HIER NOG UITGEVIST WORDEN
-		console.log(chatUser);
+		var chatUser = getTextType($(".accountname")[0]);  //MOET HIER NOG UITGEVIST WORDEN
+		//console.log(chatUser);
 		var chatMessage = $("#questionField").val();
 		var messageIllegalCharsFound = illegalCharsFound(chatMessage);
         var userIllegalCharsFound = illegalCharsFound(chatUser);
@@ -380,11 +430,25 @@ $(document).ready(function (e){
 	    	{
 	    		$(".errorMessage").text("Your message contains illegal characters like '< >'!") ;
     			$(".errorMessage").css('display','block');
+    			if($(window).width() <= 700)
+    			{
+    				$("rightSide").height(204);
+    			}
 	    	}
 	    	else
 	    	{
 	    		$(".errorMessage").text("") ;
     			$(".errorMessage").css('display','none');
+    			if($(window).width() <= 700)
+    			{
+    				$("#rightSide").height(175);
+    			}
+
+    // BIJ HET POSTEN VAN DE CREATIE VAN EEN POST
+    // KRIJGT DIT BERICHT ALS ID HET AANTAL MESSAGES DAT AL IN DE DATABANK ZIT MET 1 VERHOOGD
+    // ZO KRIJGT DIT BERICHT EEN UNIEKE ID
+    // AL DE INGEVULDE GEGEVENS WORDEN ZOWEL NAAR DE SERVER GESTUURD OM IN DE DATABANK TE STEKEN
+    // MAAR OOK NAAR DE SUBSCRIBE FUNCTIE VAN DE CLIENT OM DE NIEUWE POST TE APPENDEN AAN HUN LIJST ZICHTBARE posts
     			var totalMessagesCount = parseInt(getTextType($("span.hiddenMessageCount")[0]));
     			totalMessagesCount++;
     			var senderPic = $("#accountPic").attr("src");
@@ -403,7 +467,7 @@ $(document).ready(function (e){
 							url: "/create",//$(this).attr('action'),
 							dataType: "json",
 							error: function( xhr, status ) {
-								console.log("Kon de actie niet uitvoeren.");
+								//console.log("Kon de actie niet uitvoeren.");
 								e.preventDefault();
 							 }, // the file to call
 							success: function(response) { // on success..
@@ -413,37 +477,41 @@ $(document).ready(function (e){
 								{
 									$("#sender").attr("src", senderPic);
 								}
-								console.log("geluktsucces");
+								//console.log("geluktsucces");
 								e.preventDefault();
 								
 							}
 						});//einde ajax
+    			 // OOK DE MESSAGESCOUNT IN DE HIDDEN SPAN WORDT AAN GEPAST VOOR ALS ER NOG BERICHTEN WORDEN
+    			 // GEMAAKT TERWIJL ER NOG NIET GEREFRESHED IS, ZODAT DE ID MEE VERANDERT
+    			 // WANNEER WEL GEREFRESHED WORDT, WORDT DE INHOUD HIERVAN INGEVULD DOOR DE SERVER DIE DIT AANTAL OPHAALT
 				changeText($("span.hiddenMessageCount")[0],totalMessagesCount);
 	    	}
     	}
     	else
     	{
+
     		$(".errorMessage").text("You must fill in both your message and a message type!") ;
     		$(".errorMessage").css('display','block');
+    		if($(window).width() <= 700)
+    			{
+    				$("#rightSide").height(204);
+    			}
     	}
 		
 	});// END ON CLICK submitQuestion
 
 	
+// BIJ HET KLIKKEN OP HET VOTEUP PIJLTJE WORDT DE ID VAN HET AANGEKLIKTE BERICHT OPGEVRAAGD
+// DAN WORDT ER GEKEKEN VAN WELKE SITUATIE DE VOTE KOMT
+// INDIEN VOTEDUP & VOTEDDOWN BEIDE FALSE ZIJN DAN KOMEN WE VANUIT DE NEUTRALE SITUATIE
+// WAARBIJ NU VOTEDUP GEKOZEN IS EN MOET DIT DATAATTRIBUUT VERANDEREN NAAR TRUE
+// EN MOETEN DE JUISTE KLASSEN ERAAN TOEGEVOEGD EN VERWIJDERD WORDEN
+// INDIEN VOTEDDOWN AL OP TRUE STOND KOMEN VAN -1 NAAR +1
+// ANDERE MOGELIJKHEDEN BESTAAN NIET, DAN WORDT DE NEUTRALE SITUATIE GEKOZEN
 	$( "#questionList" ).on( "click", ".voteUp", function( event ) {
 		 	var currentMessageId = "#" + $(this).parents(".questionItem")[0].id;
-		//if($(currentMessageId).data("votedup") === false)
-		//{
-		 	//var test = $(currentMessageId).find(".voteCounter")[0];
-		 	//var currentVotes = parseInt(test.innerText);
-		 	//if(votedDown === true)
-		 	//	currentVotes+=2;	
-		 	//else
-		 	//	currentVotes++;
-		 	
-	        //test.innerText = currentVotes;
-	        //checkVotingAvailibility (currentMessageId, "votedup", "voteddown", ".voteUp", ".voteDown" , true);
-	   // }
+
 
 	    if($(currentMessageId).data("votedup") === false && $(currentMessageId).data("voteddown") === false)
 	    {
@@ -476,21 +544,17 @@ $(document).ready(function (e){
     });// END ON CLICK .voteUp
 
 
+// BIJ HET KLIKKEN OP HET VOTEDOWN PIJLTJE WORDT DE ID VAN HET AANGEKLIKTE BERICHT OPGEVRAAGD
+// DAN WORDT ER GEKEKEN VAN WELKE SITUATIE DE VOTE KOMT
+// INDIEN VOTEDUP & VOTEDDOWN BEIDE FALSE ZIJN DAN KOMEN WE VANUIT DE NEUTRALE SITUATIE
+// WAARBIJ NU VOTEDOWN GEKOZEN IS EN MOET DIT DATAATTRIBUUT VERANDEREN NAAR TRUE
+// EN MOETEN DE JUISTE KLASSEN ERAAN TOEGEVOEGD EN VERWIJDERD WORDEN
+// INDIEN VOTEDUP AL OP TRUE STOND KOMEN VAN 1 NAAR -1
+// ANDERE MOGELIJKHEDEN BESTAAN NIET, DAN WORDT DE NEUTRALE SITUATIE GEKOZEN
     $( "#questionList" ).on( "click", ".voteDown", function( event ) {
 
 
 		 var currentMessageId = "#" + $(this).parents(".questionItem")[0].id;
-    	//if($(currentMessageId).data("voteddown") === false)
-		//{
-
-		 	//var test = $(currentMessageId).find(".voteCounter")[0];
-		 	//var currentVotes = parseInt(test.innerText);
-		 	//if(votedUp === true)
-		 	//	currentVotes-=2;	
-		 	//else
-		 	//	currentVotes--;
-		 	
-	        //test.innerText = currentVotes;
 
 
 		    if($(currentMessageId).data("voteddown") === false && $(currentMessageId).data("votedup") === false)
@@ -523,10 +587,15 @@ $(document).ready(function (e){
         //checkIfNoVotes ("#" + currentMessageId);
     });// END ON CLICK .voteDown
 
+// DE CLIENT MOET OOK LUISTEN NAAR DE VERANDERING VAN VOTES
+// WE BEPALEN ADHV DE MEEGEGEVEN PARAMETERS NAAR WELKE SITUATIE WE MOETEN GAAN
+// EN BEPAALDEN DAARMEE DE JUISTE VOTEVALUE
+// DAN WORDT DEZE VOTE SAMEN MET ZIJN CORRESPONDERENDE ID DOORGESTUURD NAAR DE SERVER
+// OM TE WORDEN AANGEPAST IN DE DATABANK EN BIJ DE POSTS VAN DE CLIENTS OP HET SCHERM
     var subscriptionVote = client.subscribe('/vote', function(message) {
 		var test = $(message.chosenQuestion).find(".voteCounter")[0];
 		var mesId = message.chosenQuestion; // #message5
-		alert(mesId);
+		//alert(mesId);
     	//alert($(this).parents(".questionItem")[0].id);
     	var mesString = "#message";
     	var mesStinglength = mesString.length;
@@ -575,7 +644,8 @@ $(document).ready(function (e){
 								
 							}
 						});//einde ajax
-	    
+	// OOK BIJ HET VOTEN WORDT ER BEKEKEN WAAR HET HUIDIGE BERICHT NAARTOE MOET
+	// OMDAT ZE GERANGSCHIKT WORDEN OP BASIS VAN VOTES VAN HOOG NAAR LAAG
 	    if($("ul#questionList").children().length > 1)
   		{
 		    sortMessages ($(message.chosenQuestion), currentVotes); 
@@ -585,6 +655,10 @@ $(document).ready(function (e){
 
     });// END SUBSCRIBE VOTE
 
+// BIJ HET KLIKKEN OP DE DELETE KNOP
+// WORDT DE ID VAN HET CORRESPONDERENDE POST OPGEVRAAGD EEN ZOWEL DOORGESTUURD NAAR DE SERVER
+// OM TE DELETEN IN DE DATABANK MAAR OOK UIT DE LIJST BIJ DE CLIENTS	
+// ENKEL WANNEER DE DELETE GELUKT IS IN DE DATABANK, DAN WORDEN DE POSTS BIJ DE CLIENTS OOK AANGEPAST
     $( "#questionList" ).on( "click", ".delete", function (event){
     	var currentMessageId = "#" + $(this).parents(".questionItem")[0].id;
     	var mesId = $(this).parents(".questionItem")[0].id;
@@ -621,6 +695,7 @@ $(document).ready(function (e){
     	
     });// END ON CLICK .DELETE
 
+	// BIJ HET OPVANGEN VAN EEN DELETE WORDT HET OVEREENKOMSTIG BERICHT UIT DE MESSAGESLIST VERWIJDERT
     var subscriptionDeleteVote = client.subscribe('/deleteVote', function(message) {
 		$( "#questionList " + message.chosenQuestion ).remove();
     });// END SUBSCRIBE VOTE
@@ -634,9 +709,10 @@ $(document).ready(function (e){
 // FUNCTIE BESCHRIJVINGEN
 // ----------------------------------------------------------------
 
-// hier wordt er gecheckt dat wanneer de content zichtbaar is dat
-// ook het usericoontje moet getoond worden
-// en niet wanneer de content niet maar wel het loginscherm te zien is
+
+// HIER WORDT ER GECHECKT OF DAT DE CONTENT ZICHTBAAR IS DAT OOK HET USERICOONTJE MOET GETOOND WORDEN
+// EN NIET WANNEER DE CONTENT NIET MAAR WEL HET LOGINSCHERM TE ZIEN IS
+// WORDT NIET MEER GEBRUIKT
 function checkContentVisibility ()
 {
 	if ($("#content").css('display') == 'none') 
@@ -652,10 +728,10 @@ function checkContentVisibility ()
 }
 
 
-// de kleine kleurband die de vragen van antwoorden onderscheidt
-// heeft een varierende lengte afhankelijk van de lengte van het bericht
-// daarom wordt de lengte van de berichtcontainer berekend en vermenigvuldigd met 10
-// zodat deze zeker groot genoeg is.
+// DEZE FUNCTIE HANGT EEN KLEINE KLEURBAND AAN DE POSTS DIE DE VRAGEN VAN ANTWOORDEN ONDERSCHEIDT
+// DEZE HEEFT EEN VARIERENDE LENGTE AFHANKELIJK VAN DE LENGTE VAN HET BERICHT
+// DAAROM WORDT DE LENGTE VAN DE BERICHTCONTAINER BEREKEND EN VERMENIGVULDIGD MET 10
+// ZODAT DEZE ZEKER GROOT GENOEG IS.
 function calculatePaddingForMessages ()
 {
 	$("#questionList li div.question").each(function( index ) {
@@ -676,13 +752,15 @@ function calculatePaddingForMessages ()
 }
 
 
+// BIJ HET HOVEREN OVER EEN PIJL WERD DE HOVER IMAGE VERANDERT
+// NIET MEER NODIG
 function setHoverImage (this_element, imageOnHover)
 {	
 	$(this_element).attr("src",imageOnHover);
 }
 
 
-// eerste letter van een string in hoofdletter omzetten
+// DE EERSTE LETTER VAN EEN STRING NAAR EEN HOOFDLETTER OMZETTEN
 function capitaliseFirstLetter(string)
 {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -703,10 +781,12 @@ function illegalCharsFound(checkString)
     return result;
 }
 
+// CHECKEN OF ER NOG NIET GEVOTED IS EN DE OVEREENKOMSTIGE IMG GEBRUIKEN DAARVOOR
+// WORDT NIET MEER GEBRUIKT
 function checkIfNoVotes (p_elementID)
 {
-	console.log("r",$(p_elementID));
-	console.log("e",$(p_elementID).children().find("span.voteCounter"));
+	//console.log("r",$(p_elementID));
+	//console.log("e",$(p_elementID).children().find("span.voteCounter"));
 	// het downvoten van vragen disablen als er 0 votes zijn
 		//if($(p_elementID).find(".voteCounter")[0].innerText == "0" || $(p_elementID).find(".voteCounter")[0].innerText == 0 )
 		if(getTextType($(p_elementID).find(".voteCounter")[0]) == "0")
@@ -723,6 +803,7 @@ function checkIfNoVotes (p_elementID)
 		}
 }
 
+// EEN DATETIME OBJECT NAAR EEN CUSTOM FORMAAT CONVERTEREN (1)
 function createDateStringOnlyTime(currentdate)
 {
    
@@ -736,6 +817,7 @@ function createDateStringOnlyTime(currentdate)
     return currentDateTime;
 }
 
+// EEN DATETIME OBJECT NAAR EEN CUSTOM FORMAAT CONVERTEREN (2)
 function createDateString(currentdate)
 {
     var currentDay = checkDate(currentdate.getDate());
@@ -754,7 +836,8 @@ function createDateString(currentdate)
     return currentDateTime;
 }
 
-
+// CHECKEN OF EEN DATE ELEMENT KLEINER IS DAN 10, EN ER DAN EEN 0 VOOR PLAATSEN
+// VOORBEELD: 01/05/2014 IPV 1/5/2014
 function checkDate(p_dateElement)
 {
     if(p_dateElement < 10)
@@ -762,6 +845,8 @@ function checkDate(p_dateElement)
     return p_dateElement;
 }
 
+// WERD GEBRUIKT OM DE PIJLTJES VAN DE VOTES TE SETTEN
+// NU NIET MEER GEBRUIKT
 function checkVotingAvailibility (p_currentMessageId, p_dataAtrrDisable, p_dataAttrEnable, p_voteTypeDisable, p_voteTypeEnable , p_voteValue)
 {
 	if(p_voteTypeDisable == ".voteDown")
@@ -795,6 +880,8 @@ function checkVotingAvailibility (p_currentMessageId, p_dataAtrrDisable, p_dataA
 
 }
 
+// DE INITIELE VOTING SITUATIE SETTEN
+// = NEUTRALE PIJLTJES
 function setInitialVotingSituation (p_currentMessageId)
 {
 		$(p_currentMessageId).data('voteddown',false);
@@ -812,11 +899,15 @@ function setInitialVotingSituation (p_currentMessageId)
 
 }
 
+// CHECKEN OF ER AL POSTS ZIJN
+// INDIEN NIET, WORDT ER GETOOND DAT ER NOG GEEN ZIJN IN EEN BERICHT
+// INDIEN WEL, DAN WORDEN DE POSTS GETOOND
+// EN GEEN BERICHT
 function checkIfThereArePosts()
 {
 	if ($('ul#questionList').children().length < 1) 
 	{
-	    $( ".posts" ).append("<p id='noMessages'>Currently there are no questions asked!</p>");
+	    $( ".posts" ).append("<p id='noMessages'>Currently there are no questions!</p>");
 	}
 	else
 	{
@@ -824,6 +915,10 @@ function checkIfThereArePosts()
 	}   
 }
 
+// HIERBIJ WORDT ER ALS ER GEVOTED IS GECHECKD OF DE COOCKIES ENABLED ZIJN
+// INDIEN JA DAN WORDEN DE VOTES BIJGEHOUDEN VOOR LATER OM NIET
+// VERSCHILLENDE KEREN EEN VOTE TE KUNNEN UITBRENGEN
+// DAN WORDT DE VOTE DOORGESTUURD NAAR DE SUBSCRIBE
 function voteMessage(p_messageId, p_voteType, p_voteValue,p_dataAttrVotedUp, p_dataAttrVotedDown)
 {
 	// IN EEN COOKIE SCHRIJVEN OP WELKE MESSAGES WE AL GEVOTED HEBBEN
@@ -831,7 +926,7 @@ function voteMessage(p_messageId, p_voteType, p_voteValue,p_dataAttrVotedUp, p_d
 	{
 		$.cookie.json = true;
 	    var allMyvotes = $.cookie('myVotesIMDWALL');
-	    alert(allMyvotes);
+	    //alert(allMyvotes);
 	    //alert("id: " + p_messageId.substr(1,p_messageId.length));
 	    var id = p_messageId.substr(1,p_messageId.length);
 	    //var incId = uniqId();
@@ -857,6 +952,7 @@ function voteMessage(p_messageId, p_voteType, p_voteValue,p_dataAttrVotedUp, p_d
     
 }
 
+// BIJ HET DELETEN VAN EEN POST WORDT DIT DOORGEGEVEN NAAR DE SUBSCRIBE ZODAT ZE OOK UIT DE MESSAGESLIJST BIJ DE CLIENTS VERDWIJNT
 function deleteMessage(p_messageId)
 {
     var publicationDeleteVote = client.publish('/deleteVote', {chosenQuestion : p_messageId});
@@ -865,7 +961,9 @@ function deleteMessage(p_messageId)
 
 
 
-
+// SORTEREN VAN DE MESSAGES OP DE /QUESTIONS PAGE
+// WANNEER DE VOTE VAN HET IN TE BRENGEN BERICHT KLEINER IS DAN DE VOTES VAN DE REEDS
+// BESTAANDE BERICHTEN DAN WORDT ZE ERONDER GEPLAATST
 function sortMessages (element, value) 
 {
 	var selector = $(".allQuestion");
@@ -905,6 +1003,9 @@ function sortMessages (element, value)
 	  //$(element).addClass('animateQuestion');
 };
 
+// SORTEREN VAN DE MESSAGES OP DE /ASK PAGE
+// WANNEER DE VOTE VAN HET IN TE BRENGEN BERICHT KLEINER IS DAN DE VOTES VAN DE REEDS
+// BESTAANDE BERICHTEN DAN WORDT ZE ERONDER GEPLAATST
 function sortMessagesAsk (element, value) 
 {
 	var selector = $(".allCurrentQuestion");
@@ -942,6 +1043,9 @@ function sortMessagesAsk (element, value)
 
 };
 
+// SORTEREN VAN DE MESSAGES OP DE /MODERATOR PAGE
+// WANNEER DE VOTE VAN HET IN TE BRENGEN BERICHT KLEINER IS DAN DE VOTES VAN DE REEDS
+// BESTAANDE BERICHTEN DAN WORDT ZE ERONDER GEPLAATST
 function sortMessagesModerator (element, value) 
 {
 
@@ -979,7 +1083,9 @@ function sortMessagesModerator (element, value)
 
 };
 
-
+// CHECKEN OF EEN ELEMENT HET ATTRIBUUT INNERTEXT HEEFT OF INNERCONTENT
+// HANDIG VOOR FIREFOX EN CHROME
+// WANT HAD DAAR PROBLEMEN MEE OM DIT ATTRIBUUT TE SETTEN
 function changeText(elem, changeVal) {
     if ((elem.textContent) && (typeof (elem.textContent) != "undefined") && (typeof (elem.textContent) != "NaN")) {
         elem.textContent = changeVal;
@@ -988,6 +1094,9 @@ function changeText(elem, changeVal) {
     }
 }
 
+// CHECKEN OF EEN ELEMENT HET ATTRIBUUT INNERTEXT HEEFT OF INNERCONTENT
+// HANDIG VOOR FIREFOX EN CHROME
+// WANT HAD DAAR PROBLEMEN MEE OM DIT ATTRIBUUT TE GETTEN
 function getTextType(elem) {
 	var result = "";
     if ((elem.textContent) && (typeof (elem.textContent) != "undefined") && (typeof (elem.textContent) != "NaN")) 
@@ -1001,12 +1110,15 @@ function getTextType(elem) {
     return result;
 }
 
-
+// WOU DIT GEBRUIKEN OM EEN UNIEKE ID TE VOORZIEN VOOR DE GEMAAKTE POSTS
+// NU WORDT DIT GEDAAN ADHV HET AANTAL GEMAAKTE POSTS
 function uniqId() {
 	var result = Math.round(messageId + (Math.random() * maxRandomIdGenerator));
   return result;
 }
 
+// WOU DIT GEBRUIKEN OM EEN SLIDEBAR TE MAKEN MET DE LOGOUT FUNCTIONALITEIT
+// IS WEGGELATEN OMDAT ER TE WEINIG INFORMATIE WAS OM ERIN TE ZETTEN
 function showLogoutSidebar()
 {
 	if($("#accountOptions").hasClass('moveRight'))
@@ -1021,7 +1133,7 @@ function showLogoutSidebar()
 		}
 }
 
-
+// FUNCTIE OM TE CHECKEN OF ER COOKIES KUNNEN WORDEN GEMAAKT
 function cookiesAreEnabled()
 {
 	if (navigator.cookieEnabled === true)
