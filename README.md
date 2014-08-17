@@ -174,7 +174,7 @@ For this lab we had to build an app that the teacher suggested or build your own
 It started out as a simple app to build, but I got kind of caught up in it and it started to become more than a school assignment. I had a lot of fun building this app alongside [Tom](https://github.com/tommooredotbe/webtech2-bestrepositoryeu).
 
 ### More about TerrAppke :
-We've uses a lot of the subject mentioned above. And like I said before, I had a lot of fun with this app. My teammate and I formed a nice team and I'm proud of our little app. We worked hard so that maybe our app would be chosen for the school campaign.
+We've used a lot of the subject mentioned above. And like I said before, I had a lot of fun with this app. My teammate and I formed a nice team and I'm proud of our little app. We worked hard so that maybe our app would be chosen for the school campaign.
 
 
 ## <a name="lab6">6. NodeJs</a>
