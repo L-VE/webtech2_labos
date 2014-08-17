@@ -15,6 +15,7 @@ var mongoose = require( 'mongoose' );
 var Chat     = mongoose.model( 'Chat' );
 var ChatCount = mongoose.model('ChatCount');
 var Moderator = mongoose.model('Moderator');
+var Votes = mongoose.model('Votes');
 var allChats = "";
 
 
@@ -30,6 +31,7 @@ var faye = require('faye');
 var app = express();
 
 var facebookUserId = "";
+var facebookUsername = "";
 var userDisplayName = "";
 var userFirstName = "" ;
 var userLastName = "" ;
@@ -52,6 +54,9 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
+// facebook pic bug fixen
+//bij u publish die link zitten naar die pic ipv algemene variable en die picture eig publischen 
+
 
 //CALLBACK URLS OM ZO REMOTE EN LOCAL TE KUNNEN DEVELOPPEN
 var callbackURLLocal = "http://localhost:3002/auth/facebook/callback";
@@ -62,7 +67,7 @@ passport.use(new FacebookStrategy({
     clientID: "311747825641524",
     clientSecret: "88978dea32c610c42185bd102cb5c14a",
     callbackURL: /*__dirname + "/auth/facebook/callback"*/ callbackURLRemote,
-    profileFields: ['id', 'displayName', 'photos']
+    profileFields: ['id', 'displayName', 'photos', "username"]
   },
   function(accessToken, refreshToken, profile, done) {
     /*User.findOrCreate({ facebookId: profile.id }, function (err, user) {
@@ -75,6 +80,7 @@ passport.use(new FacebookStrategy({
           userDisplayName = profile.displayName;
           userFirstName = profile.givenName ;
           userLastName = profile.familyName  ;
+          facebookUsername  = profile.username;
           userName = profile.name  ;
           userLoggedIn = true;
           //console.log(facebookUserId);
@@ -163,9 +169,10 @@ app.get('/ask'/*, ensureAuthenticated*/, function(req, res){
               res.render( 'ask', {
                 title : 'IMD WALL',
                 questions : questions,
+                facebookUserName : facebookUsername,
                 facebookUserID : facebookUserId,
                 count : totalMessagesSent,
-                userImg : "https://graph.facebook.com/" + facebookUserId + "/picture?type=large",
+                userImg : "https://graph.facebook.com/" + facebookUsername + "/picture?type=large",
                 user: user
               });
           }); 
@@ -199,11 +206,12 @@ app.get('/moderator', function(req, res){
 
         Chat.find({}).sort('-votes').execFind( function ( err, questions, count ){
           allChats = questions;
-          //console.log(allChats);
+          console.log(allChats);
+           
             res.render( 'moderator', {
               title : 'IMD WALL',
               questions : questions,
-              facebookUserID : facebookUserId,
+              facebookUserName : facebookUsername,
               count : allChats.length
             });
         });
@@ -269,26 +277,148 @@ Chat.findOne({ id : req.params.id}, function (err, chat) {
 // OM DE OVEREENKOMSTIGE POST IN DE DATABANK TE UPDATEN MET DE JUISTE VOTE VALUE
 app.post('/vote/:id/:vote', function (req, res){
   var result = false;
-  return Chat.find({ id : req.params.id}, function (err, chat) {
+  var votevalue = req.body.voteData.voteValue;
+  var votetype = req.body.voteData.voteType;
+  var votedUp = req.body.voteData.votedUp;
+  var votedDown = req.body.voteData.votedDown;
+  var voteddown = 0;
+  var votedup = 0;
+  var voterFacebookID = req.body.voteData.voterFacebookID;
+  var ts = Math.round((new Date()).getTime() / 1000);
+  if(votedUp === "true")
+    votedup = 1;
+  else
+    votedup = 0;
+
+  if(votedDown === "true")
+    voteddown = 1;
+  else
+    voteddown = 0;
+
+  /*console.log(votedup);
+  console.log(voteddown);*/
+
+ /* console.log(req.params.id);
+  console.log(voterFacebookID);*/
+
+  /*Votes.findOne({ chat_id: req.params.id, voterFacebookID: voterFacebookID}, function (err, chat) {
+    console.log(chat);
+  });*/
+  Votes.count({ chat_id: req.params.id, voterFacebookID: voterFacebookID }, function (err, count) {
+    if (err)
+      console.log('error');
+    else
+    {
         //console.log(req.params.id);
-        //console.log(req.params.vote);
-          var conditions = { id: req.params.id }
-          , update = { votes : req.params.vote}
-          , options = { multi: true };
+        console.log('there are %d jungle adventures', count);
+            if (count == 1) 
+            {
+                var conditions = { chat_id: req.params.id }
+                    , update = { voteValue : votevalue, voteType : votetype, votedUp : votedup, votedDown : voteddown}
+                    , options = { multi: false };
+                console.log(update);
 
-        Chat.update(conditions, update, options, callback);
+                Votes.update(conditions, update, options, callback);
 
-        function callback (err, numAffected) {
-                // numAffected is the number of updated documents
-            if(!err)
-              //console.log("geupdated");
-              result = true;
-            else
-              //console.log(err);
-              result = false;
-        };
+                function callback (err, numAffected) {
+                        // numAffected is the number of updated documents
+                    if(!err)
+                    {
+                      //console.log("geupdated");
+                      Chat.find({ id : req.params.id}, function (err, chat) {
+                            //console.log(req.params.id);
+                            //console.log(req.params.vote);
+                              var conditions = { id: req.params.id }
+                              , update = { votes : req.params.vote}
+                              , options = { multi: true };
 
-          
+                            Chat.update(conditions, update, options, callback);
+
+                            function callback (err, numAffected) {
+                                    // numAffected is the number of updated documents
+                                if(! err)
+                                {
+                                  res.send(JSON.stringify(true));
+                                }
+                                else
+                                {
+                                  res.send(JSON.stringify(false));
+                                }
+                            };      
+                      });
+                    }
+                    else
+                      console.log(err);
+                      result = false;
+                };  
+            } 
+            else 
+            {
+                  new Votes({
+                          id    : ts,
+                          chat_id : req.params.id ,
+                          voteValue : votevalue,
+                          voteType : votetype,
+                          votedUp : votedup,
+                          votedDown : voteddown,
+                          voterFacebookID : voterFacebookID
+                      }).save( function( err, question, count ){
+                        var mesCount = "";
+                          if(! err)
+                          {
+                              Chat.find({ id : req.params.id}, function (err, chat) {
+                                      //console.log(req.params.id);
+                                      //console.log(req.params.vote);
+                                        var conditions = { id: req.params.id }
+                                        , update = { votes : req.params.vote}
+                                        , options = { multi: true };
+
+                                      Chat.update(conditions, update, options, callback);
+
+                                      function callback (err, numAffected) {
+                                              // numAffected is the number of updated documents
+                                          if(! err)
+                                          {
+                                            res.send(JSON.stringify(true));
+                                          }
+                                          else
+                                          {
+                                            res.send(JSON.stringify(false));
+                                          }
+                                      };      
+                                });
+                          }
+                          else
+                          {
+                            res.send(JSON.stringify(false));
+                          }
+
+                      });
+            }
+      }
+  });
+});
+
+
+// FUNCTIE OM ALLE VOTES UIT DE DB OP TE HALEN ADHV VAN DE FACEBOOKUSERID
+// OM BIJ HET LADEN VAN DE PAGINA, ALLE VOTES VAN EEN BEPAALDE USER OP TE HALEN
+// EN AAN TE GEVEN BIJ DE JUISTE POST, ZODAT MEERDERE KEREN VOTEN OP HETZELFDE UITGESLOTEN WORDT
+app.post('/getVotesByUser/:id', function (req, res){
+  var voterFacebookID = req.params.id;
+  var votesList;
+
+  Votes.find({ voterFacebookID: voterFacebookID}, function (err, chats) {
+  //Votes.count({voterFacebookID: voterFacebookID }, function (err, count) {
+    if(!err)
+    {
+      console.log(chats);
+      res.send(chats);
+    }
+    else
+    {
+      console.log("unlucky");
+      res.send(JSON.stringify(false));
+    }
   });
 });
 

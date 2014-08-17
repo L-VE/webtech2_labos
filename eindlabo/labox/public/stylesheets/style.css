@@ -529,7 +529,8 @@ body {
                       background-size: 30px;
                       margin: 0 auto; }
                     body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails .votes .voteAction ul li span.chosenUp:hover {
-                      background-image: url('../../images/vote_up_light.png'); }
+                      background-image: url('../../images/vote_up_light.png');
+                      cursor: pointer; }
                     body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails .votes .voteAction ul li span.inactiveDown {
                       /*@extend .extraAImage;*/
                       display: block;
@@ -554,12 +555,14 @@ body {
                       background-size: 30px;
                       margin: 0 auto; }
                     body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails .votes .voteAction ul li span.chosenDown:hover {
-                      background-image: url('../../images/vote_down_light.png'); }
+                      background-image: url('../../images/vote_down_light.png');
+                      cursor: pointer; }
               body #wholeContainer #baseContent #content #leftSide .messageConSec .messageDetails #sender {
                 width: 47%; }
         body #wholeContainer #baseContent #content #rightSide {
           transition: -webkit-transform 0.5s;
           transition: transform 0.5s;
+          background-color: purple;
           float: right;
           /*width: 30%;*/
           width: 25%;

@@ -8,16 +8,16 @@
   "dependencies": {
     "express": "3.5.0",
     "jade": "*",
-    "mongoose": "3.2.0",
+    "mongoose" : "3.2.0",
     "pg": "0.6.15",
-    "passport": "~0.1.17",
-    "passport-local": "~0.1.6",
-    "passport-facebook": "~1.0.2"
+    "passport" : "~0.1.17",    
+    "passport-local" : "~0.1.6",  
+    "passport-facebook" : "~1.0.2"
   },
   "devDependencies": {
-    "gulp": "*",
+    "gulp": "^3.6.2",
     "gulp-concat-css": "^0.1.4",
-    "gulp-minify-css": "^0.3.7",
+    "gulp-minify-css": "^0.3.1",
     "gulp-sass": "^0.7.1",
     "gulp-watch": "^0.6.2",
     "gulp-nodemon": "^1.0.2",

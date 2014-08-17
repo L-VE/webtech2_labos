@@ -425,6 +425,7 @@ body
 												span.chosenUp:hover
 												{
 													background-image: url('../../images/vote_up_light.png');
+													cursor:pointer;
 												}
 
 												span.inactiveDown
@@ -466,6 +467,7 @@ body
 												span.chosenDown:hover
 												{
 													background-image: url('../../images/vote_down_light.png');
+													cursor:pointer;
 												}
 											}
 										}
@@ -485,6 +487,7 @@ body
 				#rightSide
 				{
 					@include add-transition(0.5s);
+					background-color: purple;
 					float: right;
 					/*width: 30%;*/
 					width: 25%;

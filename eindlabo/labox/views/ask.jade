@@ -22,7 +22,8 @@ block content
             #leftSide
                 p.category 
                     span Current questions (*)
-                    span.hiddenSpan #{facebookUserID}
+                    span.hiddenSpan(id='facebookUserID') #{facebookUserID}
+                    span.hiddenSpan(id='facebookUserName') #{facebookUserName}
                 #topicList
                     span(class='hiddenMessageCount') #{count}
                     ul#questionList(class='allCurrentQuestion')

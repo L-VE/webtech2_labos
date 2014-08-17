@@ -4,14 +4,14 @@ var minifyCss = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
 var sass = require('gulp-sass');
 var nodemon = require('gulp-nodemon');
-var livereload = require('gulp-livereload');
+/*var livereload = require('gulp-livereload');*/
 var concat = require('gulp-concat');
 
 gulp.task('styles', function (){
 	gulp.src('public/stylesheets/*.css')
     .pipe(concatCss('build.css'))
-    .pipe(minifyCss(opts))
-    .pipe(livereload())
+    .pipe(minifyCss({keepBreaks:true}))
+    /*.pipe(livereload())*/
     .pipe(gulp.dest('public/build/css/'))
 });
 
@@ -19,7 +19,7 @@ gulp.task('scripts', function() {
   gulp.src('public/javascripts/script.js')
     .pipe(concat('script.js'))
     .pipe(uglify())
-    .pipe(livereload())
+   /* .pipe(livereload())*/
     .pipe(gulp.dest('public/build/js/'));
 });
 

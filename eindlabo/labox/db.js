@@ -28,7 +28,9 @@ var chatSchema = new Schema({
                           votes : Number,
                           message : String,
                           chatType : { type: String, default: "question" },
-                          senderPicURL : String
+                          senderPicURL : String,
+                          facebookID : String,
+                          facebookUsername : String
 
 });
 
@@ -38,9 +40,21 @@ var chatCountSchema = new Schema({
                           description : String
 });
 
+var votesSchema = new Schema({
+                          id:  Number,
+                          chat_id: Number,
+                          voteValue : String,
+                          voteType : String,
+                          votedUp : Boolean,
+                          votedDown : Boolean,
+                          voterFacebookID : String
+});
+
+
 mongoose.model( 'Moderator', moderatorSchema, 'moderator' );
 mongoose.model( 'Chat', chatSchema, 'chats' );
 mongoose.model( 'ChatCount', chatCountSchema, 'chatcount' );
+mongoose.model( 'Votes', votesSchema, 'votes' );
 
 
 

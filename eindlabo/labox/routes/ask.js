@@ -33,7 +33,9 @@ exports.create = function ( req, res ){
 		    message : req.body.chatContent.message,
 		    chatType : req.body.chatContent.chatType,
 		    chatTime : Date.now(),
-		    senderPicURL : req.body.chatContent.senderPicURL
+		    senderPicURL : req.body.chatContent.senderPicURL,
+        facebookID : req.body.chatContent.facebookUserID,
+        facebookUsername : req.body.chatContent.facebookUserName
 	  }).save( function( err, question, count ){
 	  	var mesCount = "";
 	  		if(! err)

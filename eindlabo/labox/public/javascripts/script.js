@@ -18,36 +18,6 @@ $(document).ready(function (e){
 		}
 	};
 
-// COOKIE BIJHOUDEN VOOR HET ONTHOUDEN OP WELKE MESSAGES WE AL GEVOTED HEBBEN
-// ZODAT BIJ EEN REFRESH JE NIET VERSCHILLENDE KEER KAN UP_ OF DOWNVOTED OP EEN POST
-// BETER MET LOCALSTORAGE DAN MET COOKIE
-    $("#indexBody").ready(function (event){
-    	/*if(cookiesAreEnabled)
-		{
-			var CookieSet = $.cookie('myVotesIMDWALL');
-			    $.cookie.json = true;
-
-			     if (CookieSet == null) {
-			          var newVote =  { message : {"messageId" : "message1", "messageValue" : "1up",votedUp : "true/false",votedDown : "true/false"}};
-			          $.cookie("myVotesIMDWALL", newVote, { expires: 365 });
-
-			     }
-		}*/
-
-		if(localStorageAvailable())
-		{	
-			//alert("avail");
-
-			var savedVotes = localStorage.getItem('savedVotes');
-
-	    	if (savedVotes === null)
-		    {
-		    	var newVote =  { message : {"messageId" : "message1", "messageValue" : "1up",votedUp : "true/false",votedDown : "true/false"}};
-			          
-		    	localStorage.setItem('savedVotes',JSON.stringify(newVote));
-		    }   
-		}
-    });// END OF ON INDEXBODY LOAD
 
     // CHECKEN OF ER AL POSTS ZIJN, INDIEN WEL DAN WORDEN ZE GETOOND
     // INDIEN NIET DAN WORDT ER GEZEGD DAT ER NOG GEEN POSTS ZIJN
@@ -181,84 +151,103 @@ $(document).ready(function (e){
 // DAARVOOR ROEPEN WE DE COOKIE AAN DIE TIJDENS HET VOTEN GEMAAKT IS 
 // EN SETTEN WE DE REEDS GEVOTED POSTS MET DE JUISTE KLEURPIJL EN DATA ATRRIBUTEN
 	$(".ordinaryUser").ready(function (){
-			$("#questionList li.questionItem").each(function( index ) {
-				var currentId = $(this)[0].id;
-				//var idList = $.cookie("myVotesIMDWALL");
-				var idList = JSON.parse(localStorage.getItem('savedVotes'));
-				var dataArray = [];
 
-				$.each(idList, function (index, value) {
-					//console.log(idList.messages);//Object {messageId: "messageValue"} 
-					//console.log("index: " +index + ", value: " +value);//index: messageId, value: messageValue
-					var savedId = value.messageId;
-					var savedMesValue = value.messageValue;
-					var savedDataUp = value.votedUp;
-					var savedDataDown = value.votedDown;
-					//var mesObj = [idList.messages[index].value[0],idList.messages[index].value[1],idList.messages[index].value[2]]; 
-				    //dataArray.push(mesObj);
-				    //console.log(dataArray);
-				    
-				    if(currentId == savedId)
-				    {
-						switch(savedMesValue)
-						{
-							// ALLE MOGELIJKHEDEN CHECKEN VAN HOE DE VOTE WAS, IS BELANGRIJK OM TE WETEN
-							// VOOR HOE DE PIJLTJES GESET WORDEN
-							// WANT 1DOWN KAN BV ZIJN WANNEER JE GEWOON NAAR BENEDEN VOTE
-							// MAAR OOK WANNEER JE JE UP VOTE WILT TERUGNEMEN OM TERUG NAAR DE 
-							// NEUTRALE SITUATIE TE GAAN
-							// 2 DOWN OF 2 UP STAAT DAN VOOR WANNEER JE AL GEDOWNVOTED OF GEUPVOTED HEBT
-							// OM DAN RESPECTIEVELIJK METEEN TE UPVOTED OF DOWNVOTEN
-							case "1up" : 	if(savedDataUp == true && savedDataDown == false)//van 0 @ 1
-											{
-												$("#" + currentId).data("votedup",true);//true
-												$("#" + currentId).data("voteddown",false);//false
-												$("#" + currentId).find(".voteUp").removeClass('up');
-												$("#" + currentId).find(".voteUp").addClass('chosenUp');
-											}
-											else if(savedDataUp == false && savedDataDown == false)// van -1 @ 0
-											{
-												$("#" + currentId).data("votedup",false);//true
-												$("#" + currentId).data("voteddown",false);//false
-												$("#" + currentId).find(".voteDown").removeClass('chosenDown');
-												$("#" + currentId).find(".voteDown").addClass('down');
-											}
-								break;
-							case "2up" : 	if(savedDataUp == true && savedDataDown == false)// van -1 @ 1
-											{
-												$("#" + currentId).data("votedup",true);//true
-												$("#" + currentId).data("voteddown",false);//false
-												$("#" + currentId).find(".voteUp").removeClass('up');
-												$("#" + currentId).find(".voteUp").addClass('chosenUp');
-											}
-								break;
-							case "1down" : 	if(savedDataUp == false && savedDataDown == true)//van 0 @ -1
-											{
-												$("#" + currentId).data("votedup",false);//true
-												$("#" + currentId).data("voteddown",true);//false
-												$("#" + currentId).find(".voteDown").removeClass('down');
-												$("#" + currentId).find(".voteDown").addClass('chosenDown');
-											}
-											else if(savedDataUp == false && savedDataDown == false)// van 1 @ 0
-											{
-												$("#" + currentId).data("votedup",false);//true
-												$("#" + currentId).data("voteddown",false);//false
-												$("#" + currentId).find(".voteUp").removeClass('chosenUp');
-												$("#" + currentId).find(".voteUp").addClass('up');
-											}
-								break;
-							case "2down" : 	if(savedDataUp == false && savedDataDown == true)// van 1 @ -1
-											{
-												$("#" + currentId).data("votedup",false);//true
-												$("#" + currentId).data("voteddown",true);//false
-												$("#" + currentId).find(".voteDown").removeClass('down');
-												$("#" + currentId).find(".voteDown").addClass('chosenDown');
-											}
-								break;
-						}
-				    }
-				});
-			});
+			var votesList;
+			var id = getTextType($(".category").find("#facebookUserID")[0]);
+	    var request = $.ajax({ 
+							type: "POST", // GET or POST
+							url: "/getVotesByUser/" + id,//$(this).attr('action'),
+							dataType: "json",
+							error: function( xhr, status ) {
+								//console.log("Kon de actie niet uitvoeren.");
+								console.log(status + ",  unlucky")
+								event.preventDefault();
+							 }, // the file to call
+							success: function(response) { // on success..
+								//showAbsences();
+								//humane.log("Was een succes!");
+								votesList = response;
+											$("#questionList li.questionItem").each(function( index ) {
+
+												var currentId = $(this)[0].id;
+												//var idList = $.cookie("myVotesIMDWALL");
+												/*var idList = JSON.parse(localStorage.getItem('savedVotes'));*/
+												var idList = votesList;
+												var dataArray = [];
+
+												$.each(idList, function (index, value) {
+
+													var savedId = "message" + value.chat_id;
+													var savedVoteValue = value.voteValue;
+													var savedDataUp = value.votedUp;
+													var savedDataDown = value.votedDown;
+												    
+												    if(currentId == savedId)
+												    {
+														switch(savedVoteValue)
+														{
+															// ALLE MOGELIJKHEDEN CHECKEN VAN HOE DE VOTE WAS, IS BELANGRIJK OM TE WETEN
+															// VOOR HOE DE PIJLTJES GESET WORDEN
+															// WANT 1DOWN KAN BV ZIJN WANNEER JE GEWOON NAAR BENEDEN VOTE
+															// MAAR OOK WANNEER JE JE UP VOTE WILT TERUGNEMEN OM TERUG NAAR DE 
+															// NEUTRALE SITUATIE TE GAAN
+															// 2 DOWN OF 2 UP STAAT DAN VOOR WANNEER JE AL GEDOWNVOTED OF GEUPVOTED HEBT
+															// OM DAN RESPECTIEVELIJK METEEN TE UPVOTED OF DOWNVOTEN
+															case "1up" : 	if(savedDataUp == true && savedDataDown == false)//van 0 @ 1
+																			{
+																				$("#" + currentId).data("votedup",true);//true
+																				$("#" + currentId).data("voteddown",false);//false
+																				$("#" + currentId).find(".voteUp").removeClass('up');
+																				$("#" + currentId).find(".voteUp").addClass('chosenUp');
+																			}
+																			else if(savedDataUp == false && savedDataDown == false)// van -1 @ 0
+																			{
+																				$("#" + currentId).data("votedup",false);//true
+																				$("#" + currentId).data("voteddown",false);//false
+																				$("#" + currentId).find(".voteDown").removeClass('chosenDown');
+																				$("#" + currentId).find(".voteDown").addClass('down');
+																			}
+																break;
+															case "2up" : 	if(savedDataUp == true && savedDataDown == false)// van -1 @ 1
+																			{
+																				$("#" + currentId).data("votedup",true);//true
+																				$("#" + currentId).data("voteddown",false);//false
+																				$("#" + currentId).find(".voteUp").removeClass('up');
+																				$("#" + currentId).find(".voteUp").addClass('chosenUp');
+																			}
+																break;
+															case "1down" : 	if(savedDataUp == false && savedDataDown == true)//van 0 @ -1
+																			{
+																				$("#" + currentId).data("votedup",false);//true
+																				$("#" + currentId).data("voteddown",true);//false
+																				$("#" + currentId).find(".voteDown").removeClass('down');
+																				$("#" + currentId).find(".voteDown").addClass('chosenDown');
+																			}
+																			else if(savedDataUp == false && savedDataDown == false)// van 1 @ 0
+																			{
+																				$("#" + currentId).data("votedup",false);//true
+																				$("#" + currentId).data("voteddown",false);//false
+																				$("#" + currentId).find(".voteUp").removeClass('chosenUp');
+																				$("#" + currentId).find(".voteUp").addClass('up');
+																			}
+																break;
+															case "2down" : 	if(savedDataUp == false && savedDataDown == true)// van 1 @ -1
+																			{
+																				$("#" + currentId).data("votedup",false);//true
+																				$("#" + currentId).data("voteddown",true);//false
+																				$("#" + currentId).find(".voteDown").removeClass('down');
+																				$("#" + currentId).find(".voteDown").addClass('chosenDown');
+																			}
+																break;
+														}
+												    }
+												});
+											});
+
+								event.preventDefault();
+								
+							}
+			});//einde ajax
 		});
 
 	/*client = new Faye.Client('http://localhost:3002/faye/',{
@@ -416,15 +405,15 @@ $(document).ready(function (e){
 // IN DEZE GEVALLEN WORDEN FOUTBOODSCHAPPEN GETOOND
 	$("#submitQuestion").on('click', function (e){
 		e.preventDefault();
-		var chatUser = getTextType($(".accountname")[0]);  //MOET HIER NOG UITGEVIST WORDEN
+		var chatUser = getTextType($(".accountname")[0]);  //== de displayname MOET HIER NOG UITGEVIST WORDEN
 		//console.log(chatUser);
 		var chatMessage = $("#questionField").val();
 		var messageIllegalCharsFound = illegalCharsFound(chatMessage);
-        var userIllegalCharsFound = illegalCharsFound(chatUser);
+    var userIllegalCharsFound = illegalCharsFound(chatUser);
 		var chatMessageType = $("#sendTypes input[type='radio']:checked").val();
 		var currentDateTime = new Date();
-      	//var currentdate = createDateStringOnlyTime(currentDateTime); 
-      	var currentdate = createDateString(currentDateTime);
+    //var currentdate = createDateStringOnlyTime(currentDateTime); 
+    var currentdate = createDateString(currentDateTime);
 
 
 		
@@ -456,10 +445,13 @@ $(document).ready(function (e){
     // MAAR OOK NAAR DE SUBSCRIBE FUNCTIE VAN DE CLIENT OM DE NIEUWE POST TE APPENDEN AAN HUN LIJST ZICHTBARE posts
     			var totalMessagesCount = parseInt(getTextType($("span.hiddenMessageCount")[0]));
     			totalMessagesCount++;
+    			//var facebookUserID = getTextType($(".hiddenSpan"));
+    			var facebookUserID = getTextType($(".category").find("#facebookUserID")[0]);
+    			var facebookUserName = getTextType($(".category").find("#facebookUserName")[0]);
     			var senderPic = $("#accountPic").attr("src");
-    			var insertInDb = {id : totalMessagesCount, message : chatMessage, sender : chatUser, chatType : chatMessageType, chatTime : currentDateTime, senderPicURL : senderPic};
+    			var insertInDb = {id : totalMessagesCount, message : chatMessage, sender : chatUser, chatType : chatMessageType, chatTime : currentDateTime, senderPicURL : senderPic, facebookUserID : facebookUserID, facebookUserName : facebookUserName};
 		
-    			var publicationAsk = client.publish('/message', {id : "message"+totalMessagesCount, chat : chatMessage, user : chatUser, chatMessageType : chatMessageType, chatTime : currentdate, senderPicURL :senderPic});
+    			var publicationAsk = client.publish('/message', {id : "message"+totalMessagesCount, chat : chatMessage, user : chatUser, chatMessageType : chatMessageType, chatTime : currentdate, senderPicURL :senderPic, facebookUserID : facebookUserID, facebookUserName : facebookUserName});
     			//var publicationAsk = client.publish('/moderate', {chat : chatMessage, user : chatUser, chatMessageType : chatMessageType});
     				  //alert(parseInt(getTextType($("span.hiddenMessageCount")[0])));
 				
@@ -524,19 +516,19 @@ $(document).ready(function (e){
 	    	
 
 	    	$(currentMessageId).data("votedup",true);
-			$(currentMessageId).find(".voteUp").removeClass('up');
-			$(currentMessageId).find(".voteUp").addClass('chosenUp');
-			voteMessage(currentMessageId, "up", "1up",true,false);
+				$(currentMessageId).find(".voteUp").removeClass('up');
+				$(currentMessageId).find(".voteUp").addClass('chosenUp');
+				voteMessage(currentMessageId, "up", "1up",true,false);
 	    }
 	    else if($(currentMessageId).data("votedup") === false && $(currentMessageId).data("voteddown") === true)
 	    {
 	    	//checkVotingAvailibility (currentMessageId, "votedup", "voteddown", ".voteUp", ".voteDown" , true);
 	    	$(currentMessageId).data("votedup",true);
 	    	$(currentMessageId).data("voteddown",false);
-			$(currentMessageId).find(".voteUp").removeClass('up');
-			$(currentMessageId).find(".voteUp").addClass('chosenUp');
-			$(currentMessageId).find(".voteDown").removeClass('chosenDown');
-			$(currentMessageId).find(".voteDown").addClass('down');
+				$(currentMessageId).find(".voteUp").removeClass('up');
+				$(currentMessageId).find(".voteUp").addClass('chosenUp');
+				$(currentMessageId).find(".voteDown").removeClass('chosenDown');
+				$(currentMessageId).find(".voteDown").addClass('down');
 	    	voteMessage(currentMessageId, "up", "2up",true,false);
 	    }
 	    else
@@ -566,19 +558,19 @@ $(document).ready(function (e){
 		    {
 		    	//checkVotingAvailibility (currentMessageId, "voteddown", "votedup", ".voteDown", ".voteUp" , true);
 		    	$(currentMessageId).data("voteddown",true);
-				$(currentMessageId).find(".voteDown").removeClass('down');
-				$(currentMessageId).find(".voteDown").addClass('chosenDown');
+					$(currentMessageId).find(".voteDown").removeClass('down');
+					$(currentMessageId).find(".voteDown").addClass('chosenDown');
 		    	voteMessage(currentMessageId, "down", "1down",false,true);
 		    }
 		    else if($(currentMessageId).data("voteddown") === false && $(currentMessageId).data("votedup") === true)
 		    {
 		    	//checkVotingAvailibility (currentMessageId, "voteddown", "votedup", ".voteDown", ".voteUp" , true);
 		    	$(currentMessageId).data("voteddown",true);
-	    	    $(currentMessageId).data("votedup",false);
-				$(currentMessageId).find(".voteDown").removeClass('down');
-				$(currentMessageId).find(".voteDown").addClass('chosenDown');
-				$(currentMessageId).find(".voteUp").removeClass('chosenUp');
-				$(currentMessageId).find(".voteUp").addClass('up');
+	    	  $(currentMessageId).data("votedup",false);
+					$(currentMessageId).find(".voteDown").removeClass('down');
+					$(currentMessageId).find(".voteDown").addClass('chosenDown');
+					$(currentMessageId).find(".voteUp").removeClass('chosenUp');
+					$(currentMessageId).find(".voteUp").addClass('up');
 		    	voteMessage(currentMessageId, "down", "2down",false,true);
 		    }
 		    else
@@ -610,6 +602,8 @@ $(document).ready(function (e){
 		var currentVotes = parseInt(getTextType(test));
 		//var currentVotes = parseInt(test.text());/*parseInt(test.innerText);*/
 		var voteValue = message.voteValue;
+		var voterFacebookID = getTextType($(".category").find("#facebookUserID")[0]);
+		//console.log(voterFacebookID);
 		switch (voteValue)
 		{
 			case "1up" : currentVotes ++;
@@ -633,22 +627,25 @@ $(document).ready(function (e){
 
 	
 	    changeText(test, currentVotes);
+	    var voteData = {voteValue : voteValue, voteType : message.voteType, votedUp : message.votedUp, votedDown : message.votedDown, voterFacebookID : voterFacebookID};
 	    var request = $.ajax({ 
 							type: "POST", // GET or POST
 							url: "/vote/" + id + "/" + currentVotes,//$(this).attr('action'),
+							data : {voteData : voteData},
 							dataType: "json",
 							error: function( xhr, status ) {
 								//console.log("Kon de actie niet uitvoeren.");
+								console.log(status + ",  unlucky")
 								event.preventDefault();
 							 }, // the file to call
 							success: function(response) { // on success..
 								//showAbsences();
 								//humane.log("Was een succes!");
-								//console.log("geluktsucces");
+								console.log("geluktsucces, " + response);
 								event.preventDefault();
 								
 							}
-						});//einde ajax
+			});//einde ajax
 	// OOK BIJ HET VOTEN WORDT ER BEKEKEN WAAR HET HUIDIGE BERICHT NAARTOE MOET
 	// OMDAT ZE GERANGSCHIKT WORDEN OP BASIS VAN VOTES VAN HOOG NAAR LAAG
 	    if($("ul#questionList").children().length > 1)
@@ -949,8 +946,9 @@ function voteMessage(p_messageId, p_voteType, p_voteValue,p_dataAttrVotedUp, p_d
 
 	}*/
 
+	
 	// BETER MET LOCALSTORAGE DAN MET COOKIE
-	if(localStorageAvailable)
+/*	if(localStorageAvailable)
 	{
 			 var allMyvotes = JSON.parse(localStorage.getItem('savedVotes'));
 			 var id = p_messageId.substr(1,p_messageId.length);
@@ -969,9 +967,9 @@ function voteMessage(p_messageId, p_voteType, p_voteValue,p_dataAttrVotedUp, p_d
 	    messageId++;
 	    localStorage.setItem('savedVotes',JSON.stringify(allMyvotes));
 	    //console.log(JSON.parse(localStorage.getItem('savedVotes')));
-	}
+	}*/
 
-    var publicationVote = client.publish('/vote', {chosenQuestion : p_messageId, voteType : p_voteType, voteValue : p_voteValue});
+    var publicationVote = client.publish('/vote', {chosenQuestion : p_messageId, voteType : p_voteType, voteValue : p_voteValue, votedUp : p_dataAttrVotedUp, votedDown : p_dataAttrVotedDown});
     
     
 }
@@ -1122,7 +1120,10 @@ function changeText(elem, changeVal) {
 // HANDIG VOOR FIREFOX EN CHROME
 // WANT HAD DAAR PROBLEMEN MEE OM DIT ATTRIBUUT TE GETTEN
 function getTextType(elem) {
+	//console.log(elem);
 	var result = "";
+		if(elem == undefined)
+			return "NaN";	
     if ((elem.textContent) && (typeof (elem.textContent) != "undefined") && (typeof (elem.textContent) != "NaN")) 
     {
         result = elem.textContent;
